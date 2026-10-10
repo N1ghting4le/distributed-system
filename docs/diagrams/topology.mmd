@@ -1,0 +1,12 @@
+flowchart LR
+    GW["Ingest Gateway<br/>(Producer)"] -- "routing key = type" --> X{{"transit.events<br/>topic, durable"}}
+    TS2["Track Service"] -- "vehicle.incident" --> X
+    AS2["Schedule Analytics"] -- "vehicle.incident" --> X
+    X -- "vehicle.position" --> Q1[("track.positions")]
+    X -- "vehicle.position" --> Q2[("analytics.positions")]
+    X -- "ticket.validation" --> Q3[("analytics.validations")]
+    X -- "vehicle.incident" --> Q4[("incidents")]
+    Q1 --> TS["Track Service<br/>1..N экземпляров"]
+    Q2 --> AS["Schedule Analytics<br/>1 экземпляр"]
+    Q3 --> AS
+    Q4 --> IS["Incident Service"]

@@ -1,3 +1,10 @@
 # Ingest Gateway (Producer)
 
-Прием событий бортового оборудования по HTTP (`POST /api/v1/events`), проверка по `docs/schemas/message.schema.json`, присвоение `message_id` (UUID v5 от `source_id:seq`) и публикация в exchange `transit.events` с publisher confirms. Реализуется в ЛР 2 (Python 3.12, FastAPI, aio-pika).
+`gateway.py` – FastAPI + aio-pika. `POST /api/v1/events` принимает одно событие устройства или пакет до 50,
+присваивает `message_id` (UUID v5 от `source_id:seq`, пространство имен `uuid5(NAMESPACE_DNS, "transit-monitor.local")`)
+и `received_at`, проверяет конверт по `docs/schemas/message.schema.json` и публикует сообщения в exchange
+`transit.events` (topic) с routing key = `type`: persistent, `mandatory`, publisher confirms. Ответы: 202 – все
+сообщения пакета подтверждены брокером; 400 – ошибка структуры (пакет не публикуется); 503 – брокер недоступен.
+`GET /health` – состояние подключения к брокеру. Журнал: строка `sent id=… type=… source=… seq=…` на каждое сообщение.
+
+Запуск: `python producer/gateway.py` (`RABBIT_URL`, `GATEWAY_PORT=8080`, `SCHEMA_PATH`).

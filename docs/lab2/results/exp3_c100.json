@@ -1,0 +1,449 @@
+{
+ "params": {
+  "name": "exp3_c100",
+  "consumers": 2,
+  "count": 100,
+  "repeat": 3,
+  "delay_ms": 20,
+  "prefetch": 1,
+  "types": "vehicle.position",
+  "vehicles": 1200,
+  "rate": 0,
+  "incident_prob": null,
+  "seed": 42,
+  "all": false
+ },
+ "runs": [
+  {
+   "consumers": 2,
+   "count": 100,
+   "delay_ms": 20,
+   "prefetch": 1,
+   "sent": 100,
+   "sent_by_type": {
+    "vehicle.position": 100,
+    "ticket.validation": 0,
+    "vehicle.incident": 0
+   },
+   "received_track": 100,
+   "processed_track": 100,
+   "lost_track": 0,
+   "seconds": 1.775,
+   "throughput": 56.4,
+   "latency_avg_s": 0.926,
+   "latency_p95_s": 1.69,
+   "producer_span_s": 0.05,
+   "send_done_s": 1.0,
+   "processed_done_s": 2.81,
+   "max_ready": 94,
+   "distribution": {
+    "c1": 50,
+    "c2": 50
+   },
+   "by_consumer": {
+    "track-service": {
+     "processed": 100,
+     "results": "{\"stored\": 100}"
+    }
+   },
+   "logs": {
+    "c1.log": {
+     "received": 50,
+     "processed": 50
+    },
+    "c2.log": {
+     "received": 50,
+     "processed": 50
+    }
+   },
+   "samples": [
+    [
+     0.02,
+     0
+    ],
+    [
+     0.13,
+     0
+    ],
+    [
+     0.25,
+     0
+    ],
+    [
+     0.36,
+     0
+    ],
+    [
+     0.47,
+     0
+    ],
+    [
+     0.58,
+     0
+    ],
+    [
+     0.7,
+     0
+    ],
+    [
+     0.81,
+     0
+    ],
+    [
+     0.92,
+     55
+    ],
+    [
+     1.0,
+     94
+    ],
+    [
+     1.11,
+     88
+    ],
+    [
+     1.23,
+     80
+    ],
+    [
+     1.35,
+     74
+    ],
+    [
+     1.46,
+     68
+    ],
+    [
+     1.57,
+     60
+    ],
+    [
+     1.7,
+     54
+    ],
+    [
+     1.81,
+     47
+    ],
+    [
+     1.9,
+     42
+    ],
+    [
+     2.01,
+     36
+    ],
+    [
+     2.13,
+     28
+    ],
+    [
+     2.25,
+     22
+    ],
+    [
+     2.36,
+     14
+    ],
+    [
+     2.48,
+     8
+    ],
+    [
+     2.59,
+     2
+    ],
+    [
+     2.7,
+     0
+    ]
+   ]
+  },
+  {
+   "consumers": 2,
+   "count": 100,
+   "delay_ms": 20,
+   "prefetch": 1,
+   "sent": 100,
+   "sent_by_type": {
+    "vehicle.position": 100,
+    "ticket.validation": 0,
+    "vehicle.incident": 0
+   },
+   "received_track": 100,
+   "processed_track": 100,
+   "lost_track": 0,
+   "seconds": 1.772,
+   "throughput": 56.4,
+   "latency_avg_s": 0.915,
+   "latency_p95_s": 1.684,
+   "producer_span_s": 0.081,
+   "send_done_s": 1.04,
+   "processed_done_s": 2.75,
+   "max_ready": 92,
+   "distribution": {
+    "c1": 50,
+    "c2": 50
+   },
+   "by_consumer": {
+    "track-service": {
+     "processed": 100,
+     "results": "{\"stored\": 100}"
+    }
+   },
+   "logs": {
+    "c1.log": {
+     "received": 50,
+     "processed": 50
+    },
+    "c2.log": {
+     "received": 50,
+     "processed": 50
+    }
+   },
+   "samples": [
+    [
+     0.02,
+     0
+    ],
+    [
+     0.13,
+     0
+    ],
+    [
+     0.25,
+     0
+    ],
+    [
+     0.37,
+     0
+    ],
+    [
+     0.48,
+     0
+    ],
+    [
+     0.59,
+     0
+    ],
+    [
+     0.7,
+     0
+    ],
+    [
+     0.82,
+     0
+    ],
+    [
+     0.93,
+     31
+    ],
+    [
+     1.04,
+     92
+    ],
+    [
+     1.15,
+     86
+    ],
+    [
+     1.25,
+     80
+    ],
+    [
+     1.37,
+     72
+    ],
+    [
+     1.49,
+     66
+    ],
+    [
+     1.6,
+     58
+    ],
+    [
+     1.72,
+     52
+    ],
+    [
+     1.83,
+     46
+    ],
+    [
+     1.95,
+     38
+    ],
+    [
+     2.07,
+     32
+    ],
+    [
+     2.18,
+     24
+    ],
+    [
+     2.3,
+     18
+    ],
+    [
+     2.42,
+     12
+    ],
+    [
+     2.54,
+     4
+    ],
+    [
+     2.65,
+     0
+    ]
+   ]
+  },
+  {
+   "consumers": 2,
+   "count": 100,
+   "delay_ms": 20,
+   "prefetch": 1,
+   "sent": 100,
+   "sent_by_type": {
+    "vehicle.position": 100,
+    "ticket.validation": 0,
+    "vehicle.incident": 0
+   },
+   "received_track": 100,
+   "processed_track": 100,
+   "lost_track": 0,
+   "seconds": 1.778,
+   "throughput": 56.2,
+   "latency_avg_s": 0.92,
+   "latency_p95_s": 1.684,
+   "producer_span_s": 0.053,
+   "send_done_s": 1.0,
+   "processed_done_s": 2.75,
+   "max_ready": 94,
+   "distribution": {
+    "c1": 50,
+    "c2": 50
+   },
+   "by_consumer": {
+    "track-service": {
+     "processed": 100,
+     "results": "{\"stored\": 99, \"stored_route_deviation\": 1}"
+    }
+   },
+   "logs": {
+    "c1.log": {
+     "received": 50,
+     "processed": 50
+    },
+    "c2.log": {
+     "received": 50,
+     "processed": 50
+    }
+   },
+   "samples": [
+    [
+     0.02,
+     0
+    ],
+    [
+     0.14,
+     0
+    ],
+    [
+     0.24,
+     0
+    ],
+    [
+     0.35,
+     0
+    ],
+    [
+     0.46,
+     0
+    ],
+    [
+     0.57,
+     0
+    ],
+    [
+     0.68,
+     0
+    ],
+    [
+     0.79,
+     0
+    ],
+    [
+     0.9,
+     29
+    ],
+    [
+     1.0,
+     94
+    ],
+    [
+     1.11,
+     88
+    ],
+    [
+     1.2,
+     82
+    ],
+    [
+     1.32,
+     76
+    ],
+    [
+     1.43,
+     68
+    ],
+    [
+     1.54,
+     62
+    ],
+    [
+     1.65,
+     56
+    ],
+    [
+     1.76,
+     50
+    ],
+    [
+     1.87,
+     44
+    ],
+    [
+     1.98,
+     36
+    ],
+    [
+     2.09,
+     30
+    ],
+    [
+     2.2,
+     24
+    ],
+    [
+     2.32,
+     16
+    ],
+    [
+     2.44,
+     10
+    ],
+    [
+     2.54,
+     4
+    ],
+    [
+     2.65,
+     0
+    ]
+   ]
+  }
+ ]
+}

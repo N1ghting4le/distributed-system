@@ -1,0 +1,94 @@
+{
+  "rabbitmq_version": "4.1.8",
+  "vhosts": [
+    {
+      "name": "/"
+    }
+  ],
+  "exchanges": [
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
+      "name": "transit.events",
+      "type": "topic",
+      "vhost": "/"
+    }
+  ],
+  "queues": [
+    {
+      "arguments": {
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "incidents",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "analytics.validations",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "analytics.positions",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "track.positions",
+      "type": "classic",
+      "vhost": "/"
+    }
+  ],
+  "bindings": [
+    {
+      "arguments": {},
+      "destination": "analytics.validations",
+      "destination_type": "queue",
+      "routing_key": "ticket.validation",
+      "source": "transit.events",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "destination": "incidents",
+      "destination_type": "queue",
+      "routing_key": "vehicle.incident",
+      "source": "transit.events",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "destination": "analytics.positions",
+      "destination_type": "queue",
+      "routing_key": "vehicle.position",
+      "source": "transit.events",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "destination": "track.positions",
+      "destination_type": "queue",
+      "routing_key": "vehicle.position",
+      "source": "transit.events",
+      "vhost": "/"
+    }
+  ]
+}
