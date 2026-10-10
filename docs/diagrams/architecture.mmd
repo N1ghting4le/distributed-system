@@ -1,0 +1,37 @@
+flowchart TB
+    SIM["<b>Бортовое оборудование</b><br/>GPS-трекеры, валидаторы, кнопки<br/><i>(эмулируется Fleet Simulator)</i>"]
+
+    subgraph SYS["Система мониторинга городского транспорта"]
+        GW["<b>Ingest Gateway</b><br/>(Producer)"]
+        subgraph MQ["RabbitMQ"]
+            EX{{"exchange transit.events (topic)"}}
+            Q4(["incidents"])
+            Q3(["analytics.<br/>validations"])
+            Q2(["analytics.<br/>positions"])
+            Q1(["track.<br/>positions"])
+        end
+        IS["<b>Incident Service</b><br/>инциденты"]
+        AS["<b>Schedule Analytics</b><br/>расписание,<br/>пассажиропоток"]
+        TS["<b>Track Service</b><br/>валидация, трек"]
+        DB[("<b>PostgreSQL</b><br/>схема transit")]
+        API["<b>Dispatcher API</b>"]
+    end
+    DISP["Диспетчер (браузер)"]
+
+    SIM -- "HTTP POST (sync)" --> GW
+    GW -. "publish + confirm" .-> EX
+    EX -. "vehicle.incident" .-> Q4
+    EX -. "ticket.validation" .-> Q3
+    EX -. "vehicle.position" .-> Q2
+    EX -. "vehicle.position" .-> Q1
+    Q4 -.-> IS
+    Q3 -.-> AS
+    Q2 -.-> AS
+    Q1 -.-> TS
+    AS -. "schedule_deviation" .-> EX
+    TS -. "route_deviation" .-> EX
+    IS -- "SQL" --> DB
+    AS -- "SQL" --> DB
+    TS -- "SQL" --> DB
+    DB -- "SQL SELECT" --> API
+    API -- "HTTP REST (sync)" --> DISP

@@ -1,0 +1,19 @@
+{
+  "message_id": "3fb6e88d-af4e-5bdc-bf43-8c4dd881ffee",
+  "type": "vehicle.position",
+  "schema_version": 1,
+  "source_id": "trk-10427",
+  "seq": 58231,
+  "timestamp": "2026-10-12T05:15:30Z",
+  "received_at": "2026-10-12T05:15:30.412Z",
+  "payload": {
+    "vehicle_id": "BUS-10427",
+    "route_id": "100",
+    "trip_id": "100-A-0815",
+    "lat": 53.902284,
+    "lon": 27.561831,
+    "speed_kmh": 31.5,
+    "heading": 74,
+    "doors_open": false
+  }
+}

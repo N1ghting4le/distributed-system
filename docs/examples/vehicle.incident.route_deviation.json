@@ -1,0 +1,21 @@
+{
+  "message_id": "7c8053a7-f80d-5c55-b668-eeee29b51c09",
+  "type": "vehicle.incident",
+  "schema_version": 1,
+  "source_id": "track-service",
+  "seq": 58231,
+  "timestamp": "2026-10-12T05:15:30Z",
+  "received_at": "2026-10-12T05:15:30.497Z",
+  "payload": {
+    "incident_type": "route_deviation",
+    "severity": "medium",
+    "detected_by": "track-service",
+    "vehicle_id": "BUS-10427",
+    "route_id": "100",
+    "trip_id": "100-A-0815",
+    "lat": 53.902284,
+    "lon": 27.561831,
+    "cause_message_id": "3fb6e88d-af4e-5bdc-bf43-8c4dd881ffee",
+    "details": { "distance_m": 412, "threshold_m": 300 }
+  }
+}

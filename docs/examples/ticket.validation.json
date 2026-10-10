@@ -1,0 +1,20 @@
+{
+  "message_id": "67aca9ce-5a1f-5e35-8c84-35527b658b2c",
+  "type": "ticket.validation",
+  "schema_version": 1,
+  "source_id": "val-10427-2",
+  "seq": 310544,
+  "timestamp": "2026-10-12T05:14:02Z",
+  "received_at": "2026-10-12T05:14:02.871Z",
+  "payload": {
+    "validator_id": "VAL-10427-2",
+    "vehicle_id": "BUS-10427",
+    "route_id": "100",
+    "trip_id": "100-A-0815",
+    "stop_id": "ST-0213",
+    "ticket_type": "travel_card",
+    "ticket_ref": "9c1e5a7b30d24f68",
+    "result": "accepted",
+    "reject_reason": null
+  }
+}

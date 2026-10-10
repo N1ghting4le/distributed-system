@@ -1,0 +1,29 @@
+sequenceDiagram
+    autonumber
+    participant T as GPS-трекер<br/>BUS-10427
+    participant G as Ingest Gateway<br/>(Producer)
+    participant B as RabbitMQ
+    participant TS as Track Service
+    participant DB as PostgreSQL
+    participant IS as Incident Service
+
+    T->>G: POST /api/v1/events
+    Note over G: Проверка схемы,<br/>message_id =<br/>UUIDv5(source_id, seq)
+    G-)B: publish<br/>vehicle.position
+    B--)G: publisher confirm
+    G-->>T: 202 Accepted {message_id}
+    Note over B: Копии в track.positions<br/>и analytics.positions
+    B-)TS: deliver
+    Note over TS: Проверка структуры,<br/>до трассы 412 м > 300 м
+    TS->>DB: INSERT processed_<br/>messages ON CONFLICT
+    DB-->>TS: 1 строка (новое)
+    TS->>DB: INSERT vehicle_positions,<br/>UPSERT vehicle_state
+    DB-->>TS: COMMIT OK
+    TS-)B: publish vehicle.<br/>incident
+    B--)TS: publisher confirm
+    TS-)B: ack
+    B-)IS: deliver vehicle.incident
+    Note over IS: Приоритет 3,<br/>корреляция за 5 мин
+    IS->>DB: INSERT incidents,<br/>processed_messages
+    DB-->>IS: COMMIT OK
+    IS-)B: ack vehicle.incident

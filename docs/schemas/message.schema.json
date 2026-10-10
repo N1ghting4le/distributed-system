@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/N1ghting4le/distributed-system/docs/schemas/message.schema.json",
+  "title": "Сообщение системы мониторинга городского транспорта",
+  "description": "Конверт сообщения, публикуемого в exchange transit.events. Тип сообщения совпадает с routing key.",
+  "type": "object",
+  "required": ["message_id", "type", "schema_version", "source_id", "seq", "timestamp", "received_at", "payload"],
+  "additionalProperties": false,
+  "properties": {
+    "message_id": {
+      "description": "UUID v5: для устройств – от (source_id, seq), для сервисов – от (cause_message_id, incident_type); повторная отправка того же события дает тот же идентификатор",
+      "type": "string",
+      "format": "uuid",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-5[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+    },
+    "type": {
+      "type": "string",
+      "enum": ["vehicle.position", "ticket.validation", "vehicle.incident"]
+    },
+    "schema_version": { "type": "integer", "const": 1 },
+    "source_id": {
+      "description": "Идентификатор устройства (trk-*, val-*) или сервиса-источника события",
+      "type": "string",
+      "pattern": "^(trk-[0-9]{5}|val-[0-9]{5}-[0-9]|track-service|analytics-service)$"
+    },
+    "seq": {
+      "description": "Монотонно возрастающий номер события у источника",
+      "type": "integer",
+      "minimum": 0
+    },
+    "timestamp": {
+      "description": "Время возникновения события на источнике (UTC)",
+      "type": "string",
+      "format": "date-time"
+    },
+    "received_at": {
+      "description": "Время приема события шлюзом (UTC)",
+      "type": "string",
+      "format": "date-time"
+    },
+    "payload": { "type": "object" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "type": { "const": "vehicle.position" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/position" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "ticket.validation" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/validation" } } }
+    },
+    {
+      "if": { "properties": { "type": { "const": "vehicle.incident" } } },
+      "then": { "properties": { "payload": { "$ref": "#/$defs/incident" } } }
+    }
+  ],
+  "$defs": {
+    "vehicle_id": { "type": "string", "pattern": "^(BUS|TRL|TRM)-[0-9]{5}$" },
+    "route_id": { "type": "string", "pattern": "^[0-9]{1,3}[a-zа-я]?$" },
+    "trip_id": { "type": "string", "pattern": "^[0-9]{1,3}[a-zа-я]?-[AB]-[0-9]{4}$" },
+    "lat": { "type": "number", "minimum": -90, "maximum": 90 },
+    "lon": { "type": "number", "minimum": -180, "maximum": 180 },
+    "position": {
+      "type": "object",
+      "required": ["vehicle_id", "route_id", "trip_id", "lat", "lon", "speed_kmh", "heading", "doors_open"],
+      "additionalProperties": false,
+      "properties": {
+        "vehicle_id": { "$ref": "#/$defs/vehicle_id" },
+        "route_id": { "$ref": "#/$defs/route_id" },
+        "trip_id": { "$ref": "#/$defs/trip_id" },
+        "lat": { "$ref": "#/$defs/lat" },
+        "lon": { "$ref": "#/$defs/lon" },
+        "speed_kmh": { "type": "number", "minimum": 0 },
+        "heading": { "type": "integer", "minimum": 0, "maximum": 359 },
+        "doors_open": { "type": "boolean" }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "required": ["validator_id", "vehicle_id", "route_id", "trip_id", "stop_id", "ticket_type", "ticket_ref", "result"],
+      "additionalProperties": false,
+      "properties": {
+        "validator_id": { "type": "string", "pattern": "^VAL-[0-9]{5}-[0-9]$" },
+        "vehicle_id": { "$ref": "#/$defs/vehicle_id" },
+        "route_id": { "$ref": "#/$defs/route_id" },
+        "trip_id": { "$ref": "#/$defs/trip_id" },
+        "stop_id": { "type": "string", "pattern": "^ST-[0-9]{4}$" },
+        "ticket_type": { "type": "string", "enum": ["e_ticket", "travel_card", "bank_card", "qr"] },
+        "ticket_ref": {
+          "description": "Обезличенная ссылка на проездной документ (усеченный SHA-256), персональные данные не передаются",
+          "type": "string",
+          "pattern": "^[0-9a-f]{16}$"
+        },
+        "result": { "type": "string", "enum": ["accepted", "rejected"] },
+        "reject_reason": { "type": ["string", "null"], "enum": [null, "expired", "insufficient_funds", "blacklisted", "read_error"] }
+      }
+    },
+    "incident": {
+      "type": "object",
+      "required": ["incident_type", "severity", "detected_by", "vehicle_id", "route_id", "lat", "lon"],
+      "additionalProperties": false,
+      "properties": {
+        "incident_type": {
+          "type": "string",
+          "enum": ["panic_button", "accident", "breakdown", "engine_overheat", "route_deviation", "schedule_deviation"]
+        },
+        "severity": { "type": "string", "enum": ["critical", "high", "medium", "low"] },
+        "detected_by": { "type": "string", "enum": ["driver", "onboard", "track-service", "analytics-service"] },
+        "vehicle_id": { "$ref": "#/$defs/vehicle_id" },
+        "route_id": { "$ref": "#/$defs/route_id" },
+        "trip_id": { "$ref": "#/$defs/trip_id" },
+        "lat": { "$ref": "#/$defs/lat" },
+        "lon": { "$ref": "#/$defs/lon" },
+        "cause_message_id": {
+          "description": "Сообщение, по которому сервис обнаружил инцидент (для инцидентов от сервисов)",
+          "type": "string",
+          "format": "uuid"
+        },
+        "details": { "type": "object" }
+      }
+    }
+  }
+}

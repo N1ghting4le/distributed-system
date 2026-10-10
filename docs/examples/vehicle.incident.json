@@ -1,0 +1,20 @@
+{
+  "message_id": "211f809b-4d7a-58f6-8096-8f479afe503d",
+  "type": "vehicle.incident",
+  "schema_version": 1,
+  "source_id": "trk-11873",
+  "seq": 61002,
+  "timestamp": "2026-10-12T05:21:47Z",
+  "received_at": "2026-10-12T05:21:47.305Z",
+  "payload": {
+    "incident_type": "panic_button",
+    "severity": "critical",
+    "detected_by": "driver",
+    "vehicle_id": "TRL-11873",
+    "route_id": "40",
+    "trip_id": "40-B-0802",
+    "lat": 53.917402,
+    "lon": 27.588614,
+    "details": { "button": "cabin" }
+  }
+}
