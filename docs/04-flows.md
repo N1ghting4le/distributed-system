@@ -20,9 +20,8 @@ flowchart TB
         AS["<b>Schedule Analytics</b><br/>расписание,<br/>пассажиропоток"]
         TS["<b>Track Service</b><br/>валидация, трек"]
         DB[("<b>PostgreSQL</b><br/>схема transit")]
-        API["<b>Dispatcher API</b>"]
+        API["<b>Dispatcher API</b><br/>HTTP REST (sync) → диспетчер"]
     end
-    DISP["Диспетчер (браузер)"]
     SIM -- "HTTP POST (sync)" --> GW
     GW -. "publish + confirm" .-> EX
     EX -. "vehicle.incident" .-> Q4
@@ -39,7 +38,6 @@ flowchart TB
     AS -- "SQL" --> DB
     TS -- "SQL" --> DB
     DB -- "SQL SELECT" --> API
-    API -- "HTTP REST (sync)" --> DISP
 ```
 
 ## Потоки данных
