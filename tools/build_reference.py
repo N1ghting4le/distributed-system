@@ -4,7 +4,7 @@
 смещение прибытия на каждую остановку от начала рейса: время в пути по скорости маршрута плюс стоянка.
 Результат – два файла с одинаковыми числами:
   database/init/002_reference.sql – справочники для PostgreSQL (маршруты, остановки, трассы, смещения);
-  simulator/routes.json           – те же трассы и смещения для Fleet Simulator.
+  simulator/src/routes.json       – те же трассы и смещения для Fleet Simulator.
 Запуск: python tools/build_reference.py
 """
 import json
@@ -75,7 +75,7 @@ def main():
     sql.append(f"-- расписание на текущие сутки (интервал {src['service']['headway_min']} мин); сервисы вызывают функцию при запуске")
     sql.append(f"SELECT build_timetable((now() AT TIME ZONE 'Europe/Minsk')::date, {src['service']['headway_min']});")
     (ROOT / 'database' / 'init' / '002_reference.sql').write_text('\n'.join(sql) + '\n', encoding='utf-8')
-    (ROOT / 'simulator' / 'routes.json').write_text(json.dumps(sim, ensure_ascii=False, indent=1), encoding='utf-8')
+    (ROOT / 'simulator' / 'src' / 'routes.json').write_text(json.dumps(sim, ensure_ascii=False, indent=1), encoding='utf-8')
 
 
 if __name__ == '__main__':

@@ -45,9 +45,9 @@ GATEWAY_URL = os.getenv('GATEWAY_URL', 'http://localhost:8080')
 PG_CONTAINER = os.getenv('PG_CONTAINER', 'transit-pg')
 TABLES = ('vehicle_positions, vehicle_state, stop_arrivals, passenger_flow, incidents, processed_messages, '
           'rejected_messages, processing_log')
-SERVICES = {'track': 'services/track-service/track_service.py',
-            'analytics': 'services/analytics-service/analytics_service.py',
-            'incident': 'services/incident-service/incident_service.py'}
+SERVICES = {'track': 'services/track-service/src/track_service.py',
+            'analytics': 'services/analytics-service/src/analytics_service.py',
+            'incident': 'services/incident-service/src/incident_service.py'}
 POISON_SOURCE = 'trk-99999'
 
 
@@ -225,7 +225,7 @@ async def run(args):
         await (await channel.get_queue(name, ensure=False)).purge()
     await db.execute(f'TRUNCATE {TABLES}')
 
-    procs, events = [start('producer/gateway.py', run_dir / 'gateway.log', env)], []
+    procs, events = [start('producer/src/gateway.py', run_dir / 'gateway.log', env)], []
     try:
         async with httpx.AsyncClient(base_url=GATEWAY_URL) as client:
             for _ in range(100):
@@ -263,7 +263,7 @@ async def run(args):
 
             sampler_task = asyncio.create_task(sampler())
             outage = asyncio.create_task(db_outage(*args.db_outage, events)) if args.db_outage else None
-            sim_cmd = [PY, str(ROOT / 'simulator/fleet_simulator.py'), '--count', str(args.count),
+            sim_cmd = [PY, str(ROOT / 'simulator/src/fleet_simulator.py'), '--count', str(args.count),
                        '--types', args.types, '--vehicles', str(args.vehicles), '--rate', str(args.rate), '--seed', str(args.seed),
                        '--incident-prob', str(args.incident_prob), '--resend', str(args.resend)]
             with open(run_dir / 'simulator.log', 'w', encoding='utf-8') as sim_log:

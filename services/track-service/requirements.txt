@@ -1,0 +1,3 @@
+aio-pika==10.1.1
+asyncpg==0.32.0
+jsonschema==4.26.0

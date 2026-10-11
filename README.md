@@ -46,17 +46,20 @@ flowchart TB
     DB -- "SQL SELECT" --> API
 ```
 
-| Компонент | Роль | Код (ЛР 2) |
+| Компонент | Роль | Код и образ (ЛР 2–4) |
 |---|---|---|
-| Fleet Simulator | Источник данных: эмулятор бортового оборудования парка | `simulator/fleet_simulator.py` |
-| Ingest Gateway | Producer: прием HTTP, присвоение `message_id`, проверка схемы, публикация с confirms | `producer/gateway.py` |
+| Fleet Simulator | Источник данных: эмулятор бортового оборудования парка | `simulator/src/fleet_simulator.py` |
+| Ingest Gateway | Producer: прием HTTP, присвоение `message_id`, проверка схемы, публикация с confirms | `producer/src/gateway.py` |
 | RabbitMQ | Брокер: exchange `transit.events` (topic), 4 рабочие очереди; `transit.retry`, `transit.dlx`, очереди ожидания и DLQ (ЛР 3) | [`docs/lab2/topology.md`](docs/lab2/topology.md), `broker/definitions.json` |
-| Track Service | Consumer: валидация координат, трек, сход с маршрута | `services/track-service/track_service.py` |
-| Schedule Analytics Service | Consumer: прибытия, опоздания, пассажиропоток | `services/analytics-service/analytics_service.py` |
-| Incident Service | Consumer: регистрация и приоритизация инцидентов | `services/incident-service/incident_service.py` |
+| Track Service | Consumer: валидация координат, трек, сход с маршрута | `services/track-service/src/track_service.py` |
+| Schedule Analytics Service | Consumer: прибытия, опоздания, пассажиропоток | `services/analytics-service/src/analytics_service.py` |
+| Incident Service | Consumer: регистрация и приоритизация инцидентов | `services/incident-service/src/incident_service.py` |
 | Общий модуль | Retry, DLQ, идемпотентность, журнал попыток, топология брокера (ЛР 3) | `common/reliability.py`, [`docs/lab3/reliability.md`](docs/lab3/reliability.md) |
 | PostgreSQL | Хранилище, схема `transit` | `database/init/` |
-| Dispatcher API | REST API для диспетчера | `services/dispatcher-api/` (ЛР 4) |
+| Dispatcher API | REST API для диспетчера: машины, трек, инциденты, опоздания, статистика обработки (ЛР 4) | `services/dispatcher-api/src/dispatcher_api.py` |
+
+Каждый программный компонент – отдельный каталог с `Dockerfile`, `requirements.txt` и `src/`; описание запуска в
+контейнерах – [`docs/lab4/containerization.md`](docs/lab4/containerization.md).
 
 ## Документация
 
@@ -73,9 +76,37 @@ flowchart TB
 
 Python 3.12 (FastAPI, aio-pika, asyncpg) · RabbitMQ 4.1 · PostgreSQL 17 · Docker Compose · Kubernetes (Minikube) · Mermaid.
 
-## Запуск (ЛР 2–3)
+## Запуск в Docker Compose (ЛР 4)
 
-Нужны Python 3.12 и Docker (только для брокера и БД; контейнеризация компонентов – в ЛР 4).
+Нужен только Docker (Docker Desktop или Docker Engine с плагином compose).
+
+```bash
+cp .env.example .env              # параметры подключения, порты, настройки обработки
+docker compose up -d --build      # вся система одной командой: 9 контейнеров в сети transit-net
+docker compose ps                 # gateway, dispatcher-api, rabbitmq, postgres – (healthy)
+docker compose --profile load run --rm simulator --vehicles 200 --period 5 --duration 120   # нагрузка
+curl localhost:8081/api/v1/stats  # число записей и обработанных сообщений по экземплярам
+docker compose down               # остановка; данные остаются в томах transit-pg-data и transit-rabbitmq-data
+```
+
+| Сервис compose | Образ | Порт на хосте | Назначение |
+|---|---|---|---|
+| `rabbitmq` | `rabbitmq:4.1-management` | 5672, 15672 | брокер, веб-консоль <http://localhost:15672> (transit / transit) |
+| `postgres` | `postgres:17` | 5433 | хранилище; схема из `database/init/` создается при пустом томе |
+| `gateway` | `transit-monitor/gateway` | 8080 | Producer |
+| `track-service-1`, `track-service-2` | `transit-monitor/track-service` | – | конкурирующие Consumers очереди `track.positions` |
+| `analytics-service` | `transit-monitor/analytics-service` | – | Consumer `analytics.*` |
+| `incident-service` | `transit-monitor/incident-service` | – | Consumer `incidents` |
+| `dispatcher-api` | `transit-monitor/dispatcher-api` | 8081 | REST API |
+| `simulator` (профиль `load`) | `transit-monitor/simulator` | – | эмулятор парка, аргументы – после имени сервиса |
+
+Схема БД применяется только к пустому тому: после изменения `database/init/` – `docker compose down -v`
+(удаляет данные) или ручное применение скрипта через `docker compose exec postgres psql`.
+
+## Запуск без контейнеров (ЛР 2–3)
+
+Нужны Python 3.12 и Docker (только для брокера и БД). Стенды ЛР 2–3 (`tools/run_experiment.py`, `tools/run_lab3.py`)
+запускают компоненты процессами на хосте и рассчитаны на отдельные контейнеры `transit-rabbitmq` и `transit-pg`.
 
 ```bash
 # 1. Брокер и БД
@@ -91,20 +122,20 @@ python -m venv .venv
 pip install -r requirements.txt
 
 # 3. Компоненты – каждый в своем терминале (порядок не важен: очереди durable, сервисы переподключаются)
-python producer/gateway.py                                            # http://localhost:8080
-CONSUMER_ID=t1 python services/track-service/track_service.py
-CONSUMER_ID=t2 python services/track-service/track_service.py         # второй конкурирующий экземпляр
-CONSUMER_ID=a1 python services/analytics-service/analytics_service.py
-CONSUMER_ID=i1 python services/incident-service/incident_service.py
-python simulator/fleet_simulator.py --vehicles 48 --duration 120      # реальное время, все типы событий
-python simulator/fleet_simulator.py --count 1000 --types vehicle.position   # пакет «из недавнего прошлого»
+python producer/src/gateway.py                                            # http://localhost:8080
+CONSUMER_ID=t1 python services/track-service/src/track_service.py
+CONSUMER_ID=t2 python services/track-service/src/track_service.py         # второй конкурирующий экземпляр
+CONSUMER_ID=a1 python services/analytics-service/src/analytics_service.py
+CONSUMER_ID=i1 python services/incident-service/src/incident_service.py
+python simulator/src/fleet_simulator.py --vehicles 48 --duration 120      # реальное время, все типы событий
+python simulator/src/fleet_simulator.py --count 1000 --types vehicle.position   # пакет «из недавнего прошлого»
 ```
 
 Параметры – переменные окружения: `RABBIT_URL` (по умолчанию `amqp://guest:guest@localhost:5672/`), `DB_DSN`
 (`postgresql://transit:transit@localhost:5433/transit`), `GATEWAY_URL`, `CONSUMER_ID`, `PREFETCH`, `PROCESS_DELAY_MS`;
 обработка ошибок (ЛР 3) – `MAX_ATTEMPTS`, `RETRY_DELAYS_MS`, `DB_TIMEOUT_S` и имитация сбоев `FAULT_RATE`, `FAULT_POISON`,
 `FAULT_ACK_LOSS_RATE`, `FAULT_SEED` ([описание](docs/lab3/reliability.md#параметры-переменные-окружения-без-изменения-кода)).
-Например, `FAULT_RATE=0.3 RETRY_DELAYS_MS=1000,2000,4000 python services/track-service/track_service.py`.
+Например, `FAULT_RATE=0.3 RETRY_DELAYS_MS=1000,2000,4000 python services/track-service/src/track_service.py`.
 Веб-интерфейс RabbitMQ – <http://localhost:15672> (guest / guest).
 
 Проверка результата:
@@ -130,6 +161,14 @@ python tools/dlq.py stats                         # DLQ: stats | show <очер�
 [`docs/lab3/experiments.md`](docs/lab3/experiments.md) и графики. Один прогон:
 `python tools/run_lab3.py --name x --count 100 --env FAULT_RATE=0.3 --env RETRY_DELAYS_MS=1000,2000,4000`.
 
+## Эксперименты (ЛР 4)
+
+Система поднята `docker compose up -d`. `python tools/run_lab4.py startup` – чистый запуск (`down -v` → `up`) и
+1000 событий; `python tools/run_lab4.py failures` – нагрузка 210 с, остановка и запуск одного из экземпляров Track
+Service и единственного Analytics Service, остановка PostgreSQL на 15 с, `restart postgres`; `python tools/run_lab4.py
+persist` – накопление 1000 событий в очередях, `docker compose down` → `up`, сверка данных. Затем
+`python tools/report_lab4.py` – [`docs/lab4/experiments.md`](docs/lab4/experiments.md) и график.
+
 ## Проверки
 
 ```bash
@@ -137,7 +176,7 @@ pip install jsonschema
 python tools/validate_examples.py   # примеры сообщений соответствуют схеме, message_id = UUID v5
 python tools/capacity.py            # оценка интенсивности и объема потоков
 psql -d <пустая БД> -f database/init/001_schema.sql -f database/tests/smoke_test.sql
-python tools/build_reference.py     # справочники маршрутов → 002_reference.sql и simulator/routes.json
+python tools/build_reference.py     # справочники маршрутов → 002_reference.sql и simulator/src/routes.json
 ```
 
 ## План лабораторных работ
@@ -147,6 +186,6 @@ python tools/build_reference.py     # справочники маршрутов 
 | 1 | Проектирование архитектуры | `docs/`, схема БД, форматы сообщений |
 | 2 ✔ | Producer–Consumer | Gateway, Fleet Simulator, три обработчика, маршрутизация по типам, эксперименты с 1/2/4 Consumers |
 | 3 ✔ | Retry, DLQ, идемпотентность | `common/reliability.py`: `transit.retry` и очереди ожидания с TTL, `transit.dlx` и `*.dlq`, `processed_messages` в транзакции, `processing_log`, имитация сбоев, `tools/dlq.py` |
-| 4 | Контейнеризация | Dockerfile компонентов, `docker-compose.yml`, тома RabbitMQ и PostgreSQL |
+| 4 ✔ | Контейнеризация | Dockerfile каждого компонента, `docker-compose.yml` (9 сервисов, сеть `transit-net`, тома, healthcheck), `.env.example`, Dispatcher API, `tools/run_lab4.py` |
 | 5 | Kubernetes | Манифесты Deployment/Service/ConfigMap/Secret, масштабирование Track Service 1 → 2 → 4 |
 | 6 | Тестирование и оптимизация | Генератор нагрузки, chaos-сценарии, метрики throughput/latency, аудит узких мест |

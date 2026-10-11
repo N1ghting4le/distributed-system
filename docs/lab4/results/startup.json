@@ -1,0 +1,195 @@
+{
+ "phase": "startup",
+ "started_at": "2026-10-11T15:34:59.195+00:00",
+ "build_s": 3.37,
+ "up_to_ready_s": 24.92,
+ "containers": {
+  "analytics-service": {
+   "name": "transit-monitor-analytics-service-1",
+   "state": "running",
+   "health": "",
+   "status": "Up 51 seconds"
+  },
+  "dispatcher-api": {
+   "name": "transit-monitor-dispatcher-api-1",
+   "state": "running",
+   "health": "healthy",
+   "status": "Up 59 seconds (healthy)"
+  },
+  "gateway": {
+   "name": "transit-monitor-gateway-1",
+   "state": "running",
+   "health": "healthy",
+   "status": "Up 51 seconds (healthy)"
+  },
+  "incident-service": {
+   "name": "transit-monitor-incident-service-1",
+   "state": "running",
+   "health": "",
+   "status": "Up 51 seconds"
+  },
+  "postgres": {
+   "name": "transit-monitor-postgres-1",
+   "state": "running",
+   "health": "healthy",
+   "status": "Up About a minute (healthy)"
+  },
+  "rabbitmq": {
+   "name": "transit-monitor-rabbitmq-1",
+   "state": "running",
+   "health": "healthy",
+   "status": "Up About a minute (healthy)"
+  },
+  "track-service-1": {
+   "name": "transit-monitor-track-service-1-1",
+   "state": "running",
+   "health": "",
+   "status": "Up 51 seconds"
+  },
+  "track-service-2": {
+   "name": "transit-monitor-track-service-2-1",
+   "state": "running",
+   "health": "",
+   "status": "Up 51 seconds"
+  }
+ },
+ "network": [
+  "transit-monitor-analytics-service-1 172.23.0.7/16",
+  "transit-monitor-dispatcher-api-1 172.23.0.4/16",
+  "transit-monitor-gateway-1 172.23.0.9/16",
+  "transit-monitor-incident-service-1 172.23.0.8/16",
+  "transit-monitor-postgres-1 172.23.0.2/16",
+  "transit-monitor-rabbitmq-1 172.23.0.3/16",
+  "transit-monitor-track-service-1-1 172.23.0.5/16",
+  "transit-monitor-track-service-2-1 172.23.0.6/16"
+ ],
+ "volumes": [
+  "transit-pg-data",
+  "transit-rabbitmq-data"
+ ],
+ "images": [
+  "transit-monitor/simulator:lab4 183MB",
+  "transit-monitor/gateway:lab4 231MB",
+  "transit-monitor/dispatcher-api:lab4 220MB",
+  "transit-monitor/track-service:lab4 208MB",
+  "transit-monitor/analytics-service:lab4 208MB",
+  "transit-monitor/incident-service:lab4 208MB"
+ ],
+ "simulator": {
+  "generated": 1000,
+  "accepted": 1000,
+  "rejected": 0,
+  "retries": 0,
+  "elapsed_s": 1.356,
+  "rate": 737.6,
+  "by_type": {
+   "vehicle.position": 881,
+   "ticket.validation": 119,
+   "vehicle.incident": 0
+  },
+  "wall_s": 14.65
+ },
+ "drain_s": 10.7,
+ "verify": {
+  "expected": {
+   "track-service": 881,
+   "analytics-service": 1000,
+   "incident-service": 7
+  },
+  "processed": {
+   "analytics-service": 1000,
+   "track-service": 881,
+   "incident-service": 7
+  },
+  "by_instance": {
+   "analytics-1": 1000,
+   "incident-1": 7,
+   "track-2": 441,
+   "track-1": 440
+  },
+  "dlq": {
+   "analytics.positions.dlq": 0,
+   "analytics.validations.dlq": 0,
+   "incidents.dlq": 0,
+   "track.positions.dlq": 0
+  },
+  "incidents_by_source": {
+   "analytics-service": 6,
+   "track-service": 1
+  },
+  "lost": {
+   "track-service": 0,
+   "analytics-service": 0,
+   "incident-service": 0
+  }
+ },
+ "snapshot": {
+  "vehicle_positions": {
+   "rows": 881,
+   "md5": "90d977230e19e526300535829f0097ee"
+  },
+  "vehicle_state": {
+   "rows": 881,
+   "md5": "81597963e0f15ac9a72fa5a71bc37e73"
+  },
+  "stop_arrivals": {
+   "rows": 53,
+   "md5": "e4458a7c877a3130651037c3af7ff277"
+  },
+  "passenger_flow": {
+   "rows": 18,
+   "md5": "4431abc8bab390815cf08efe747c0116"
+  },
+  "incidents": {
+   "rows": 7,
+   "md5": "f7d67d51be901349a7227575e396cd6d"
+  },
+  "processed_messages": {
+   "rows": 1888,
+   "md5": "de0ef146459b14add63c485ccf84d995"
+  },
+  "processing_log": {
+   "rows": 1888,
+   "md5": ""
+  }
+ },
+ "log_stats": {
+  "track-service-1": {
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "duplicate": 0,
+   "errors": {},
+   "started": 1,
+   "stopping": 0
+  },
+  "track-service-2": {
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "duplicate": 0,
+   "errors": {},
+   "started": 1,
+   "stopping": 0
+  },
+  "analytics-service": {
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "duplicate": 0,
+   "errors": {},
+   "started": 1,
+   "stopping": 0
+  },
+  "incident-service": {
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "duplicate": 0,
+   "errors": {},
+   "started": 1,
+   "stopping": 0
+  }
+ },
+ "finished_at": "2026-10-11T15:36:22.844+00:00"
+}

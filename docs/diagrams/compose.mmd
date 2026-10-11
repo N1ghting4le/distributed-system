@@ -1,0 +1,14 @@
+flowchart TB
+    USER["Хост: браузер, curl, tools/run_lab4.py<br/>порты 8080, 8081, 15672, 5672, 5433"]
+    subgraph PRJ["Проект Docker Compose transit-monitor"]
+        subgraph NET["Сеть transit-net (bridge, DNS по именам сервисов)"]
+            SIM["simulator<br/><i>профиль load</i>"] -- "HTTP gateway:8080" --> GW["gateway<br/>(Producer)"]
+            GW -- "AMQP rabbitmq:5672" --> MQ[("rabbitmq 4.1")]
+            MQ --> T1["track-service-1"] & T2["track-service-2"] & AN["analytics-service"] & IN["incident-service"]
+            T1 & T2 & AN & IN -- "SQL postgres:5432" --> PG[("postgres 17")]
+            API["dispatcher-api"] -- "SQL" --> PG
+        end
+        MQ --- V1[["том transit-rabbitmq-data"]]
+        PG --- V2[["том transit-pg-data"]]
+    end
+    USER -.-> NET

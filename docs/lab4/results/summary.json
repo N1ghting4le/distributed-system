@@ -1,0 +1,469 @@
+{
+ "startup": {
+  "up_to_ready_s": 24.92,
+  "build_s": 3.37,
+  "containers": 8,
+  "network": [
+   "transit-monitor-analytics-service-1 172.23.0.7/16",
+   "transit-monitor-dispatcher-api-1 172.23.0.4/16",
+   "transit-monitor-gateway-1 172.23.0.9/16",
+   "transit-monitor-incident-service-1 172.23.0.8/16",
+   "transit-monitor-postgres-1 172.23.0.2/16",
+   "transit-monitor-rabbitmq-1 172.23.0.3/16",
+   "transit-monitor-track-service-1-1 172.23.0.5/16",
+   "transit-monitor-track-service-2-1 172.23.0.6/16"
+  ],
+  "volumes": [
+   "transit-pg-data",
+   "transit-rabbitmq-data"
+  ],
+  "images": [
+   "transit-monitor/simulator:lab4 183MB",
+   "transit-monitor/gateway:lab4 231MB",
+   "transit-monitor/dispatcher-api:lab4 220MB",
+   "transit-monitor/track-service:lab4 208MB",
+   "transit-monitor/analytics-service:lab4 208MB",
+   "transit-monitor/incident-service:lab4 208MB"
+  ],
+  "simulator": {
+   "generated": 1000,
+   "accepted": 1000,
+   "rejected": 0,
+   "retries": 0,
+   "elapsed_s": 1.356,
+   "rate": 737.6,
+   "by_type": {
+    "vehicle.position": 881,
+    "ticket.validation": 119,
+    "vehicle.incident": 0
+   },
+   "wall_s": 14.65
+  },
+  "verify": {
+   "expected": {
+    "track-service": 881,
+    "analytics-service": 1000,
+    "incident-service": 7
+   },
+   "processed": {
+    "analytics-service": 1000,
+    "track-service": 881,
+    "incident-service": 7
+   },
+   "by_instance": {
+    "analytics-1": 1000,
+    "incident-1": 7,
+    "track-2": 441,
+    "track-1": 440
+   },
+   "dlq": {
+    "analytics.positions.dlq": 0,
+    "analytics.validations.dlq": 0,
+    "incidents.dlq": 0,
+    "track.positions.dlq": 0
+   },
+   "incidents_by_source": {
+    "analytics-service": 6,
+    "track-service": 1
+   },
+   "lost": {
+    "track-service": 0,
+    "analytics-service": 0,
+    "incident-service": 0
+   }
+  },
+  "drain_s": 10.7
+ },
+ "failures": {
+  "stages": {
+   "load_start_t": 19.46,
+   "track": {
+    "stop_t": 33.03,
+    "stopped_t": 37.16,
+    "start_t": 63.06,
+    "started_t": 67.49,
+    "before": {
+     "t1": 19.999999999999996,
+     "t2": 19.917355371900825,
+     "max_q": 0
+    },
+    "during": {
+     "t1": 43.6385255648038,
+     "t2": 0.0,
+     "max_q": 0
+    },
+    "after": {
+     "t1": 20.56491575817642,
+     "t2": 19.67294350842419,
+     "max_q": 0
+    }
+   },
+   "analytics": {
+    "stop_t": 88.07,
+    "stopped_t": 92.27,
+    "start_t": 123.0,
+    "started_t": 127.56,
+    "before": {
+     "rate": 44.400396432111016,
+     "max_q": 0
+    },
+    "during": {
+     "rate": 0.0,
+     "max_q": 1602,
+     "peak_t": 128.39,
+     "track_rate": 42.06566347469221
+    },
+    "after": {
+     "drain_s": 20.0,
+     "peak_rate": 164.92537313432794,
+     "max_q_later": 737
+    }
+   },
+   "postgres": {
+    "stop_t": 153.06,
+    "stopped_t": 157.57,
+    "start_t": 168.0,
+    "started_t": 172.03,
+    "downtime_s": 19.0,
+    "before": {
+     "rate": 77.7777777777779,
+     "api": [
+      200
+     ],
+     "max_q": 0
+    },
+    "during": {
+     "api": [
+      "200",
+      "None"
+     ],
+     "db_samples_failed": 4,
+     "samples": 4,
+     "max_q": 837,
+     "max_retry": 69,
+     "gateway_sent": [
+      7478,
+      7954
+     ]
+    },
+    "after": {
+     "api_ok_s": 0.8,
+     "drain_s": 15.9,
+     "retry_clear_s": 5.8
+    }
+   },
+   "restart": {
+    "t": 193.01,
+    "duration_s": 4.72,
+    "api": [
+     "200",
+     "None"
+    ],
+    "db_samples_failed": 1
+   }
+  },
+  "verify": {
+   "expected": {
+    "track-service": 8157,
+    "analytics-service": 9340,
+    "incident-service": 39
+   },
+   "processed": {
+    "analytics-service": 9340,
+    "track-service": 8157,
+    "incident-service": 39
+   },
+   "by_instance": {
+    "analytics-1": 9340,
+    "incident-1": 39,
+    "track-2": 3445,
+    "track-1": 4712
+   },
+   "dlq": {
+    "analytics.positions.dlq": 0,
+    "analytics.validations.dlq": 0,
+    "incidents.dlq": 0,
+    "track.positions.dlq": 0
+   },
+   "incidents_by_source": {
+    "analytics-service": 18,
+    "track-service": 13,
+    "onboard": 10,
+    "driver": 5
+   },
+   "lost": {
+    "track-service": 0,
+    "analytics-service": 0,
+    "incident-service": 0
+   }
+  },
+  "simulator": {
+   "generated": 9355,
+   "accepted": 9355,
+   "rejected": 0,
+   "retries": 0,
+   "elapsed_s": 210.767,
+   "rate": 44.4,
+   "by_type": {
+    "vehicle.position": 8157,
+    "ticket.validation": 1183,
+    "vehicle.incident": 15
+   },
+   "wall_s": 223.77
+  },
+  "log_stats": {
+   "track-service-1": {
+    "retry": 21,
+    "dlq": 0,
+    "redelivered": 6,
+    "duplicate": 1,
+    "errors": {
+     "CannotConnectNowError": 6,
+     "ConnectionRefusedError": 13,
+     "InterfaceError": 1,
+     "gaierror": 1
+    },
+    "started": 0,
+    "stopping": 0
+   },
+   "track-service-2": {
+    "retry": 21,
+    "dlq": 0,
+    "redelivered": 0,
+    "duplicate": 0,
+    "errors": {
+     "CannotConnectNowError": 7,
+     "ConnectionDoesNotExistError": 1,
+     "ConnectionRefusedError": 11,
+     "InternalClientError": 1,
+     "gaierror": 1
+    },
+    "started": 1,
+    "stopping": 1
+   },
+   "analytics-service": {
+    "retry": 59,
+    "dlq": 0,
+    "redelivered": 44,
+    "duplicate": 2,
+    "errors": {
+     "CannotConnectNowError": 12,
+     "ConnectionDoesNotExistError": 1,
+     "ConnectionRefusedError": 40,
+     "ConnectionResetError": 2,
+     "InterfaceError": 1,
+     "InternalClientError": 1,
+     "gaierror": 2
+    },
+    "started": 1,
+    "stopping": 1
+   },
+   "incident-service": {
+    "retry": 1,
+    "dlq": 0,
+    "redelivered": 0,
+    "duplicate": 0,
+    "errors": {
+     "gaierror": 1
+    },
+    "started": 0,
+    "stopping": 0
+   }
+  },
+  "outcomes": {
+   "duplicate": 3,
+   "success": 17533,
+   "retry": 2
+  },
+  "events": [
+   {
+    "event": "stop track-service-2",
+    "t": 33.03,
+    "done": 37.16,
+    "duration_s": 4.13,
+    "code": 0
+   },
+   {
+    "event": "start track-service-2",
+    "t": 63.06,
+    "done": 67.49,
+    "duration_s": 4.43,
+    "code": 0
+   },
+   {
+    "event": "stop analytics-service",
+    "t": 88.07,
+    "done": 92.27,
+    "duration_s": 4.2,
+    "code": 0
+   },
+   {
+    "event": "start analytics-service",
+    "t": 123.0,
+    "done": 127.56,
+    "duration_s": 4.56,
+    "code": 0
+   },
+   {
+    "event": "stop postgres",
+    "t": 153.06,
+    "done": 157.57,
+    "duration_s": 4.51,
+    "code": 0
+   },
+   {
+    "event": "start postgres",
+    "t": 168.0,
+    "done": 172.03,
+    "duration_s": 4.03,
+    "code": 0
+   },
+   {
+    "event": "restart postgres",
+    "t": 193.01,
+    "done": 197.73,
+    "duration_s": 4.72,
+    "code": 0
+   },
+   {
+    "event": "load finished",
+    "t": 223.77
+   }
+  ],
+  "drain_s": 5.2
+ },
+ "persist": {
+  "simulator": {
+   "generated": 1000,
+   "accepted": 1000,
+   "rejected": 0,
+   "retries": 0,
+   "elapsed_s": 1.134,
+   "rate": 881.5,
+   "by_type": {
+    "vehicle.position": 845,
+    "ticket.validation": 154,
+    "vehicle.incident": 1
+   },
+   "wall_s": 14.47
+  },
+  "queues_before_down": {
+   "analytics.positions": {
+    "ready": 845,
+    "unacked": 0,
+    "consumers": 0
+   },
+   "analytics.validations": {
+    "ready": 154,
+    "unacked": 0,
+    "consumers": 0
+   },
+   "incidents": {
+    "ready": 0,
+    "unacked": 0,
+    "consumers": 0
+   },
+   "track.positions": {
+    "ready": 845,
+    "unacked": 0,
+    "consumers": 0
+   }
+  },
+  "queues_after_up": {
+   "analytics.positions": {
+    "ready": 579,
+    "unacked": 50,
+    "consumers": 1
+   },
+   "analytics.validations": {
+    "ready": 0,
+    "unacked": 0,
+    "consumers": 1
+   },
+   "incidents": {
+    "ready": 0,
+    "unacked": 0,
+    "consumers": 1
+   },
+   "track.positions": {
+    "ready": 221,
+    "unacked": 100,
+    "consumers": 2
+   }
+  },
+  "down_s": 8.4,
+  "up_to_ready_s": 8.29,
+  "drain_s": 6.3,
+  "total_restore_s": 30.8,
+  "volumes_after_down": [
+   "transit-pg-data",
+   "transit-rabbitmq-data"
+  ],
+  "before": {
+   "passenger_flow": {
+    "rows": 20,
+    "md5": "8ff21d9b7ea526640e1f07fa14b40d54"
+   },
+   "stop_arrivals": {
+    "rows": 122,
+    "md5": "bfbc0289feb2467a7ecf6033451c1f1f"
+   },
+   "incidents": {
+    "rows": 46,
+    "md5": "7faf8eea56964987bcae9d64f33914f1"
+   },
+   "vehicle_state": {
+    "rows": 881,
+    "md5": "787259d3ccebbc7106ff38448965570a"
+   },
+   "processing_log": {
+    "rows": 19426,
+    "md5": ""
+   },
+   "processed_messages": {
+    "rows": 19424,
+    "md5": "8c3d02966a0c0af808c791cdd37de6e6"
+   },
+   "vehicle_positions": {
+    "rows": 9038,
+    "md5": "e9a04730cba2f6b43c21bba34c677d47"
+   }
+  },
+  "after": {
+   "passenger_flow": {
+    "rows": 20,
+    "md5": "44fe2e8cec96480d046e9830f8ec59b3"
+   },
+   "stop_arrivals": {
+    "rows": 154,
+    "md5": "c2698a6077de97454e666fc0eaa562a8"
+   },
+   "incidents": {
+    "rows": 52,
+    "md5": "ff658a4dcba40a7b8573212e71fffb67"
+   },
+   "vehicle_state": {
+    "rows": 881,
+    "md5": "81eafe766bdff6d15c4e10d5d8092eb6"
+   },
+   "processing_log": {
+    "rows": 21276,
+    "md5": ""
+   },
+   "vehicle_positions": {
+    "rows": 9883,
+    "md5": "76c870a1d8624788db19dcbd7b0ef6a2"
+   },
+   "processed_messages": {
+    "rows": 21274,
+    "md5": "e8fd0ea62a36ab7bc0fa51c808e161dd"
+   }
+  },
+  "old_rows": {
+   "n": 9038,
+   "h": "e9a04730cba2f6b43c21bba34c677d47"
+  },
+  "old_intact": true,
+  "containers_after_down": 0
+ }
+}

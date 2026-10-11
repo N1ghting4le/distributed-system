@@ -1,0 +1,11 @@
+# В образы попадают только исходные тексты компонентов, common/ и docs/schemas/
+.git
+.venv
+**/__pycache__
+**/*.pyc
+logs
+docs/lab*
+docs/diagrams
+tools
+database/tests
+.env

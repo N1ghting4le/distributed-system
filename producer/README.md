@@ -7,4 +7,5 @@
 сообщения пакета подтверждены брокером; 400 – ошибка структуры (пакет не публикуется); 503 – брокер недоступен.
 `GET /health` – состояние подключения к брокеру. Журнал: строка `sent id=… type=… source=… seq=…` на каждое сообщение.
 
-Запуск: `python producer/gateway.py` (`RABBIT_URL`, `GATEWAY_PORT=8080`, `SCHEMA_PATH`).
+Запуск: `python producer/src/gateway.py` (`RABBIT_URL`, `GATEWAY_PORT=8080`, `SCHEMA_PATH`); в контейнере – сервис
+`gateway` в `docker-compose.yml` (образ из `producer/Dockerfile`, healthcheck по `GET /health`).

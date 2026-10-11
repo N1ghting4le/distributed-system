@@ -1,0 +1,144 @@
+# Transit Monitor – запуск всей системы одной командой (ЛР 4):
+#   cp .env.example .env && docker compose up -d --build
+# Нагрузка (профиль load, контейнер завершается после отправки):
+#   docker compose run --rm simulator --vehicles 200 --period 5 --duration 120
+# Остановка без потери данных: docker compose down   (docker compose down -v удаляет и тома с данными)
+name: transit-monitor
+
+x-app: &app                      # общее для всех программных компонентов
+  restart: unless-stopped        # перезапуск после сбоя процесса; остановленный вручную контейнер не поднимается
+  networks: [transit]
+  logging:
+    driver: json-file
+    options: {max-size: 10m, max-file: '3'}
+
+x-consumer-env: &consumer-env    # параметры подключения и обработки ошибок (ЛР 3) – из .env
+  RABBIT_URL: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672/
+  DB_DSN: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+  PREFETCH: ${PREFETCH:-50}
+  PROCESS_DELAY_MS: ${PROCESS_DELAY_MS:-0}
+  DB_TIMEOUT_S: ${DB_TIMEOUT_S:-10}
+  MAX_ATTEMPTS: ${MAX_ATTEMPTS:-4}
+  RETRY_DELAYS_MS: ${RETRY_DELAYS_MS:-5000,30000,120000}
+  FAULT_RATE: ${FAULT_RATE:-0}
+  TZ: UTC
+
+x-consumer-deps: &consumer-deps
+  rabbitmq: {condition: service_healthy}
+  postgres: {condition: service_healthy}
+
+services:
+  rabbitmq:
+    image: rabbitmq:4.1-management
+    hostname: rabbitmq           # имя узла RabbitMQ (rabbit@rabbitmq) задает каталог данных в томе – должно быть постоянным
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}       # guest подключается только с localhost – из других контейнеров нельзя
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASSWORD}
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq             # durable-очереди и persistent-сообщения переживают пересоздание
+      - ./broker/rabbitmq.conf:/etc/rabbitmq/conf.d/90-transit.conf:ro
+    ports:
+      - ${RABBITMQ_AMQP_PORT:-5672}:5672
+      - ${RABBITMQ_UI_PORT:-15672}:15672
+    healthcheck:
+      test: [CMD, rabbitmq-diagnostics, -q, check_port_connectivity]
+      interval: 5s
+      timeout: 10s
+      retries: 20
+      start_period: 10s
+    restart: unless-stopped
+    networks: [transit]
+
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+      TZ: UTC
+    volumes:
+      - pg-data:/var/lib/postgresql/data            # данные хранилища
+      - ./database/init:/docker-entrypoint-initdb.d:ro   # 001–003 выполняются один раз – при пустом томе
+    ports:
+      - ${POSTGRES_HOST_PORT:-5433}:5432
+    healthcheck:
+      test: [CMD-SHELL, 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}']
+      interval: 3s
+      timeout: 3s
+      retries: 30
+      start_period: 10s
+    restart: unless-stopped
+    networks: [transit]
+
+  gateway:                       # Producer
+    <<: *app
+    build: {context: ., dockerfile: producer/Dockerfile}
+    image: transit-monitor/gateway:lab4
+    environment:
+      RABBIT_URL: amqp://${RABBITMQ_USER}:${RABBITMQ_PASSWORD}@rabbitmq:5672/
+      GATEWAY_PORT: 8080
+    ports:
+      - ${GATEWAY_PORT:-8080}:8080
+    depends_on:
+      rabbitmq: {condition: service_healthy}
+
+  track-service-1:               # два конкурирующих экземпляра Track Service на очереди track.positions
+    <<: *app
+    build: {context: ., dockerfile: services/track-service/Dockerfile}
+    image: transit-monitor/track-service:lab4
+    environment: {<<: *consumer-env, CONSUMER_ID: track-1}
+    depends_on: *consumer-deps
+
+  track-service-2:
+    <<: *app
+    image: transit-monitor/track-service:lab4      # образ собирает track-service-1
+    pull_policy: never
+    environment: {<<: *consumer-env, CONSUMER_ID: track-2}
+    depends_on: *consumer-deps
+
+  analytics-service:             # один экземпляр: состояние машин хранится в памяти
+    <<: *app
+    build: {context: ., dockerfile: services/analytics-service/Dockerfile}
+    image: transit-monitor/analytics-service:lab4
+    environment: {<<: *consumer-env, CONSUMER_ID: analytics-1, HEADWAY_MIN: '${HEADWAY_MIN:-3}'}
+    depends_on: *consumer-deps
+
+  incident-service:
+    <<: *app
+    build: {context: ., dockerfile: services/incident-service/Dockerfile}
+    image: transit-monitor/incident-service:lab4
+    environment: {<<: *consumer-env, CONSUMER_ID: incident-1, PREFETCH: 10}
+    depends_on: *consumer-deps
+
+  dispatcher-api:
+    <<: *app
+    build: {context: ., dockerfile: services/dispatcher-api/Dockerfile}
+    image: transit-monitor/dispatcher-api:lab4
+    environment:
+      DB_DSN: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      API_PORT: 8081
+    ports:
+      - ${API_PORT:-8081}:8081
+    depends_on:
+      postgres: {condition: service_healthy}
+
+  simulator:                     # источник нагрузки – запускается по требованию
+    build: {context: ., dockerfile: simulator/Dockerfile}
+    image: transit-monitor/simulator:lab4
+    profiles: [load]
+    environment:
+      GATEWAY_URL: http://gateway:8080
+    networks: [transit]
+    depends_on:
+      gateway: {condition: service_healthy}
+
+networks:
+  transit:
+    name: transit-net
+    driver: bridge
+
+volumes:
+  pg-data:
+    name: transit-pg-data
+  rabbitmq-data:
+    name: transit-rabbitmq-data

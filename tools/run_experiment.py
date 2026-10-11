@@ -37,9 +37,9 @@ DB_DSN = os.getenv('DB_DSN', 'postgresql://transit:transit@localhost:5433/transi
 GATEWAY_URL = os.getenv('GATEWAY_URL', 'http://localhost:8080')
 QUEUES = ('track.positions', 'analytics.positions', 'analytics.validations', 'incidents')
 TABLES = 'vehicle_positions, vehicle_state, stop_arrivals, passenger_flow, incidents, processed_messages, rejected_messages'
-SERVICES = {'track': 'services/track-service/track_service.py',
-            'analytics': 'services/analytics-service/analytics_service.py',
-            'incident': 'services/incident-service/incident_service.py'}
+SERVICES = {'track': 'services/track-service/src/track_service.py',
+            'analytics': 'services/analytics-service/src/analytics_service.py',
+            'incident': 'services/incident-service/src/incident_service.py'}
 LOG_TS = re.compile(r'^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d,\d{3})')
 
 
@@ -87,7 +87,7 @@ async def run_once(args, run_dir, db, channel):
     for name in QUEUES:
         await (await channel.get_queue(name, ensure=False)).purge()  # объявлены с аргументами DLX (ЛР 3)
     await db.execute(f'TRUNCATE {TABLES}')
-    procs = [start('producer/gateway.py', run_dir / 'gateway.log')]
+    procs = [start('producer/src/gateway.py', run_dir / 'gateway.log')]
     consumers = []
     try:
         async with httpx.AsyncClient() as client:
@@ -125,7 +125,7 @@ async def run_once(args, run_dir, db, channel):
                 await asyncio.sleep(0.1)
 
         sampler_task = asyncio.create_task(sampler())
-        sim_cmd = [PY, str(ROOT / 'simulator/fleet_simulator.py'), '--count', str(args.count), '--types', args.types,
+        sim_cmd = [PY, str(ROOT / 'simulator/src/fleet_simulator.py'), '--count', str(args.count), '--types', args.types,
                    '--vehicles', str(args.vehicles), '--rate', str(args.rate), '--seed', str(args.seed)]
         if args.incident_prob is not None:
             sim_cmd += ['--incident-prob', str(args.incident_prob)]

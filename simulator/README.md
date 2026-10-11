@@ -9,7 +9,10 @@
 при 503 или таймауте пакет повторяется с теми же `seq`.
 
 ```bash
-python simulator/fleet_simulator.py --vehicles 48 --duration 120           # реальное время
-python simulator/fleet_simulator.py --count 10000 --types vehicle.position  # N событий без ограничения темпа
-python simulator/fleet_simulator.py --help
+python simulator/src/fleet_simulator.py --vehicles 48 --duration 120           # реальное время
+python simulator/src/fleet_simulator.py --count 10000 --types vehicle.position  # N событий без ограничения темпа
+python simulator/src/fleet_simulator.py --help
 ```
+
+В контейнере (ЛР 4) эмулятор – сервис `simulator` профиля `load`: `docker compose --profile load run --rm simulator
+--count 1000` (аргументы после имени сервиса, шлюз – `http://gateway:8080` в сети `transit-net`).

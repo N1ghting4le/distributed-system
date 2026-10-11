@@ -28,9 +28,11 @@
   FAULT_ACK_LOSS_RATE вероятность «потери» ack после фиксации (сообщение возвращается брокером повторно) (0);
   FAULT_SEED          зерно: решение о сбое – хеш (зерно, message_id, попытка), прогоны воспроизводимы.
 """
+import asyncio
 import hashlib
 import logging
 import os
+import signal
 import uuid
 from datetime import datetime, timezone
 
@@ -70,6 +72,16 @@ def settings():
     delays, poison = ','.join(map(str, RETRY_DELAYS_MS)), ','.join(sorted(FAULT_POISON)) or '-'
     return (f'max_attempts={MAX_ATTEMPTS} retry_delays_ms={delays} '
             f'fault_rate={FAULT_RATE} ack_loss_rate={FAULT_ACK_LOSS_RATE} poison={poison}')
+
+
+def stop_on_sigterm():
+    """ЛР 4: docker stop посылает SIGTERM – главная задача отменяется, блок finally закрывает соединения
+    и пишет итог; неподтвержденные доставки брокер возвращает в очередь. В Windows обработчик не ставится."""
+    task = asyncio.current_task()
+    try:
+        asyncio.get_running_loop().add_signal_handler(signal.SIGTERM, task.cancel)
+    except (NotImplementedError, RuntimeError):
+        pass
 
 
 def retry_delay_ms(attempt):

@@ -1,0 +1,5 @@
+aio-pika==10.1.1
+asyncpg==0.32.0
+fastapi==0.143.0
+uvicorn==0.54.0
+jsonschema==4.26.0

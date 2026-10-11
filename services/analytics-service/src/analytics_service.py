@@ -12,7 +12,7 @@ ticket.validation: агрегирование в пассажиропоток pa
 
 Сервис хранит состояние машины (последняя зафиксированная остановка) в памяти, поэтому запускается
 в одном экземпляре; масштабирование – распределением по vehicle_id (ЛР 5).
-Запуск: CONSUMER_ID=a1 python services/analytics-service/analytics_service.py
+Запуск: CONSUMER_ID=a1 python services/analytics-service/src/analytics_service.py
 """
 import asyncio
 import json
@@ -30,12 +30,13 @@ import aio_pika
 import asyncpg
 from jsonschema import Draft202012Validator, FormatChecker
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+ROOT = next(p for p in Path(__file__).resolve().parents if (p / 'common').is_dir())  # репозиторий или /app в образе
+sys.path.insert(0, str(ROOT))
 from common import reliability as rel  # noqa: E402
 
 RABBIT_URL = os.getenv('RABBIT_URL', 'amqp://guest:guest@localhost:5672/')
 DB_DSN = os.getenv('DB_DSN', 'postgresql://transit:transit@localhost:5433/transit')
-SCHEMA_PATH = Path(os.getenv('SCHEMA_PATH', Path(__file__).resolve().parents[2] / 'docs/schemas/message.schema.json'))
+SCHEMA_PATH = Path(os.getenv('SCHEMA_PATH', ROOT / 'docs/schemas/message.schema.json'))
 PREFETCH = int(os.getenv('PREFETCH', '50'))
 PROCESS_DELAY_MS = int(os.getenv('PROCESS_DELAY_MS', '0'))
 CONSUMER_ID = os.getenv('CONSUMER_ID', f'{socket.gethostname()}-{os.getpid()}')
@@ -219,6 +220,7 @@ async def init_connection(conn):
 
 
 async def main():
+    rel.stop_on_sigterm()
     pool = await asyncpg.create_pool(DB_DSN, min_size=1, max_size=3, init=init_connection,
                                      timeout=DB_TIMEOUT_S, command_timeout=DB_TIMEOUT_S,
                                      server_settings={'search_path': 'transit'})
@@ -246,5 +248,5 @@ async def main():
 if __name__ == '__main__':
     try:
         asyncio.run(main())
-    except KeyboardInterrupt:
+    except (KeyboardInterrupt, asyncio.CancelledError):
         pass

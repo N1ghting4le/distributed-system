@@ -1,6 +1,6 @@
 """Fleet Simulator – эмулятор бортового оборудования парка (источник данных).
 
-Каждая машина выполняет рейсы учебного расписания (simulator/routes.json): едет по трассе маршрута,
+Каждая машина выполняет рейсы учебного расписания (simulator/src/routes.json): едет по трассе маршрута,
 стоит на остановках с открытыми дверями, после конечной берет ближайший рейс обратного направления.
 Трекер раз в PERIOD секунд передает координаты (vehicle.position), валидаторы на остановках – проходы
 пассажиров (ticket.validation), водитель и бортовая диагностика – инциденты (vehicle.incident).
@@ -13,9 +13,9 @@
   без --count  работа в реальном времени: каждые PERIOD секунд – очередной такт парка.
 
 Примеры:
-  python simulator/fleet_simulator.py --count 100
-  python simulator/fleet_simulator.py --count 10000 --types vehicle.position
-  python simulator/fleet_simulator.py --vehicles 300 --duration 120
+  python simulator/src/fleet_simulator.py --count 100
+  python simulator/src/fleet_simulator.py --count 10000 --types vehicle.position
+  python simulator/src/fleet_simulator.py --vehicles 300 --duration 120
 """
 import argparse
 import asyncio

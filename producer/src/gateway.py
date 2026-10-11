@@ -6,7 +6,7 @@
 с publisher confirms: 202 Accepted отправляется только после подтверждения брокера, при недоступности
 брокера – 503, при ошибке структуры – 400 (пакет не публикуется целиком).
 
-Запуск: python producer/gateway.py   (параметры – переменные окружения ниже)
+Запуск: python producer/src/gateway.py   (параметры – переменные окружения ниже)
 """
 import asyncio
 import json
@@ -26,11 +26,12 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from jsonschema import Draft202012Validator, FormatChecker
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+ROOT = next(p for p in Path(__file__).resolve().parents if (p / 'common').is_dir())  # репозиторий или /app в образе
+sys.path.insert(0, str(ROOT))
 from common.reliability import EXCHANGE, QUEUES, declare_topology  # noqa: E402
 
 RABBIT_URL = os.getenv('RABBIT_URL', 'amqp://guest:guest@localhost:5672/')
-SCHEMA_PATH = Path(os.getenv('SCHEMA_PATH', Path(__file__).resolve().parent.parent / 'docs/schemas/message.schema.json'))
+SCHEMA_PATH = Path(os.getenv('SCHEMA_PATH', ROOT / 'docs/schemas/message.schema.json'))
 HOST = os.getenv('GATEWAY_HOST', '0.0.0.0')
 PORT = int(os.getenv('GATEWAY_PORT', '8080'))
 MAX_BATCH = 50

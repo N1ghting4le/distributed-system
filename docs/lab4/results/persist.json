@@ -1,0 +1,175 @@
+{
+ "phase": "persist",
+ "started_at": "2026-10-11T15:42:36.046+00:00",
+ "before": {
+  "passenger_flow": {
+   "rows": 20,
+   "md5": "8ff21d9b7ea526640e1f07fa14b40d54"
+  },
+  "stop_arrivals": {
+   "rows": 122,
+   "md5": "bfbc0289feb2467a7ecf6033451c1f1f"
+  },
+  "incidents": {
+   "rows": 46,
+   "md5": "7faf8eea56964987bcae9d64f33914f1"
+  },
+  "vehicle_state": {
+   "rows": 881,
+   "md5": "787259d3ccebbc7106ff38448965570a"
+  },
+  "processing_log": {
+   "rows": 19426,
+   "md5": ""
+  },
+  "processed_messages": {
+   "rows": 19424,
+   "md5": "8c3d02966a0c0af808c791cdd37de6e6"
+  },
+  "vehicle_positions": {
+   "rows": 9038,
+   "md5": "e9a04730cba2f6b43c21bba34c677d47"
+  }
+ },
+ "simulator": {
+  "generated": 1000,
+  "accepted": 1000,
+  "rejected": 0,
+  "retries": 0,
+  "elapsed_s": 1.134,
+  "rate": 881.5,
+  "by_type": {
+   "vehicle.position": 845,
+   "ticket.validation": 154,
+   "vehicle.incident": 1
+  },
+  "wall_s": 14.47
+ },
+ "queues_before_down": {
+  "analytics.positions": {
+   "ready": 845,
+   "unacked": 0,
+   "consumers": 0
+  },
+  "analytics.validations": {
+   "ready": 154,
+   "unacked": 0,
+   "consumers": 0
+  },
+  "incidents": {
+   "ready": 0,
+   "unacked": 0,
+   "consumers": 0
+  },
+  "track.positions": {
+   "ready": 845,
+   "unacked": 0,
+   "consumers": 0
+  }
+ },
+ "down_s": 8.4,
+ "down_output": " Container transit-monitor-track-service-1-1  Stopping\n Container transit-monitor-gateway-1  Stopping\n Container transit-monitor-analytics-service-1  Stopping\n Container transit-monitor-track-service-2-1  Stopping\n Container transit-monitor-dispatcher-api-1  Stopping\n Container transit-monitor-incident-service-1  Stopping\n Container transit-monitor-track-service-1-1  Stopped\n Container transit-monitor-track-service-1-1  Removing\n Container transit-monitor-track-service-2-1  Stopped\n Container transit-monitor-track-service-2-1  Removing\n Container transit-monitor-incident-service-1  Stopped\n Container transit-monitor-incident-service-1  Removing\n Container transit-monitor-analytics-service-1  Stopped\n Container transit-monitor-analytics-service-1  Removing\n Container transit-monitor-track-service-1-1  Removed\n Container transit-monitor-track-service-2-1  Removed\n Container transit-monitor-analytics-service-1  Removed\n Container transit-monitor-incident-service-1  Removed\n Container transit-monitor-gateway-1  Stopped\n Container transit-monitor-gateway-1  Removing\n Container transit-monitor-gateway-1  Removed\n Container transit-monitor-rabbitmq-1  Stopping\n Container transit-monitor-dispatcher-api-1  Stopped\n Container transit-monitor-dispatcher-api-1  Removing\n Container transit-monitor-dispatcher-api-1  Removed\n Container transit-monitor-postgres-1  Stopping\n Container transit-monitor-postgres-1  Stopped\n Container transit-monitor-postgres-1  Removing\n Container transit-monitor-postgres-1  Removed\n Container transit-monitor-rabbitmq-1  Stopped\n Container transit-monitor-rabbitmq-1  Removing\n Container transit-monitor-rabbitmq-1  Removed\n Network transit-net  Removing\n Network transit-net  Removed\n",
+ "containers_after_down": {},
+ "volumes_after_down": [
+  "transit-pg-data",
+  "transit-rabbitmq-data"
+ ],
+ "up_to_ready_s": 8.29,
+ "queues_after_up": {
+  "analytics.positions": {
+   "ready": 579,
+   "unacked": 50,
+   "consumers": 1
+  },
+  "analytics.validations": {
+   "ready": 0,
+   "unacked": 0,
+   "consumers": 1
+  },
+  "incidents": {
+   "ready": 0,
+   "unacked": 0,
+   "consumers": 1
+  },
+  "track.positions": {
+   "ready": 221,
+   "unacked": 100,
+   "consumers": 2
+  }
+ },
+ "drain_s": 6.3,
+ "total_restore_s": 30.8,
+ "after": {
+  "passenger_flow": {
+   "rows": 20,
+   "md5": "44fe2e8cec96480d046e9830f8ec59b3"
+  },
+  "stop_arrivals": {
+   "rows": 154,
+   "md5": "c2698a6077de97454e666fc0eaa562a8"
+  },
+  "incidents": {
+   "rows": 52,
+   "md5": "ff658a4dcba40a7b8573212e71fffb67"
+  },
+  "vehicle_state": {
+   "rows": 881,
+   "md5": "81eafe766bdff6d15c4e10d5d8092eb6"
+  },
+  "processing_log": {
+   "rows": 21276,
+   "md5": ""
+  },
+  "vehicle_positions": {
+   "rows": 9883,
+   "md5": "76c870a1d8624788db19dcbd7b0ef6a2"
+  },
+  "processed_messages": {
+   "rows": 21274,
+   "md5": "e8fd0ea62a36ab7bc0fa51c808e161dd"
+  }
+ },
+ "vehicle_positions_old_md5": {
+  "n": 9038,
+  "h": "e9a04730cba2f6b43c21bba34c677d47"
+ },
+ "log_stats": {
+  "track-service-1": {
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "duplicate": 0,
+   "errors": {},
+   "started": 1,
+   "stopping": 0
+  },
+  "track-service-2": {
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "duplicate": 0,
+   "errors": {},
+   "started": 1,
+   "stopping": 0
+  },
+  "analytics-service": {
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "duplicate": 0,
+   "errors": {},
+   "started": 1,
+   "stopping": 0
+  },
+  "incident-service": {
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "duplicate": 0,
+   "errors": {},
+   "started": 1,
+   "stopping": 0
+  }
+ },
+ "finished_at": "2026-10-11T15:45:19.644+00:00"
+}
