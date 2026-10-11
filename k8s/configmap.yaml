@@ -27,4 +27,6 @@ data:
   FAULT_RATE: '0'
   HEADWAY_MIN: '3'
   HEALTH_PORT: '8000'               # HTTP-пробы /live и /ready обработчиков (ЛР 5)
+  CONNECT_TIMEOUT_S: '10'           # тайм-аут попытки подключения к брокеру (ЛР 6)
+  BROKER_GRACE_S: '30'              # без брокера дольше – /live = 503, kubelet перезапускает (ЛР 6)
   TZ: UTC

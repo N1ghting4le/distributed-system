@@ -28,7 +28,7 @@ from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = next(p for p in Path(__file__).resolve().parents if (p / 'common').is_dir())  # репозиторий или /app в образе
 sys.path.insert(0, str(ROOT))
-from common.reliability import EXCHANGE, QUEUES, declare_topology  # noqa: E402
+from common.reliability import EXCHANGE, QUEUES, connect_broker, declare_topology  # noqa: E402
 
 RABBIT_URL = os.getenv('RABBIT_URL', 'amqp://guest:guest@localhost:5672/')
 SCHEMA_PATH = Path(os.getenv('SCHEMA_PATH', ROOT / 'docs/schemas/message.schema.json'))
@@ -50,7 +50,7 @@ stats = {'sent': 0, 'requests': 0, 'bad_requests': 0, 'unavailable': 0}
 async def connect():
     for attempt in range(30):
         try:
-            connection = await aio_pika.connect_robust(RABBIT_URL)
+            connection = await connect_broker(RABBIT_URL)  # ЛР 6: тайм-аут попытки подключения
             break
         except (AMQPError, OSError) as exc:
             log.warning('broker unavailable (%s), retry %d', exc, attempt + 1)
@@ -143,7 +143,7 @@ async def events(request: Request):
 @app.get('/health')
 async def health():
     conn = broker.get('connection')
-    ok = conn is not None and not conn.is_closed
+    ok = conn is not None and not conn.is_closed and conn.connected.is_set()  # ЛР 6: и во время восстановления
     return JSONResponse({'status': 'ok' if ok else 'broker_down', 'sent': stats['sent']}, status_code=200 if ok else 503)
 
 

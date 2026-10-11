@@ -18,7 +18,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: simulator
-          image: transit-monitor/simulator:lab5
+          image: transit-monitor/simulator:lab6
           imagePullPolicy: IfNotPresent
           env:
             - name: GATEWAY_URL

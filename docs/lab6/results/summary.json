@@ -1,0 +1,2705 @@
+{
+ "perf": [
+  {
+   "count": 1000,
+   "sent": 1000,
+   "processed": 1904,
+   "errors": 0,
+   "retries": 0,
+   "dlq": 0,
+   "lost": 0,
+   "time_s": 14.98,
+   "thr_events": 66.8,
+   "thr_ops": 127.1,
+   "ingest_rate": 520.9,
+   "track_thr": 60.4,
+   "analytics_thr": 78.3,
+   "lat_track_avg": 7.006,
+   "lat_track_p95": 12.719,
+   "lat_track_max": 13.355,
+   "lat_an_avg": 5.971,
+   "lat_an_p95": 10.746,
+   "gateway_rejected": 0,
+   "http_retries": 0,
+   "redelivered": 0,
+   "duplicates": 0,
+   "rejected": 0,
+   "cpu": {
+    "gateway": {
+     "cpu_avg": 0.031,
+     "cpu_max": 0.495,
+     "mem_max_mb": 54.7
+    },
+    "dispatcher-api": {
+     "cpu_avg": 0.003,
+     "cpu_max": 0.005,
+     "mem_max_mb": 46.4
+    },
+    "track-service": {
+     "cpu_avg": 0.1,
+     "cpu_max": 0.46,
+     "mem_max_mb": 56.4
+    },
+    "postgres": {
+     "cpu_avg": 0.126,
+     "cpu_max": 0.485,
+     "mem_max_mb": 125.5
+    },
+    "rabbitmq": {
+     "cpu_avg": 0.94,
+     "cpu_max": 2.268,
+     "mem_max_mb": 201.8
+    },
+    "incident-service": {
+     "cpu_avg": 0.002,
+     "cpu_max": 0.011,
+     "mem_max_mb": 26.1
+    },
+    "analytics-service": {
+     "cpu_avg": 0.095,
+     "cpu_max": 0.5,
+     "mem_max_mb": 32.9
+    }
+   },
+   "pg": {
+    "xact_commit": 11129,
+    "xact_rollback": 0,
+    "tup_inserted": 5080,
+    "tup_updated": 2631,
+    "blks_read": 12,
+    "blks_hit": 102425,
+    "wal_records": 23613,
+    "wal_bytes": 2841773,
+    "wal_write": 3764,
+    "wal_sync": 3764,
+    "wal_mb": 2.71,
+    "commits_per_s": 742.9,
+    "fsync_per_s": 251.3
+   }
+  },
+  {
+   "count": 5000,
+   "sent": 5000,
+   "processed": 9325,
+   "errors": 0,
+   "retries": 0,
+   "dlq": 0,
+   "lost": 0,
+   "time_s": 65.87,
+   "thr_events": 75.9,
+   "thr_ops": 141.6,
+   "ingest_rate": 665.6,
+   "track_thr": 65.5,
+   "analytics_thr": 102.4,
+   "lat_track_avg": 29.919,
+   "lat_track_p95": 55.858,
+   "lat_track_max": 58.713,
+   "lat_an_avg": 21.342,
+   "lat_an_p95": 39.647,
+   "gateway_rejected": 0,
+   "http_retries": 0,
+   "redelivered": 0,
+   "duplicates": 0,
+   "rejected": 0,
+   "cpu": {
+    "gateway": {
+     "cpu_avg": 0.103,
+     "cpu_max": 1.001,
+     "mem_max_mb": 54.8
+    },
+    "dispatcher-api": {
+     "cpu_avg": 0.003,
+     "cpu_max": 0.004,
+     "mem_max_mb": 46.4
+    },
+    "track-service": {
+     "cpu_avg": 0.36,
+     "cpu_max": 0.449,
+     "mem_max_mb": 56.8
+    },
+    "postgres": {
+     "cpu_avg": 0.356,
+     "cpu_max": 0.475,
+     "mem_max_mb": 135.5
+    },
+    "rabbitmq": {
+     "cpu_avg": 1.09,
+     "cpu_max": 2.577,
+     "mem_max_mb": 209.1
+    },
+    "incident-service": {
+     "cpu_avg": 0.003,
+     "cpu_max": 0.01,
+     "mem_max_mb": 26.1
+    },
+    "analytics-service": {
+     "cpu_avg": 0.341,
+     "cpu_max": 0.506,
+     "mem_max_mb": 33.3
+    }
+   },
+   "pg": {
+    "xact_commit": 38019,
+    "xact_rollback": 0,
+    "tup_inserted": 23060,
+    "tup_updated": 14391,
+    "blks_read": 0,
+    "blks_hit": 293399,
+    "wal_records": 113548,
+    "wal_bytes": 12587299,
+    "wal_write": 18331,
+    "wal_sync": 18327,
+    "wal_mb": 12.0,
+    "commits_per_s": 577.2,
+    "fsync_per_s": 278.2
+   }
+  },
+  {
+   "count": 10000,
+   "sent": 10000,
+   "processed": 18692,
+   "errors": 0,
+   "retries": 0,
+   "dlq": 0,
+   "lost": 0,
+   "time_s": 132.65,
+   "thr_events": 75.4,
+   "thr_ops": 140.9,
+   "ingest_rate": 663.0,
+   "track_thr": 65.5,
+   "analytics_thr": 102.1,
+   "lat_track_avg": 59.942,
+   "lat_track_p95": 112.188,
+   "lat_track_max": 117.826,
+   "lat_an_avg": 42.298,
+   "lat_an_p95": 79.173,
+   "gateway_rejected": 0,
+   "http_retries": 0,
+   "redelivered": 0,
+   "duplicates": 0,
+   "rejected": 0,
+   "cpu": {
+    "gateway": {
+     "cpu_avg": 0.107,
+     "cpu_max": 1.019,
+     "mem_max_mb": 54.8
+    },
+    "dispatcher-api": {
+     "cpu_avg": 0.003,
+     "cpu_max": 0.006,
+     "mem_max_mb": 46.4
+    },
+    "track-service": {
+     "cpu_avg": 0.371,
+     "cpu_max": 0.451,
+     "mem_max_mb": 57.5
+    },
+    "postgres": {
+     "cpu_avg": 0.372,
+     "cpu_max": 0.526,
+     "mem_max_mb": 176.5
+    },
+    "rabbitmq": {
+     "cpu_avg": 1.144,
+     "cpu_max": 3.517,
+     "mem_max_mb": 221.3
+    },
+    "incident-service": {
+     "cpu_avg": 0.002,
+     "cpu_max": 0.016,
+     "mem_max_mb": 26.2
+    },
+    "analytics-service": {
+     "cpu_avg": 0.348,
+     "cpu_max": 0.507,
+     "mem_max_mb": 34.5
+    }
+   },
+   "pg": {
+    "xact_commit": 75864,
+    "xact_rollback": 0,
+    "tup_inserted": 46012,
+    "tup_updated": 24964,
+    "blks_read": 17,
+    "blks_hit": 695629,
+    "wal_records": 221767,
+    "wal_bytes": 22429460,
+    "wal_write": 36681,
+    "wal_sync": 36674,
+    "wal_mb": 21.39,
+    "commits_per_s": 571.9,
+    "fsync_per_s": 276.5
+   }
+  }
+ ],
+ "perf_rate": [
+  {
+   "rate": 25,
+   "sent": 3000,
+   "processed": 5559,
+   "errors": 0,
+   "retries": 0,
+   "dlq": 0,
+   "lost": 0,
+   "time_s": 118.7,
+   "thr_events": 25.3,
+   "thr_ops": 46.8,
+   "ingest_rate": 25.0,
+   "track_thr": 21.5,
+   "analytics_thr": 25.3,
+   "lat_track_avg": 0.37,
+   "lat_track_p95": 0.667,
+   "lat_track_max": 0.781,
+   "lat_an_avg": 0.253,
+   "lat_an_p95": 0.457,
+   "gateway_rejected": 0,
+   "http_retries": 0,
+   "redelivered": 0,
+   "duplicates": 0,
+   "rejected": 0
+  },
+  {
+   "rate": 50,
+   "sent": 3000,
+   "processed": 5580,
+   "errors": 0,
+   "retries": 0,
+   "dlq": 0,
+   "lost": 0,
+   "time_s": 59.61,
+   "thr_events": 50.3,
+   "thr_ops": 93.6,
+   "ingest_rate": 50.0,
+   "track_thr": 43.2,
+   "analytics_thr": 50.5,
+   "lat_track_avg": 0.373,
+   "lat_track_p95": 0.675,
+   "lat_track_max": 0.802,
+   "lat_an_avg": 0.263,
+   "lat_an_p95": 0.478,
+   "gateway_rejected": 0,
+   "http_retries": 0,
+   "redelivered": 0,
+   "duplicates": 0,
+   "rejected": 0
+  },
+  {
+   "rate": 100,
+   "sent": 3000,
+   "processed": 5600,
+   "errors": 0,
+   "retries": 0,
+   "dlq": 0,
+   "lost": 0,
+   "time_s": 39.53,
+   "thr_events": 75.9,
+   "thr_ops": 141.7,
+   "ingest_rate": 100.0,
+   "track_thr": 65.8,
+   "analytics_thr": 99.7,
+   "lat_track_avg": 5.118,
+   "lat_track_p95": 9.378,
+   "lat_track_max": 10.066,
+   "lat_an_avg": 0.277,
+   "lat_an_p95": 0.579,
+   "gateway_rejected": 0,
+   "http_retries": 0,
+   "redelivered": 0,
+   "duplicates": 0,
+   "rejected": 0
+  },
+  {
+   "rate": 200,
+   "sent": 3000,
+   "processed": 5570,
+   "errors": 0,
+   "retries": 0,
+   "dlq": 0,
+   "lost": 0,
+   "time_s": 39.25,
+   "thr_events": 76.4,
+   "thr_ops": 141.9,
+   "ingest_rate": 200.0,
+   "track_thr": 65.5,
+   "analytics_thr": 103.5,
+   "lat_track_avg": 12.508,
+   "lat_track_p95": 23.177,
+   "lat_track_max": 24.534,
+   "lat_an_avg": 7.167,
+   "lat_an_p95": 13.546,
+   "gateway_rejected": 0,
+   "http_retries": 0,
+   "redelivered": 0,
+   "duplicates": 0,
+   "rejected": 0
+  }
+ ],
+ "scale": {
+  "delay_20": [
+   {
+    "replicas": 1,
+    "sent": 5000,
+    "processed": 10006,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 149.05,
+    "thr_events": 33.5,
+    "thr_ops": 67.1,
+    "ingest_rate": 652.4,
+    "track_thr": 33.6,
+    "analytics_thr": 96.3,
+    "lat_track_avg": 71.737,
+    "lat_track_p95": 134.819,
+    "lat_track_max": 141.663,
+    "lat_an_avg": 23.279,
+    "lat_an_p95": 42.584,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "by_instance": {
+     "track-service-d4b69b554-pbnhs": 5000
+    },
+    "cpu": {
+     "gateway": {
+      "cpu_avg": 0.052,
+      "cpu_max": 0.993,
+      "mem_max_mb": 54.6
+     },
+     "dispatcher-api": {
+      "cpu_avg": 0.003,
+      "cpu_max": 0.005,
+      "mem_max_mb": 48.6
+     },
+     "track-service": {
+      "cpu_avg": 0.179,
+      "cpu_max": 0.221,
+      "mem_max_mb": 32.5
+     },
+     "postgres": {
+      "cpu_avg": 0.245,
+      "cpu_max": 0.436,
+      "mem_max_mb": 240.1
+     },
+     "rabbitmq": {
+      "cpu_avg": 1.016,
+      "cpu_max": 2.695,
+      "mem_max_mb": 222.9
+     },
+     "incident-service": {
+      "cpu_avg": 0.001,
+      "cpu_max": 0.006,
+      "mem_max_mb": 26.8
+     },
+     "analytics-service": {
+      "cpu_avg": 0.165,
+      "cpu_max": 0.507,
+      "mem_max_mb": 36.1
+     }
+    },
+    "pg": {
+     "xact_commit": 41589,
+     "xact_rollback": 0,
+     "tup_inserted": 25042,
+     "tup_updated": 15056,
+     "blks_read": 0,
+     "blks_hit": 937135,
+     "wal_records": 122448,
+     "wal_bytes": 19106964,
+     "wal_write": 20045,
+     "wal_sync": 20041,
+     "wal_mb": 18.22,
+     "commits_per_s": 279.0,
+     "fsync_per_s": 134.5
+    },
+    "ready_s": 0.15
+   },
+   {
+    "replicas": 2,
+    "sent": 5000,
+    "processed": 10008,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 76.74,
+    "thr_events": 65.2,
+    "thr_ops": 130.4,
+    "ingest_rate": 641.6,
+    "track_thr": 65.3,
+    "analytics_thr": 98.1,
+    "lat_track_avg": 35.35,
+    "lat_track_p95": 65.867,
+    "lat_track_max": 69.217,
+    "lat_an_avg": 22.838,
+    "lat_an_p95": 41.535,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "by_instance": {
+     "track-service-d4b69b554-pbnhs": 2528,
+     "track-service-d4b69b554-sxxzx": 2472
+    },
+    "cpu": {
+     "gateway": {
+      "cpu_avg": 0.094,
+      "cpu_max": 1.003,
+      "mem_max_mb": 54.7
+     },
+     "dispatcher-api": {
+      "cpu_avg": 0.003,
+      "cpu_max": 0.007,
+      "mem_max_mb": 48.6
+     },
+     "track-service": {
+      "cpu_avg": 0.361,
+      "cpu_max": 0.458,
+      "mem_max_mb": 63.5
+     },
+     "postgres": {
+      "cpu_avg": 0.403,
+      "cpu_max": 0.576,
+      "mem_max_mb": 258.3
+     },
+     "rabbitmq": {
+      "cpu_avg": 1.122,
+      "cpu_max": 2.824,
+      "mem_max_mb": 229.8
+     },
+     "incident-service": {
+      "cpu_avg": 0.002,
+      "cpu_max": 0.005,
+      "mem_max_mb": 26.7
+     },
+     "analytics-service": {
+      "cpu_avg": 0.304,
+      "cpu_max": 0.504,
+      "mem_max_mb": 38.6
+     }
+    },
+    "pg": {
+     "xact_commit": 40963,
+     "xact_rollback": 0,
+     "tup_inserted": 25057,
+     "tup_updated": 15072,
+     "blks_read": 0,
+     "blks_hit": 681672,
+     "wal_records": 124107,
+     "wal_bytes": 13901734,
+     "wal_write": 19836,
+     "wal_sync": 19834,
+     "wal_mb": 13.26,
+     "commits_per_s": 533.8,
+     "fsync_per_s": 258.5
+    },
+    "ready_s": 3.28
+   },
+   {
+    "replicas": 4,
+    "sent": 5000,
+    "processed": 10006,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 53.81,
+    "thr_events": 92.9,
+    "thr_ops": 186.0,
+    "ingest_rate": 569.5,
+    "track_thr": 122.8,
+    "analytics_thr": 93.1,
+    "lat_track_avg": 16.757,
+    "lat_track_p95": 30.678,
+    "lat_track_max": 32.33,
+    "lat_an_avg": 24.548,
+    "lat_an_p95": 43.537,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "by_instance": {
+     "track-service-d4b69b554-kdjkl": 1255,
+     "track-service-d4b69b554-pbnhs": 1265,
+     "track-service-d4b69b554-sxxzx": 1243,
+     "track-service-d4b69b554-zpjwh": 1237
+    },
+    "cpu": {
+     "gateway": {
+      "cpu_avg": 0.143,
+      "cpu_max": 1.004,
+      "mem_max_mb": 54.5
+     },
+     "track-service": {
+      "cpu_avg": 0.576,
+      "cpu_max": 0.927,
+      "mem_max_mb": 116.9
+     },
+     "dispatcher-api": {
+      "cpu_avg": 0.003,
+      "cpu_max": 0.004,
+      "mem_max_mb": 48.6
+     },
+     "postgres": {
+      "cpu_avg": 0.563,
+      "cpu_max": 0.944,
+      "mem_max_mb": 281.1
+     },
+     "rabbitmq": {
+      "cpu_avg": 1.32,
+      "cpu_max": 2.797,
+      "mem_max_mb": 235.8
+     },
+     "incident-service": {
+      "cpu_avg": 0.002,
+      "cpu_max": 0.009,
+      "mem_max_mb": 26.9
+     },
+     "analytics-service": {
+      "cpu_avg": 0.447,
+      "cpu_max": 0.505,
+      "mem_max_mb": 39.2
+     }
+    },
+    "pg": {
+     "xact_commit": 40715,
+     "xact_rollback": 0,
+     "tup_inserted": 25040,
+     "tup_updated": 15034,
+     "blks_read": 0,
+     "blks_hit": 585108,
+     "wal_records": 120541,
+     "wal_bytes": 16569370,
+     "wal_write": 19077,
+     "wal_sync": 19074,
+     "wal_mb": 15.8,
+     "commits_per_s": 756.6,
+     "fsync_per_s": 354.5
+    },
+    "ready_s": 3.98
+   }
+  ],
+  "delay_0": [
+   {
+    "replicas": 1,
+    "sent": 5000,
+    "processed": 10010,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 58.93,
+    "thr_events": 84.8,
+    "thr_ops": 169.9,
+    "ingest_rate": 588.2,
+    "track_thr": 85.0,
+    "analytics_thr": 92.4,
+    "lat_track_avg": 26.891,
+    "lat_track_p95": 48.76,
+    "lat_track_max": 50.739,
+    "lat_an_avg": 24.303,
+    "lat_an_p95": 44.082,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "by_instance": {
+     "track-service-7b7d97fd75-s7dn8": 5000
+    },
+    "cpu": {
+     "track-service": {
+      "cpu_avg": 0.457,
+      "cpu_max": 0.521,
+      "mem_max_mb": 27.7
+     },
+     "gateway": {
+      "cpu_avg": 0.132,
+      "cpu_max": 1.016,
+      "mem_max_mb": 54.4
+     },
+     "dispatcher-api": {
+      "cpu_avg": 0.003,
+      "cpu_max": 0.004,
+      "mem_max_mb": 48.7
+     },
+     "postgres": {
+      "cpu_avg": 0.501,
+      "cpu_max": 0.577,
+      "mem_max_mb": 280.3
+     },
+     "rabbitmq": {
+      "cpu_avg": 1.245,
+      "cpu_max": 2.872,
+      "mem_max_mb": 233.0
+     },
+     "incident-service": {
+      "cpu_avg": 0.002,
+      "cpu_max": 0.008,
+      "mem_max_mb": 27.0
+     },
+     "analytics-service": {
+      "cpu_avg": 0.42,
+      "cpu_max": 0.505,
+      "mem_max_mb": 39.4
+     }
+    },
+    "pg": {
+     "xact_commit": 40739,
+     "xact_rollback": 0,
+     "tup_inserted": 25048,
+     "tup_updated": 15066,
+     "blks_read": 0,
+     "blks_hit": 660463,
+     "wal_records": 123528,
+     "wal_bytes": 20437943,
+     "wal_write": 20024,
+     "wal_sync": 20020,
+     "wal_mb": 19.49,
+     "commits_per_s": 691.3,
+     "fsync_per_s": 339.7
+    },
+    "ready_s": 0.19
+   },
+   {
+    "replicas": 2,
+    "sent": 5000,
+    "processed": 10011,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 56.98,
+    "thr_events": 87.8,
+    "thr_ops": 175.7,
+    "ingest_rate": 544.0,
+    "track_thr": 129.7,
+    "analytics_thr": 87.8,
+    "lat_track_avg": 16.323,
+    "lat_track_p95": 28.843,
+    "lat_track_max": 29.783,
+    "lat_an_avg": 27.337,
+    "lat_an_p95": 46.356,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "by_instance": {
+     "track-service-7b7d97fd75-7s4bk": 2451,
+     "track-service-7b7d97fd75-s7dn8": 2549
+    },
+    "cpu": {
+     "track-service": {
+      "cpu_avg": 0.597,
+      "cpu_max": 1.019,
+      "mem_max_mb": 56.0
+     },
+     "gateway": {
+      "cpu_avg": 0.144,
+      "cpu_max": 1.004,
+      "mem_max_mb": 54.4
+     },
+     "dispatcher-api": {
+      "cpu_avg": 0.003,
+      "cpu_max": 0.005,
+      "mem_max_mb": 48.7
+     },
+     "postgres": {
+      "cpu_avg": 0.583,
+      "cpu_max": 0.942,
+      "mem_max_mb": 314.2
+     },
+     "rabbitmq": {
+      "cpu_avg": 1.369,
+      "cpu_max": 2.898,
+      "mem_max_mb": 234.9
+     },
+     "incident-service": {
+      "cpu_avg": 0.003,
+      "cpu_max": 0.008,
+      "mem_max_mb": 27.1
+     },
+     "analytics-service": {
+      "cpu_avg": 0.45,
+      "cpu_max": 0.502,
+      "mem_max_mb": 39.4
+     }
+    },
+    "pg": {
+     "xact_commit": 40186,
+     "xact_rollback": 0,
+     "tup_inserted": 24816,
+     "tup_updated": 14725,
+     "blks_read": 0,
+     "blks_hit": 664567,
+     "wal_records": 119639,
+     "wal_bytes": 12226384,
+     "wal_write": 18761,
+     "wal_sync": 18759,
+     "wal_mb": 11.66,
+     "commits_per_s": 705.3,
+     "fsync_per_s": 329.2
+    },
+    "ready_s": 3.32
+   },
+   {
+    "replicas": 4,
+    "sent": 5000,
+    "processed": 10007,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 54.74,
+    "thr_events": 91.3,
+    "thr_ops": 182.8,
+    "ingest_rate": 509.9,
+    "track_thr": 237.3,
+    "analytics_thr": 91.4,
+    "lat_track_avg": 6.473,
+    "lat_track_p95": 11.055,
+    "lat_track_max": 11.589,
+    "lat_an_avg": 25.735,
+    "lat_an_p95": 43.263,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "by_instance": {
+     "track-service-7b7d97fd75-7s4bk": 1193,
+     "track-service-7b7d97fd75-gvc8z": 1286,
+     "track-service-7b7d97fd75-s7dn8": 1298,
+     "track-service-7b7d97fd75-ttt8k": 1223
+    },
+    "cpu": {
+     "track-service": {
+      "cpu_avg": 0.635,
+      "cpu_max": 2.018,
+      "mem_max_mb": 108.9
+     },
+     "gateway": {
+      "cpu_avg": 0.144,
+      "cpu_max": 0.956,
+      "mem_max_mb": 54.4
+     },
+     "dispatcher-api": {
+      "cpu_avg": 0.003,
+      "cpu_max": 0.005,
+      "mem_max_mb": 48.7
+     },
+     "postgres": {
+      "cpu_avg": 0.592,
+      "cpu_max": 1.359,
+      "mem_max_mb": 343.3
+     },
+     "rabbitmq": {
+      "cpu_avg": 1.326,
+      "cpu_max": 3.192,
+      "mem_max_mb": 261.6
+     },
+     "incident-service": {
+      "cpu_avg": 0.002,
+      "cpu_max": 0.012,
+      "mem_max_mb": 27.1
+     },
+     "analytics-service": {
+      "cpu_avg": 0.443,
+      "cpu_max": 0.504,
+      "mem_max_mb": 39.5
+     }
+    },
+    "pg": {
+     "xact_commit": 40718,
+     "xact_rollback": 0,
+     "tup_inserted": 25040,
+     "tup_updated": 15037,
+     "blks_read": 0,
+     "blks_hit": 687341,
+     "wal_records": 119258,
+     "wal_bytes": 11583768,
+     "wal_write": 16792,
+     "wal_sync": 16790,
+     "wal_mb": 11.05,
+     "commits_per_s": 743.8,
+     "fsync_per_s": 306.7
+    },
+    "ready_s": 3.33
+   }
+  ]
+ },
+ "idle_cpu": {
+  "analytics-service": {
+   "cpu_avg": 0.001,
+   "cpu_max": 0.002,
+   "mem_max_mb": 36.0
+  },
+  "postgres": {
+   "cpu_avg": 0.021,
+   "cpu_max": 0.039,
+   "mem_max_mb": 271.7
+  },
+  "track-service": {
+   "cpu_avg": 0.002,
+   "cpu_max": 0.003,
+   "mem_max_mb": 57.4
+  },
+  "incident-service": {
+   "cpu_avg": 0.001,
+   "cpu_max": 0.002,
+   "mem_max_mb": 26.0
+  },
+  "gateway": {
+   "cpu_avg": 0.003,
+   "cpu_max": 0.004,
+   "mem_max_mb": 49.9
+  },
+  "dispatcher-api": {
+   "cpu_avg": 0.003,
+   "cpu_max": 0.003,
+   "mem_max_mb": 40.2
+  },
+  "rabbitmq": {
+   "cpu_avg": 0.818,
+   "cpu_max": 1.371,
+   "mem_max_mb": 197.5
+  }
+ },
+ "idle_cpu_after_probe_fix": {
+  "analytics-service": {
+   "cpu_avg": 0.001,
+   "cpu_max": 0.002,
+   "mem_max_mb": 38.1
+  },
+  "postgres": {
+   "cpu_avg": 0.018,
+   "cpu_max": 0.036,
+   "mem_max_mb": 263.1
+  },
+  "track-service": {
+   "cpu_avg": 0.001,
+   "cpu_max": 0.002,
+   "mem_max_mb": 31.6
+  },
+  "incident-service": {
+   "cpu_avg": 0.001,
+   "cpu_max": 0.001,
+   "mem_max_mb": 26.5
+  },
+  "gateway": {
+   "cpu_avg": 0.003,
+   "cpu_max": 0.004,
+   "mem_max_mb": 51.1
+  },
+  "dispatcher-api": {
+   "cpu_avg": 0.003,
+   "cpu_max": 0.003,
+   "mem_max_mb": 41.0
+  },
+  "rabbitmq": {
+   "cpu_avg": 0.135,
+   "cpu_max": 1.418,
+   "mem_max_mb": 115.1
+  }
+ },
+ "errors": {
+  "transient": [
+   {
+    "p": 0,
+    "sent": 2000,
+    "processed": 4004,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 33.12,
+    "thr_events": 60.4,
+    "thr_ops": 120.9,
+    "ingest_rate": 478.6,
+    "track_thr": 60.6,
+    "analytics_thr": 78.0,
+    "lat_track_avg": 15.343,
+    "lat_track_p95": 28.007,
+    "lat_track_max": 29.371,
+    "lat_an_avg": 11.648,
+    "lat_an_p95": 20.987,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "error_reasons": [],
+    "reject_reasons": null
+   },
+   {
+    "p": 0.1,
+    "sent": 2000,
+    "processed": 4006,
+    "errors": 222,
+    "retries": 222,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 40.55,
+    "thr_events": 49.3,
+    "thr_ops": 98.8,
+    "ingest_rate": 513.5,
+    "track_thr": 49.4,
+    "analytics_thr": 77.0,
+    "lat_track_avg": 17.331,
+    "lat_track_p95": 33.104,
+    "lat_track_max": 39.254,
+    "lat_an_avg": 11.862,
+    "lat_an_p95": 21.316,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "error_reasons": [
+     {
+      "consumer": "track-service",
+      "outcome": "retry",
+      "reason": "TransientError: simulated transient fault (FAULT_RATE=0.1)",
+      "n": 222
+     }
+    ],
+    "reject_reasons": null
+   },
+   {
+    "p": 0.2,
+    "sent": 2000,
+    "processed": 4002,
+    "errors": 506,
+    "retries": 505,
+    "dlq": 1,
+    "lost": 1,
+    "time_s": 45.94,
+    "thr_events": 43.5,
+    "thr_ops": 87.1,
+    "ingest_rate": 482.0,
+    "track_thr": 43.6,
+    "analytics_thr": 74.2,
+    "lat_track_avg": 19.994,
+    "lat_track_p95": 36.154,
+    "lat_track_max": 44.071,
+    "lat_an_avg": 12.432,
+    "lat_an_p95": 22.152,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "error_reasons": [
+     {
+      "consumer": "track-service",
+      "outcome": "retry",
+      "reason": "TransientError: simulated transient fault (FAULT_RATE=0.2)",
+      "n": 505
+     },
+     {
+      "consumer": "track-service",
+      "outcome": "dlq",
+      "reason": "TransientError: simulated transient fault (FAULT_RATE=0.2)",
+      "n": 1
+     }
+    ],
+    "reject_reasons": null
+   },
+   {
+    "p": 0.3,
+    "sent": 2000,
+    "processed": 3983,
+    "errors": 907,
+    "retries": 887,
+    "dlq": 20,
+    "lost": 20,
+    "time_s": 49.68,
+    "thr_events": 40.3,
+    "thr_ops": 80.2,
+    "ingest_rate": 518.3,
+    "track_thr": 40.0,
+    "analytics_thr": 77.4,
+    "lat_track_avg": 22.432,
+    "lat_track_p95": 42.478,
+    "lat_track_max": 46.879,
+    "lat_an_avg": 11.654,
+    "lat_an_p95": 21.276,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "error_reasons": [
+     {
+      "consumer": "track-service",
+      "outcome": "retry",
+      "reason": "TransientError: simulated transient fault (FAULT_RATE=0.3)",
+      "n": 887
+     },
+     {
+      "consumer": "track-service",
+      "outcome": "dlq",
+      "reason": "TransientError: simulated transient fault (FAULT_RATE=0.3)",
+      "n": 20
+     }
+    ],
+    "reject_reasons": null
+   }
+  ],
+  "bad_data": [
+   {
+    "p": 0,
+    "sent": 2000,
+    "processed": 4001,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 30.47,
+    "thr_events": 65.6,
+    "thr_ops": 131.3,
+    "ingest_rate": 678.7,
+    "track_thr": 65.8,
+    "analytics_thr": 103.0,
+    "lat_track_avg": 14.256,
+    "lat_track_p95": 26.383,
+    "lat_track_max": 27.763,
+    "lat_an_avg": 8.914,
+    "lat_an_p95": 16.032,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 0,
+    "error_reasons": [],
+    "reject_reasons": []
+   },
+   {
+    "p": 0.1,
+    "sent": 2000,
+    "processed": 4000,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 30.77,
+    "thr_events": 65.0,
+    "thr_ops": 130.0,
+    "ingest_rate": 680.6,
+    "track_thr": 65.1,
+    "analytics_thr": 99.5,
+    "lat_track_avg": 14.362,
+    "lat_track_p95": 26.719,
+    "lat_track_max": 28.06,
+    "lat_an_avg": 9.001,
+    "lat_an_p95": 16.748,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 202,
+    "error_reasons": [],
+    "reject_reasons": [
+     {
+      "reason": "outside_city",
+      "n": 67
+     },
+     {
+      "reason": "speed_limit",
+      "n": 66
+     },
+     {
+      "reason": "stale",
+      "n": 69
+     }
+    ]
+   },
+   {
+    "p": 0.2,
+    "sent": 2000,
+    "processed": 4001,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 30.55,
+    "thr_events": 65.5,
+    "thr_ops": 131.0,
+    "ingest_rate": 680.2,
+    "track_thr": 65.6,
+    "analytics_thr": 102.3,
+    "lat_track_avg": 14.279,
+    "lat_track_p95": 26.487,
+    "lat_track_max": 27.879,
+    "lat_an_avg": 8.973,
+    "lat_an_p95": 16.18,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 414,
+    "error_reasons": [],
+    "reject_reasons": [
+     {
+      "reason": "outside_city",
+      "n": 143
+     },
+     {
+      "reason": "speed_limit",
+      "n": 139
+     },
+     {
+      "reason": "stale",
+      "n": 132
+     }
+    ]
+   },
+   {
+    "p": 0.3,
+    "sent": 2000,
+    "processed": 4003,
+    "errors": 0,
+    "retries": 0,
+    "dlq": 0,
+    "lost": 0,
+    "time_s": 30.36,
+    "thr_events": 65.9,
+    "thr_ops": 131.9,
+    "ingest_rate": 683.6,
+    "track_thr": 66.1,
+    "analytics_thr": 104.5,
+    "lat_track_avg": 14.209,
+    "lat_track_p95": 26.325,
+    "lat_track_max": 27.694,
+    "lat_an_avg": 8.767,
+    "lat_an_p95": 15.769,
+    "gateway_rejected": 0,
+    "http_retries": 0,
+    "redelivered": 0,
+    "duplicates": 0,
+    "rejected": 594,
+    "error_reasons": [],
+    "reject_reasons": [
+     {
+      "reason": "outside_city",
+      "n": 217
+     },
+     {
+      "reason": "speed_limit",
+      "n": 191
+     },
+     {
+      "reason": "stale",
+      "n": 186
+     }
+    ]
+   }
+  ]
+ },
+ "consumer": {
+  "sent": 9858,
+  "processed": 18444,
+  "errors": 0,
+  "retries": 0,
+  "dlq": 0,
+  "lost": 0,
+  "time_s": 151.86,
+  "thr_events": 64.9,
+  "thr_ops": 121.5,
+  "ingest_rate": 65.0,
+  "track_thr": 56.4,
+  "analytics_thr": 65.2,
+  "lat_track_avg": 2.137,
+  "lat_track_p95": 3.57,
+  "lat_track_max": 4.476,
+  "lat_an_avg": 1.166,
+  "lat_an_p95": 3.125,
+  "gateway_rejected": 0,
+  "http_retries": 0,
+  "redelivered": 50,
+  "duplicates": 0,
+  "rejected": 0,
+  "events": {
+   "t_fail": 45.84,
+   "victim": "analytics-service-6bcd5b6b8c-wlmcn",
+   "node": "transit-worker",
+   "pid": "85451",
+   "restart_detected_s": 1.29,
+   "ready_s": 4.2,
+   "first_processed_s": 2.67,
+   "last_terminated": {
+    "containerID": "containerd://9526f2b9c4f70d2d62db46e30a7aee9a5efb5e85f7bf0e218e35deefcbb38b94",
+    "exitCode": 137,
+    "finishedAt": "2026-10-11T18:00:33Z",
+    "reason": "Error",
+    "startedAt": "2026-10-11T17:59:40Z"
+   },
+   "recovered_t": 50.040000000000006
+  },
+  "recovery": {
+   "analytics-service": {
+    "arrived_during": 190,
+    "backlog_after": 203,
+    "processed_after": 7411
+   },
+   "track-service": {
+    "arrived_during": 167,
+    "backlog_after": 65,
+    "processed_after": 6298
+   },
+   "incident-service": {
+    "arrived_during": 0,
+    "backlog_after": 0,
+    "processed_after": 30
+   }
+  },
+  "outage": [
+   45.84,
+   50.040000000000006
+  ],
+  "baseline_queue": 102,
+  "queue_peak": 221,
+  "normal_at": 66.4,
+  "error_reasons": [],
+  "log_levels": {
+   "simulator-9fg26": {
+    "INFO": 2
+   },
+   "track-service": {
+    "INFO": 17140,
+    "WARNING": 16
+   },
+   "gateway": {
+    "INFO": 9858
+   },
+   "analytics-service": {
+    "INFO": 19677
+   },
+   "incident-service": {
+    "INFO": 106,
+    "WARNING": 5
+   },
+   "rabbitmq": {
+    "WARNING": 2,
+    "INFO": 2
+   },
+   "postgres": {
+    "OTHER": 2
+   }
+  },
+  "log_top": {
+   "track-service|WARNING|route deviation vehicle=BUS-N distance=Nm, incident id=<id> published": 8,
+   "track-service|WARNING|route deviation vehicle=TRL-N distance=Nm, incident id=<id> published": 6,
+   "incident-service|WARNING|incident N registered: type=panic_button vehicle=BUS-N priority=N": 2,
+   "track-service|WARNING|route deviation vehicle=TRM-N distance=Nm, incident id=<id> published": 2,
+   "rabbitmq|WARNING|\u001b[N;N;NmN-N-N N:N:N+N:N [warning] <N.N> closing AMQP connection <N.N> (N.N:N -> N.N:N, vhost: '/', user: 'tran": 1,
+   "rabbitmq|WARNING|\u001b[N;N;NmN-N-N N:N:N+N:N [warning] <N.N> client unexpectedly closed TCP connection\u001b[Nm": 1,
+   "incident-service|WARNING|incident N registered: type=panic_button vehicle=TRL-N priority=N": 1,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=TRL-N priority=N": 1,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=BUS-N priority=N": 1
+  },
+  "log_lines": 46810,
+  "cpu": {
+   "analytics-service": {
+    "cpu_avg": 0.379,
+    "cpu_max": 0.509,
+    "mem_max_mb": 33.6
+   },
+   "gateway": {
+    "cpu_avg": 0.112,
+    "cpu_max": 0.25,
+    "mem_max_mb": 54.3
+   },
+   "dispatcher-api": {
+    "cpu_avg": 0.003,
+    "cpu_max": 0.005,
+    "mem_max_mb": 48.8
+   },
+   "track-service": {
+    "cpu_avg": 0.402,
+    "cpu_max": 0.485,
+    "mem_max_mb": 56.2
+   },
+   "postgres": {
+    "cpu_avg": 0.416,
+    "cpu_max": 0.705,
+    "mem_max_mb": 402.6
+   },
+   "rabbitmq": {
+    "cpu_avg": 1.266,
+    "cpu_max": 2.403,
+    "mem_max_mb": 239.1
+   },
+   "incident-service": {
+    "cpu_avg": 0.004,
+    "cpu_max": 0.011,
+    "mem_max_mb": 27.2
+   }
+  },
+  "log_attempts": {}
+ },
+ "broker": {
+  "sent": 12150,
+  "processed": 22559,
+  "errors": 0,
+  "retries": 0,
+  "dlq": 0,
+  "lost": 0,
+  "time_s": 327.95,
+  "thr_events": 37.0,
+  "thr_ops": 68.8,
+  "ingest_rate": 67.3,
+  "track_thr": 50.6,
+  "analytics_thr": 64.3,
+  "lat_track_avg": 20.642,
+  "lat_track_p95": 29.617,
+  "lat_track_max": 30.673,
+  "lat_an_avg": 12.335,
+  "lat_an_p95": 23.555,
+  "gateway_rejected": 0,
+  "http_retries": 24,
+  "redelivered": 145,
+  "duplicates": 5,
+  "rejected": 0,
+  "events": {
+   "t_fail": 45.0,
+   "broker_not_ready_s": 2.17,
+   "broker_ready_s": 15.78,
+   "gateway_ok_s": 16.05,
+   "consumers_back_s": 294.49,
+   "first_processed_s": 21.1,
+   "recovered_t": 339.49,
+   "pods_after": [
+    {
+     "name": "analytics-service-6bcd5b6b8c-wlmcn",
+     "app": "analytics-service",
+     "restarts": 2,
+     "ready": true
+    },
+    {
+     "name": "dispatcher-api-84579f68bf-hbtkv",
+     "app": "dispatcher-api",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "gateway-866c7ff975-29jhp",
+     "app": "gateway",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "incident-service-7889867f97-8zvnt",
+     "app": "incident-service",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "postgres-0",
+     "app": "postgres",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "rabbitmq-0",
+     "app": "rabbitmq",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "track-service-d4b69b554-5kpwt",
+     "app": "track-service",
+     "restarts": 2,
+     "ready": true
+    },
+    {
+     "name": "track-service-d4b69b554-zk8sm",
+     "app": "track-service",
+     "restarts": 2,
+     "ready": true
+    }
+   ]
+  },
+  "recovery": {
+   "analytics-service": {
+    "arrived_during": 9740,
+    "backlog_after": 0,
+    "processed_after": 0
+   },
+   "incident-service": {
+    "arrived_during": 32,
+    "backlog_after": 0,
+    "processed_after": 0
+   },
+   "track-service": {
+    "arrived_during": 8345,
+    "backlog_after": 0,
+    "processed_after": 0
+   }
+  },
+  "outage": [
+   45.0,
+   339.49
+  ],
+  "baseline_queue": 158,
+  "queue_peak": 3367,
+  "normal_at": 339.9,
+  "error_reasons": [
+   {
+    "consumer": "track-service",
+    "outcome": "duplicate",
+    "reason": "",
+    "n": 3
+   },
+   {
+    "consumer": "analytics-service",
+    "outcome": "duplicate",
+    "reason": "",
+    "n": 2
+   }
+  ],
+  "log_levels": {
+   "simulator-b2wfd": {
+    "INFO": 2,
+    "WARNING": 24
+   },
+   "track-service": {
+    "INFO": 20796,
+    "WARNING": 20,
+    "ERROR": 10,
+    "OTHER": 200
+   },
+   "gateway": {
+    "INFO": 12155,
+    "ERROR": 30,
+    "WARNING": 5,
+    "OTHER": 6
+   },
+   "analytics-service": {
+    "INFO": 24254,
+    "ERROR": 4,
+    "WARNING": 2,
+    "OTHER": 30
+   },
+   "incident-service": {
+    "INFO": 115,
+    "WARNING": 19,
+    "ERROR": 7,
+    "OTHER": 6
+   },
+   "rabbitmq": {
+    "OTHER": 2,
+    "WARNING": 2,
+    "INFO": 7,
+    "ERROR": 10
+   },
+   "postgres": {
+    "OTHER": 2
+   }
+  },
+  "log_top": {
+   "gateway|ERROR|publish failed (ChannelInvalidStateError: <aio_pika.robust_channel.RobustChannel object at NxNfNbNdN> closed),": 24,
+   "simulator-b2wfd|WARNING|gateway answered N, retry in Ns": 24,
+   "track-service|WARNING|route deviation vehicle=TRM-N distance=Nm, incident id=<id> published": 7,
+   "track-service|WARNING|route deviation vehicle=TRL-N distance=Nm, incident id=<id> published": 6,
+   "rabbitmq|ERROR|N-N-N N:N:N+N:N [error] <N.N> Error on AMQP connection <N.N> (N.N:N -> N.N:N, vhost: '/', user: 'transit', sta": 5,
+   "rabbitmq|ERROR|N-N-N N:N:N+N:N [error] <N.N>  operation none caused a connection exception connection_forced: \"broker forced ": 5,
+   "track-service|ERROR|Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel ": 4,
+   "gateway|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 4,
+   "gateway|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 4,
+   "track-service|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 4,
+   "incident-service|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 4,
+   "incident-service|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 4,
+   "incident-service|WARNING|incident N registered: type=panic_button vehicle=BUS-N priority=N": 3,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=TRL-N priority=N": 3,
+   "track-service|WARNING|route deviation vehicle=BUS-N distance=Nm, incident id=<id> published": 3,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=TRM-N priority=N": 3,
+   "incident-service|WARNING|incident N registered: type=panic_button vehicle=TRL-N priority=N": 2,
+   "track-service|ERROR|Unexpected connection close from remote \"amqp://transit:******@rabbitmq:N/\", Connection.Close(reply_code=N, re": 2,
+   "track-service|WARNING|Cancelling cause reader exited abnormally": 2,
+   "analytics-service|ERROR|Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel ": 2,
+   "incident-service|ERROR|Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel ": 2,
+   "track-service|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 2,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=BUS-N priority=N": 2,
+   "rabbitmq|WARNING|N-N-N N:N:N+N:N [warning] <N.N> HTTP listener registry could not find context rabbitmq_prometheus_tls": 1,
+   "rabbitmq|WARNING|N-N-N N:N:N+N:N [warning] <N.N> HTTP listener registry could not find context rabbitmq_management_tls": 1
+  },
+  "log_lines": 57712,
+  "cpu": {
+   "analytics-service": {
+    "cpu_avg": 0.217,
+    "cpu_max": 0.517,
+    "mem_max_mb": 34.3
+   },
+   "gateway": {
+    "cpu_avg": 0.072,
+    "cpu_max": 0.937,
+    "mem_max_mb": 54.3
+   },
+   "dispatcher-api": {
+    "cpu_avg": 0.003,
+    "cpu_max": 0.005,
+    "mem_max_mb": 48.9
+   },
+   "track-service": {
+    "cpu_avg": 0.241,
+    "cpu_max": 0.787,
+    "mem_max_mb": 56.3
+   },
+   "postgres": {
+    "cpu_avg": 0.296,
+    "cpu_max": 0.585,
+    "mem_max_mb": 425.1
+   },
+   "rabbitmq": {
+    "cpu_avg": 1.105,
+    "cpu_max": 3.079,
+    "mem_max_mb": 252.7
+   },
+   "incident-service": {
+    "cpu_avg": 0.003,
+    "cpu_max": 0.204,
+    "mem_max_mb": 27.8
+   }
+  },
+  "log_attempts": {}
+ },
+ "network": {
+  "sent": 13303,
+  "processed": 24868,
+  "errors": 1,
+  "retries": 1,
+  "dlq": 0,
+  "lost": 0,
+  "time_s": 249.56,
+  "thr_events": 53.3,
+  "thr_ops": 99.6,
+  "ingest_rate": 66.2,
+  "track_thr": 46.3,
+  "analytics_thr": 66.0,
+  "lat_track_avg": 37.672,
+  "lat_track_p95": 53.754,
+  "lat_track_max": 163.269,
+  "lat_an_avg": 0.842,
+  "lat_an_p95": 2.062,
+  "gateway_rejected": 0,
+  "http_retries": 0,
+  "redelivered": 0,
+  "duplicates": 0,
+  "rejected": 0,
+  "events": {
+   "t_fail": 40.52,
+   "victim": "track-service-5769fc487b-6rvhw",
+   "node": "transit-worker",
+   "rules": "iptables -I OUTPUT -d 10.96.88.133 -j DROP && iptables -I OUTPUT -d 10.96.247.50 -j DROP",
+   "iptables_rc": 0,
+   "iptables_err": "",
+   "partition_s": 90,
+   "not_ready_s": 5.15,
+   "broker_dropped_consumer_s": null,
+   "t_restore": 135.92,
+   "restore_rc": 0,
+   "ready_after_restore_s": 0.92,
+   "victim_first_processed_after_restore_s": 8.17,
+   "consumers_back_after_restore_s": 8.86,
+   "recovered_t": 135.92,
+   "victim_after": {
+    "name": "track-service-5769fc487b-6rvhw",
+    "ready": true,
+    "restarts": 0,
+    "last_terminated": null
+   }
+  },
+  "recovery": {
+   "analytics-service": {
+    "arrived_during": 6668,
+    "backlog_after": 0,
+    "processed_after": 4628
+   },
+   "incident-service": {
+    "arrived_during": 12,
+    "backlog_after": 0,
+    "processed_after": 15
+   },
+   "track-service": {
+    "arrived_during": 5666,
+    "backlog_after": 2860,
+    "processed_after": 6945
+   }
+  },
+  "outage": [
+   40.52,
+   135.92
+  ],
+  "baseline_queue": 180,
+  "queue_peak": 3230,
+  "normal_at": 252.9,
+  "error_reasons": [
+   {
+    "consumer": "track-service",
+    "outcome": "retry",
+    "reason": "TimeoutError",
+    "n": 1
+   }
+  ],
+  "log_levels": {
+   "simulator-pxsl7": {
+    "INFO": 2
+   },
+   "gateway": {
+    "INFO": 13303
+   },
+   "track-service": {
+    "INFO": 23109,
+    "WARNING": 16,
+    "OTHER": 205
+   },
+   "analytics-service": {
+    "INFO": 26566,
+    "WARNING": 1
+   },
+   "incident-service": {
+    "INFO": 91,
+    "WARNING": 2
+   },
+   "postgres": {
+    "OTHER": 2
+   }
+  },
+  "log_top": {
+   "track-service|WARNING|Failed to restore the pool connection floor; retrying": 5,
+   "track-service|WARNING|route deviation vehicle=TRM-N distance=Nm, incident id=<id> published": 4,
+   "track-service|WARNING|route deviation vehicle=BUS-N distance=Nm, incident id=<id> published": 4,
+   "track-service|WARNING|route deviation vehicle=TRL-N distance=Nm, incident id=<id> published": 2,
+   "analytics-service|WARNING|schedule deviation vehicle=BUS-N trip=N-A-N delay=Ns, incident id=<id> published": 1,
+   "track-service|WARNING|attempt N/N failed id=<id> (TimeoutError), retry in N ms": 1,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=TRM-N priority=N": 1,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=TRL-N priority=N": 1
+  },
+  "log_lines": 63307,
+  "cpu": {
+   "analytics-service": {
+    "cpu_avg": 0.304,
+    "cpu_max": 0.52,
+    "mem_max_mb": 35.8
+   },
+   "gateway": {
+    "cpu_avg": 0.093,
+    "cpu_max": 0.301,
+    "mem_max_mb": 54.2
+   },
+   "track-service": {
+    "cpu_avg": 0.327,
+    "cpu_max": 0.494,
+    "mem_max_mb": 57.5
+   },
+   "dispatcher-api": {
+    "cpu_avg": 0.003,
+    "cpu_max": 0.004,
+    "mem_max_mb": 48.8
+   },
+   "postgres": {
+    "cpu_avg": 0.43,
+    "cpu_max": 0.74,
+    "mem_max_mb": 451.2
+   },
+   "rabbitmq": {
+    "cpu_avg": 1.231,
+    "cpu_max": 2.723,
+    "mem_max_mb": 235.3
+   },
+   "incident-service": {
+    "cpu_avg": 0.003,
+    "cpu_max": 0.01,
+    "mem_max_mb": 27.8
+   }
+  },
+  "log_attempts": {
+   "track-service:retry": {
+    "TimeoutError": 1
+   }
+  }
+ },
+ "storage": {
+  "sent": 9964,
+  "processed": 18499,
+  "errors": 0,
+  "retries": 0,
+  "dlq": 0,
+  "lost": 0,
+  "time_s": 189.18,
+  "thr_events": 52.7,
+  "thr_ops": 97.8,
+  "ingest_rate": 66.3,
+  "track_thr": 45.6,
+  "analytics_thr": 58.0,
+  "lat_track_avg": 34.061,
+  "lat_track_p95": 43.33,
+  "lat_track_max": 81.849,
+  "lat_an_avg": 25.916,
+  "lat_an_p95": 42.962,
+  "gateway_rejected": 0,
+  "http_retries": 0,
+  "redelivered": 0,
+  "duplicates": 1,
+  "rejected": 0,
+  "events": {
+   "t_fail": 40.0,
+   "outage_s": 30,
+   "pg_stopped_s": 0.44,
+   "consumers_not_ready_s": 4.97,
+   "t_restore": 70.0,
+   "pg_ready_after_restore_s": 8.21,
+   "consumers_ready_after_restore_s": 9.86,
+   "first_processed_after_restore_s": 8.98,
+   "recovered_t": 78.98
+  },
+  "recovery": {
+   "analytics-service": {
+    "arrived_during": 2686,
+    "backlog_after": 2672,
+    "processed_after": 7892
+   },
+   "incident-service": {
+    "arrived_during": 4,
+    "backlog_after": 4,
+    "processed_after": 24
+   },
+   "track-service": {
+    "arrived_during": 2317,
+    "backlog_after": 2395,
+    "processed_after": 6834
+   }
+  },
+  "outage": [
+   40.0,
+   70.0
+  ],
+  "baseline_queue": 255,
+  "queue_peak": 5168,
+  "normal_at": 192.6,
+  "error_reasons": [
+   {
+    "consumer": "track-service",
+    "outcome": "duplicate",
+    "reason": "",
+    "n": 1
+   }
+  ],
+  "log_levels": {
+   "simulator-mxbrz": {
+    "INFO": 2
+   },
+   "gateway": {
+    "INFO": 9964
+   },
+   "track-service": {
+    "INFO": 17089,
+    "WARNING": 123,
+    "OTHER": 935
+   },
+   "analytics-service": {
+    "INFO": 19911,
+    "WARNING": 47,
+    "OTHER": 333
+   },
+   "incident-service": {
+    "INFO": 91,
+    "WARNING": 31,
+    "OTHER": 175
+   },
+   "postgres": {
+    "OTHER": 52
+   },
+   "dispatcher-api": {
+    "WARNING": 14
+   }
+  },
+  "log_top": {
+   "track-service|WARNING|Failed to restore the pool connection floor; retrying": 25,
+   "track-service|WARNING|attempt N/N failed id=<id> (ConnectionRefusedError: [Errno N] Connect call failed ('N.N', N)), retry in N ms": 25,
+   "track-service|WARNING|processing_log not written id=<id> (ConnectionRefusedError)": 25,
+   "analytics-service|WARNING|attempt N/N failed id=<id> (ConnectionRefusedError: [Errno N] Connect call failed ('N.N', N)), retry in N ms": 17,
+   "analytics-service|WARNING|processing_log not written id=<id> (ConnectionRefusedError)": 16,
+   "track-service|WARNING|attempt N/N failed id=<id> (CannotConnectNowError: the database system is shutting down), retry in N ms": 14,
+   "dispatcher-api|WARNING|GET /health: database unavailable (ConnectionRefusedError)": 14,
+   "track-service|WARNING|processing_log not written id=<id> (CannotConnectNowError)": 13,
+   "analytics-service|WARNING|Failed to restore the pool connection floor; retrying": 9,
+   "incident-service|WARNING|attempt N/N failed id=<id> (ConnectionRefusedError: [Errno N] Connect call failed ('N.N', N)), retry in N ms": 9,
+   "incident-service|WARNING|processing_log not written id=<id> (ConnectionRefusedError)": 9,
+   "incident-service|WARNING|Failed to restore the pool connection floor; retrying": 5,
+   "track-service|WARNING|route deviation vehicle=BUS-N distance=Nm, incident id=<id> published": 5,
+   "track-service|WARNING|route deviation vehicle=TRL-N distance=Nm, incident id=<id> published": 4,
+   "track-service|WARNING|route deviation vehicle=TRM-N distance=Nm, incident id=<id> published": 3,
+   "analytics-service|WARNING|processing_log not written id=<id> (TimeoutError)": 3,
+   "incident-service|WARNING|incident N registered: type=panic_button vehicle=TRL-N priority=N": 2,
+   "track-service|WARNING|processing_log not written id=<id> (ConnectionResetError)": 2,
+   "analytics-service|WARNING|attempt N/N failed id=<id> (TimeoutError), retry in N ms": 2,
+   "track-service|WARNING|processing_log not written id=<id> (TimeoutError)": 2,
+   "track-service|WARNING|attempt N/N failed id=<id> (TimeoutError), retry in N ms": 2,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=TRM-N priority=N": 2,
+   "incident-service|WARNING|incident N registered: type=panic_button vehicle=BUS-N priority=N": 2,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=BUS-N priority=N": 2,
+   "track-service|WARNING|attempt N/N failed id=<id> (ConnectionDoesNotExistError: connection was closed in the middle of operation: ter": 1
+  },
+  "log_lines": 48777,
+  "cpu": {
+   "analytics-service": {
+    "cpu_avg": 0.3,
+    "cpu_max": 0.516,
+    "mem_max_mb": 39.4
+   },
+   "gateway": {
+    "cpu_avg": 0.089,
+    "cpu_max": 0.221,
+    "mem_max_mb": 54.1
+   },
+   "track-service": {
+    "cpu_avg": 0.324,
+    "cpu_max": 0.519,
+    "mem_max_mb": 59.6
+   },
+   "dispatcher-api": {
+    "cpu_avg": 0.003,
+    "cpu_max": 0.01,
+    "mem_max_mb": 48.8
+   },
+   "postgres": {
+    "cpu_avg": 0.382,
+    "cpu_max": 0.66,
+    "mem_max_mb": 448.7
+   },
+   "rabbitmq": {
+    "cpu_avg": 1.233,
+    "cpu_max": 3.092,
+    "mem_max_mb": 211.4
+   },
+   "incident-service": {
+    "cpu_avg": 0.004,
+    "cpu_max": 0.02,
+    "mem_max_mb": 27.2
+   }
+  },
+  "log_attempts": {
+   "track-service:retry": {
+    "ConnectionDoesNotExistError": 1,
+    "InternalClientError": 1,
+    "CannotConnectNowError": 14,
+    "ConnectionRefusedError": 25,
+    "TimeoutError": 2
+   },
+   "analytics-service:retry": {
+    "ConnectionRefusedError": 17,
+    "TimeoutError": 2
+   },
+   "incident-service:retry": {
+    "ConnectionRefusedError": 9
+   }
+  }
+ },
+ "storage2": {
+  "sent": 7810,
+  "processed": 14588,
+  "errors": 2,
+  "retries": 2,
+  "dlq": 0,
+  "lost": 0,
+  "time_s": 173.52,
+  "thr_events": 45.0,
+  "thr_ops": 84.1,
+  "ingest_rate": 64.7,
+  "track_thr": 41.1,
+  "analytics_thr": 49.7,
+  "lat_track_avg": 41.78,
+  "lat_track_p95": 50.791,
+  "lat_track_max": 96.434,
+  "lat_an_avg": 37.632,
+  "lat_an_p95": 53.539,
+  "gateway_rejected": 0,
+  "http_retries": 0,
+  "redelivered": 0,
+  "duplicates": 0,
+  "rejected": 0,
+  "events": {
+   "t_fail": 30.01,
+   "outage_s": 40,
+   "pg_stopped_s": 0.51,
+   "consumers_not_ready_s": 3.61,
+   "t_restore": 70.01,
+   "pg_ready_after_restore_s": 5.9,
+   "consumers_ready_after_restore_s": 7.81,
+   "first_processed_after_restore_s": 7.42,
+   "recovered_t": 77.43,
+   "dlq_before_replay": {
+    "track.positions.dlq": 0,
+    "analytics.positions.dlq": 0,
+    "analytics.validations.dlq": 0,
+    "incidents.dlq": 2
+   },
+   "replay": {
+    "incidents.dlq": [
+     "3c5eee03-2968-5880-b403-fc0d8d2bf0b0  attempts=4 class=transient by=incident-service/incident-service-65d548bd98-954tx at=2026-10-11T18:18:04.094+00:00",
+     "    ConnectionRefusedError: [Errno 111] Connect call failed ('10.96.247.50', 5432)",
+     "replayed 2 message(s)"
+    ]
+   },
+   "t_replay": 180.89
+  },
+  "recovery": null,
+  "outage": [
+   30.01,
+   70.01
+  ],
+  "baseline_queue": 250,
+  "queue_peak": 6441,
+  "normal_at": 170.1,
+  "error_reasons": [
+   {
+    "consumer": "analytics-service",
+    "outcome": "retry",
+    "reason": "ConnectionRefusedError: [Errno 111] Connect call failed ('10.96.247.50",
+    "n": 1
+   },
+   {
+    "consumer": "track-service",
+    "outcome": "retry",
+    "reason": "ConnectionRefusedError: [Errno 111] Connect call failed ('10.96.247.50",
+    "n": 1
+   }
+  ],
+  "log_levels": {
+   "simulator-z985z": {
+    "INFO": 2
+   },
+   "gateway": {
+    "INFO": 7810
+   },
+   "track-service": {
+    "INFO": 13573,
+    "WARNING": 124,
+    "OTHER": 623
+   },
+   "analytics-service": {
+    "INFO": 15627,
+    "WARNING": 70,
+    "OTHER": 251
+   },
+   "incident-service": {
+    "INFO": 91,
+    "WARNING": 35,
+    "OTHER": 175,
+    "ERROR": 2
+   },
+   "postgres": {
+    "OTHER": 62
+   },
+   "dispatcher-api": {
+    "WARNING": 16
+   },
+   "rabbitmq": {
+    "INFO": 3
+   }
+  },
+  "log_top": {
+   "track-service|WARNING|processing_log not written id=<id> (ConnectionRefusedError)": 32,
+   "track-service|WARNING|attempt N/N failed id=<id> (ConnectionRefusedError: [Errno N] Connect call failed ('N.N', N)), retry in N ms": 31,
+   "analytics-service|WARNING|attempt N/N failed id=<id> (ConnectionRefusedError: [Errno N] Connect call failed ('N.N', N)), retry in N ms": 19,
+   "track-service|WARNING|Failed to restore the pool connection floor; retrying": 17,
+   "analytics-service|WARNING|processing_log not written id=<id> (ConnectionRefusedError)": 17,
+   "dispatcher-api|WARNING|GET /health: database unavailable (ConnectionRefusedError)": 16,
+   "incident-service|WARNING|processing_log not written id=<id> (ConnectionRefusedError)": 14,
+   "track-service|WARNING|processing_log not written id=<id> (CannotConnectNowError)": 12,
+   "incident-service|WARNING|attempt N/N failed id=<id> (ConnectionRefusedError: [Errno N] Connect call failed ('N.N', N)), retry in N ms": 12,
+   "track-service|WARNING|attempt N/N failed id=<id> (CannotConnectNowError: the database system is shutting down), retry in N ms": 11,
+   "analytics-service|WARNING|processing_log not written id=<id> (CannotConnectNowError)": 9,
+   "analytics-service|WARNING|attempt N/N failed id=<id> (CannotConnectNowError: the database system is shutting down), retry in N ms": 8,
+   "analytics-service|WARNING|Failed to restore the pool connection floor; retrying": 7,
+   "track-service|WARNING|route deviation vehicle=TRM-N distance=Nm, incident id=<id> published": 5,
+   "incident-service|WARNING|Failed to restore the pool connection floor; retrying": 5,
+   "track-service|WARNING|route deviation vehicle=TRL-N distance=Nm, incident id=<id> published": 5,
+   "track-service|WARNING|route deviation vehicle=BUS-N distance=Nm, incident id=<id> published": 4,
+   "analytics-service|WARNING|processing_log not written id=<id> (TimeoutError)": 3,
+   "track-service|WARNING|attempt N/N failed id=<id> (ConnectionDoesNotExistError: connection was closed in the middle of operation: ter": 2,
+   "track-service|WARNING|attempt N/N failed id=<id> (TimeoutError), retry in N ms": 2,
+   "analytics-service|WARNING|attempt N/N failed id=<id> (TimeoutError), retry in N ms": 2,
+   "incident-service|ERROR|attempt N/N failed id=<id> (transient, ConnectionRefusedError: [Errno N] Connect call failed ('N.N', N)), move": 2,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=TRL-N priority=N": 2,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=BUS-N priority=N": 1,
+   "analytics-service|WARNING|processing_log not written id=<id> (InternalClientError)": 1
+  },
+  "log_lines": 38470,
+  "cpu": {
+   "track-service": {
+    "cpu_avg": 0.279,
+    "cpu_max": 0.499,
+    "mem_max_mb": 55.6
+   },
+   "gateway": {
+    "cpu_avg": 0.075,
+    "cpu_max": 0.214,
+    "mem_max_mb": 54.1
+   },
+   "postgres": {
+    "cpu_avg": 0.353,
+    "cpu_max": 0.801,
+    "mem_max_mb": 140.5
+   },
+   "dispatcher-api": {
+    "cpu_avg": 0.004,
+    "cpu_max": 0.01,
+    "mem_max_mb": 48.8
+   },
+   "incident-service": {
+    "cpu_avg": 0.004,
+    "cpu_max": 0.014,
+    "mem_max_mb": 27.0
+   },
+   "analytics-service": {
+    "cpu_avg": 0.276,
+    "cpu_max": 0.505,
+    "mem_max_mb": 33.6
+   },
+   "rabbitmq": {
+    "cpu_avg": 1.218,
+    "cpu_max": 3.343,
+    "mem_max_mb": 217.7
+   }
+  },
+  "log_attempts": {
+   "track-service:retry": {
+    "ConnectionDoesNotExistError": 2,
+    "CannotConnectNowError": 11,
+    "ConnectionResetError": 1,
+    "ConnectionRefusedError": 31,
+    "TimeoutError": 2
+   },
+   "analytics-service:retry": {
+    "InterfaceError": 1,
+    "InternalClientError": 1,
+    "CannotConnectNowError": 8,
+    "ConnectionRefusedError": 19,
+    "TimeoutError": 2
+   },
+   "incident-service:retry": {
+    "ConnectionRefusedError": 12
+   },
+   "incident-service:dlq": {
+    "transient": 2
+   }
+  }
+ },
+ "broker_fixed": {
+  "sent": 12078,
+  "processed": 22419,
+  "errors": 0,
+  "retries": 0,
+  "dlq": 0,
+  "lost": 0,
+  "time_s": 221.52,
+  "thr_events": 54.5,
+  "thr_ops": 101.2,
+  "ingest_rate": 67.1,
+  "track_thr": 46.6,
+  "analytics_thr": 64.6,
+  "lat_track_avg": 34.152,
+  "lat_track_p95": 48.498,
+  "lat_track_max": 50.191,
+  "lat_an_avg": 12.332,
+  "lat_an_p95": 24.636,
+  "gateway_rejected": 0,
+  "http_retries": 24,
+  "redelivered": 150,
+  "duplicates": 3,
+  "rejected": 0,
+  "events": {
+   "t_fail": 45.0,
+   "broker_not_ready_s": 2.96,
+   "broker_ready_s": 17.14,
+   "gateway_ok_s": 24.58,
+   "consumers_back_s": 29.51,
+   "first_processed_s": 25.17,
+   "recovered_t": 74.51,
+   "pods_after": [
+    {
+     "name": "analytics-service-79c4d5d755-mjmx9",
+     "app": "analytics-service",
+     "restarts": 2,
+     "ready": true
+    },
+    {
+     "name": "dispatcher-api-795dc49c98-l97c5",
+     "app": "dispatcher-api",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "gateway-9d85848ff-fdbtj",
+     "app": "gateway",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "incident-service-76bbb9d87d-vr2mk",
+     "app": "incident-service",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "postgres-0",
+     "app": "postgres",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "rabbitmq-0",
+     "app": "rabbitmq",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "track-service-5d97d68bc-5vl8t",
+     "app": "track-service",
+     "restarts": 2,
+     "ready": true
+    },
+    {
+     "name": "track-service-5d97d68bc-l7dwx",
+     "app": "track-service",
+     "restarts": 2,
+     "ready": false
+    }
+   ]
+  },
+  "recovery": {
+   "analytics-service": {
+    "arrived_during": 642,
+    "backlog_after": 463,
+    "processed_after": 9436
+   },
+   "incident-service": {
+    "arrived_during": 0,
+    "backlog_after": 0,
+    "processed_after": 25
+   },
+   "track-service": {
+    "arrived_during": 563,
+    "backlog_after": 488,
+    "processed_after": 8159
+   }
+  },
+  "outage": [
+   45.0,
+   74.51
+  ],
+  "baseline_queue": 234,
+  "queue_peak": 4338,
+  "normal_at": 75.5,
+  "error_reasons": [
+   {
+    "consumer": "track-service",
+    "outcome": "duplicate",
+    "reason": "",
+    "n": 2
+   },
+   {
+    "consumer": "analytics-service",
+    "outcome": "duplicate",
+    "reason": "",
+    "n": 1
+   }
+  ],
+  "log_levels": {
+   "simulator-q62tc": {
+    "INFO": 2,
+    "WARNING": 24
+   },
+   "gateway": {
+    "INFO": 12083,
+    "ERROR": 26,
+    "WARNING": 5,
+    "OTHER": 6
+   },
+   "track-service": {
+    "INFO": 20656,
+    "WARNING": 18,
+    "ERROR": 10,
+    "OTHER": 283
+   },
+   "analytics-service": {
+    "INFO": 24121,
+    "ERROR": 4,
+    "WARNING": 4,
+    "OTHER": 105
+   },
+   "incident-service": {
+    "INFO": 104,
+    "WARNING": 12,
+    "ERROR": 7,
+    "OTHER": 6
+   },
+   "postgres": {
+    "OTHER": 1
+   },
+   "rabbitmq": {
+    "OTHER": 2,
+    "WARNING": 2,
+    "INFO": 7,
+    "ERROR": 10
+   }
+  },
+  "log_top": {
+   "gateway|ERROR|publish failed (ChannelInvalidStateError: <aio_pika.robust_channel.RobustChannel object at NxNfNeNcfN> closed)": 20,
+   "simulator-q62tc|WARNING|gateway answered N, retry in Ns": 20,
+   "track-service|WARNING|route deviation vehicle=TRL-N distance=Nm, incident id=<id> published": 7,
+   "rabbitmq|ERROR|N-N-N N:N:N+N:N [error] <N.N> Error on AMQP connection <N.N> (N.N:N -> N.N:N, vhost: '/', user: 'transit', sta": 5,
+   "rabbitmq|ERROR|N-N-N N:N:N+N:N [error] <N.N>  operation none caused a connection exception connection_forced: \"broker forced ": 5,
+   "track-service|WARNING|route deviation vehicle=TRM-N distance=Nm, incident id=<id> published": 4,
+   "track-service|ERROR|Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel ": 4,
+   "track-service|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 4,
+   "incident-service|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 4,
+   "gateway|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 4,
+   "incident-service|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 4,
+   "gateway|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 4,
+   "simulator-q62tc|WARNING|gateway unavailable (ConnectError), retry in Ns": 4,
+   "track-service|WARNING|route deviation vehicle=BUS-N distance=Nm, incident id=<id> published": 3,
+   "incident-service|WARNING|incident N registered: type=panic_button vehicle=TRM-N priority=N": 2,
+   "incident-service|WARNING|incident N registered: type=accident vehicle=TRL-N priority=N": 2,
+   "track-service|ERROR|Unexpected connection close from remote \"amqp://transit:******@rabbitmq:N/\", Connection.Close(reply_code=N, re": 2,
+   "track-service|WARNING|Cancelling cause reader exited abnormally": 2,
+   "analytics-service|ERROR|Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel ": 2,
+   "incident-service|ERROR|Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel ": 2,
+   "track-service|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 2,
+   "incident-service|WARNING|incident N registered: type=panic_button vehicle=BUS-N priority=N": 2,
+   "analytics-service|WARNING|schedule deviation vehicle=BUS-N trip=N-B-N delay=Ns, incident id=<id> published": 2,
+   "rabbitmq|WARNING|N-N-N N:N:N+N:N [warning] <N.N> HTTP listener registry could not find context rabbitmq_prometheus_tls": 1,
+   "rabbitmq|WARNING|N-N-N N:N:N+N:N [warning] <N.N> HTTP listener registry could not find context rabbitmq_management_tls": 1
+  },
+  "log_lines": 57508,
+  "cpu": {
+   "track-service": {
+    "cpu_avg": 0.367,
+    "cpu_max": 0.931,
+    "mem_max_mb": 58.6
+   },
+   "postgres": {
+    "cpu_avg": 0.446,
+    "cpu_max": 0.771,
+    "mem_max_mb": 256.7
+   },
+   "analytics-service": {
+    "cpu_avg": 0.331,
+    "cpu_max": 0.516,
+    "mem_max_mb": 34.0
+   },
+   "rabbitmq": {
+    "cpu_avg": 1.24,
+    "cpu_max": 2.995,
+    "mem_max_mb": 214.1
+   },
+   "gateway": {
+    "cpu_avg": 0.103,
+    "cpu_max": 0.816,
+    "mem_max_mb": 50.0
+   },
+   "dispatcher-api": {
+    "cpu_avg": 0.004,
+    "cpu_max": 0.007,
+    "mem_max_mb": 40.1
+   },
+   "incident-service": {
+    "cpu_avg": 0.003,
+    "cpu_max": 0.011,
+    "mem_max_mb": 26.5
+   }
+  },
+  "log_attempts": {}
+ },
+ "broker_fixed2": {
+  "sent": 11945,
+  "processed": 22321,
+  "errors": 0,
+  "retries": 0,
+  "dlq": 0,
+  "lost": 0,
+  "time_s": 210.33,
+  "thr_events": 56.8,
+  "thr_ops": 106.1,
+  "ingest_rate": 66.3,
+  "track_thr": 49.2,
+  "analytics_thr": 63.0,
+  "lat_track_avg": 22.036,
+  "lat_track_p95": 32.012,
+  "lat_track_max": 33.742,
+  "lat_an_avg": 12.82,
+  "lat_an_p95": 26.653,
+  "gateway_rejected": 0,
+  "http_retries": 24,
+  "redelivered": 112,
+  "duplicates": 112,
+  "rejected": 0,
+  "events": {
+   "t_fail": 45.0,
+   "broker_not_ready_s": 1.97,
+   "broker_ready_s": 16.01,
+   "gateway_ok_s": 23.02,
+   "consumers_back_s": 23.23,
+   "first_processed_s": 26.36,
+   "recovered_t": 68.23,
+   "pods_after": [
+    {
+     "name": "analytics-service-65454bf7cd-4gqnj",
+     "app": "analytics-service",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "dispatcher-api-795dc49c98-l97c5",
+     "app": "dispatcher-api",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "gateway-9d85848ff-fdbtj",
+     "app": "gateway",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "incident-service-6675bcf-wp5ht",
+     "app": "incident-service",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "postgres-0",
+     "app": "postgres",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "rabbitmq-0",
+     "app": "rabbitmq",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "track-service-788965dc5d-bbxbt",
+     "app": "track-service",
+     "restarts": 0,
+     "ready": true
+    },
+    {
+     "name": "track-service-788965dc5d-n64ph",
+     "app": "track-service",
+     "restarts": 0,
+     "ready": true
+    }
+   ]
+  },
+  "recovery": {
+   "analytics-service": {
+    "arrived_during": 0,
+    "backlog_after": 0,
+    "processed_after": 9464
+   },
+   "incident-service": {
+    "arrived_during": 0,
+    "backlog_after": 0,
+    "processed_after": 37
+   },
+   "track-service": {
+    "arrived_during": 0,
+    "backlog_after": 0,
+    "processed_after": 8296
+   }
+  },
+  "outage": [
+   45.0,
+   68.23
+  ],
+  "baseline_queue": 212,
+  "queue_peak": 3494,
+  "normal_at": 69.2,
+  "error_reasons": [
+   {
+    "consumer": "track-service",
+    "outcome": "duplicate",
+    "reason": "",
+    "n": 75
+   },
+   {
+    "consumer": "analytics-service",
+    "outcome": "duplicate",
+    "reason": "",
+    "n": 37
+   }
+  ],
+  "log_levels": {
+   "simulator-4h8nc": {
+    "INFO": 2,
+    "WARNING": 24
+   },
+   "gateway": {
+    "INFO": 11950,
+    "ERROR": 26,
+    "WARNING": 5,
+    "OTHER": 6
+   },
+   "analytics-service": {
+    "INFO": 23928,
+    "WARNING": 48,
+    "ERROR": 7,
+    "OTHER": 6
+   },
+   "track-service": {
+    "INFO": 20852,
+    "WARNING": 104,
+    "ERROR": 14,
+    "OTHER": 12
+   },
+   "incident-service-6675bcf": {
+    "INFO": 122,
+    "ERROR": 7,
+    "WARNING": 12,
+    "OTHER": 6
+   },
+   "rabbitmq": {
+    "OTHER": 2,
+    "WARNING": 2,
+    "INFO": 7,
+    "ERROR": 10
+   },
+   "postgres": {
+    "OTHER": 1
+   }
+  },
+  "log_top": {
+   "track-service|WARNING|ack not delivered id=<id> (ChannelInvalidStateError: channel closed), broker will redeliver the message": 75,
+   "analytics-service|WARNING|ack not delivered id=<id> (ChannelInvalidStateError: channel closed), broker will redeliver the message": 36,
+   "simulator-4h8nc|WARNING|gateway answered N, retry in Ns": 20,
+   "gateway|ERROR|publish failed (ChannelInvalidStateError: <aio_pika.robust_channel.RobustChannel object at NxNfNeNcfN> closed)": 18,
+   "track-service|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 8,
+   "track-service|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 8,
+   "track-service|WARNING|route deviation vehicle=TRM-N distance=Nm, incident id=<id> published": 7,
+   "track-service|WARNING|route deviation vehicle=BUS-N distance=Nm, incident id=<id> published": 6,
+   "track-service|WARNING|route deviation vehicle=TRL-N distance=Nm, incident id=<id> published": 6,
+   "rabbitmq|ERROR|N-N-N N:N:N+N:N [error] <N.N> Error on AMQP connection <N.N> (N.N:N -> N.N:N, vhost: '/', user: 'transit', sta": 5,
+   "rabbitmq|ERROR|N-N-N N:N:N+N:N [error] <N.N>  operation none caused a connection exception connection_forced: \"broker forced ": 5,
+   "incident-service-6675bcf|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 4,
+   "incident-service-6675bcf|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 4,
+   "track-service|ERROR|Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel ": 4,
+   "analytics-service|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 4,
+   "analytics-service|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 4,
+   "gateway|ERROR|error when creating transport: <AMQPConnectionError: (N, \"Connect call failed ('N.N', N)\")>": 4,
+   "gateway|WARNING|Connection attempt to \"amqp://transit:******@rabbitmq:N/\" failed: [Errno N] Connect call failed ('N.N', N). Re": 4,
+   "simulator-4h8nc|WARNING|gateway unavailable (ConnectError), retry in Ns": 4,
+   "incident-service-6675bcf|WARNING|incident N registered: type=accident vehicle=TRL-N priority=N": 3,
+   "analytics-service|WARNING|schedule deviation vehicle=TRM-N trip=N-A-N delay=Ns, incident id=<id> published": 2,
+   "track-service|ERROR|Unexpected connection close from remote \"amqp://transit:******@rabbitmq:N/\", Connection.Close(reply_code=N, re": 2,
+   "track-service|WARNING|Cancelling cause reader exited abnormally": 2,
+   "incident-service-6675bcf|ERROR|Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel ": 2,
+   "analytics-service|ERROR|Callback <OneShotCallback: cb=<bound method RobustChannel._on_close of <aio_pika.robust_channel.RobustChannel ": 2
+  },
+  "log_lines": 57153,
+  "cpu": {
+   "analytics-service": {
+    "cpu_avg": 0.342,
+    "cpu_max": 0.655,
+    "mem_max_mb": 36.0
+   },
+   "postgres": {
+    "cpu_avg": 0.467,
+    "cpu_max": 0.894,
+    "mem_max_mb": 273.6
+   },
+   "track-service": {
+    "cpu_avg": 0.372,
+    "cpu_max": 0.59,
+    "mem_max_mb": 57.7
+   },
+   "incident-service": {
+    "cpu_avg": 0.003,
+    "cpu_max": 0.011,
+    "mem_max_mb": 26.0
+   },
+   "gateway": {
+    "cpu_avg": 0.11,
+    "cpu_max": 0.985,
+    "mem_max_mb": 49.9
+   },
+   "dispatcher-api": {
+    "cpu_avg": 0.004,
+    "cpu_max": 0.013,
+    "mem_max_mb": 40.2
+   },
+   "rabbitmq": {
+    "cpu_avg": 1.242,
+    "cpu_max": 2.888,
+    "mem_max_mb": 215.6
+   }
+  },
+  "log_attempts": {}
+ },
+ "optim": [
+  {
+   "synchronous_commit": "on",
+   "sent": 5000,
+   "processed": 10010,
+   "errors": 0,
+   "retries": 0,
+   "dlq": 0,
+   "lost": 0,
+   "time_s": 52.49,
+   "thr_events": 95.3,
+   "thr_ops": 190.7,
+   "ingest_rate": 516.9,
+   "track_thr": 235.5,
+   "analytics_thr": 95.3,
+   "lat_track_avg": 6.471,
+   "lat_track_p95": 11.472,
+   "lat_track_max": 11.915,
+   "lat_an_avg": 24.368,
+   "lat_an_p95": 41.432,
+   "gateway_rejected": 0,
+   "http_retries": 0,
+   "redelivered": 0,
+   "duplicates": 0,
+   "rejected": 0,
+   "pg": {
+    "xact_commit": 40865,
+    "xact_rollback": 0,
+    "tup_inserted": 24845,
+    "tup_updated": 14913,
+    "blks_read": 295,
+    "blks_hit": 1173331,
+    "wal_records": 117568,
+    "wal_bytes": 13301593,
+    "wal_write": 16624,
+    "wal_sync": 16621,
+    "wal_mb": 12.69,
+    "commits_per_s": 778.5,
+    "fsync_per_s": 316.7
+   },
+   "cpu": {
+    "analytics-service": {
+     "cpu_avg": 0.427,
+     "cpu_max": 0.516,
+     "mem_max_mb": 33.7
+    },
+    "track-service": {
+     "cpu_avg": 0.652,
+     "cpu_max": 1.996,
+     "mem_max_mb": 112.1
+    },
+    "postgres": {
+     "cpu_avg": 0.709,
+     "cpu_max": 1.377,
+     "mem_max_mb": 167.0
+    },
+    "gateway": {
+     "cpu_avg": 0.147,
+     "cpu_max": 0.963,
+     "mem_max_mb": 54.1
+    },
+    "dispatcher-api": {
+     "cpu_avg": 0.003,
+     "cpu_max": 0.004,
+     "mem_max_mb": 48.8
+    },
+    "rabbitmq": {
+     "cpu_avg": 1.345,
+     "cpu_max": 2.79,
+     "mem_max_mb": 293.2
+    },
+    "incident-service": {
+     "cpu_avg": 0.003,
+     "cpu_max": 0.021,
+     "mem_max_mb": 25.6
+    }
+   }
+  },
+  {
+   "synchronous_commit": "off",
+   "sent": 5000,
+   "processed": 10007,
+   "errors": 0,
+   "retries": 0,
+   "dlq": 0,
+   "lost": 0,
+   "time_s": 46.78,
+   "thr_events": 106.9,
+   "thr_ops": 213.9,
+   "ingest_rate": 549.4,
+   "track_thr": 272.3,
+   "analytics_thr": 107.0,
+   "lat_track_avg": 5.081,
+   "lat_track_p95": 9.142,
+   "lat_track_max": 9.558,
+   "lat_an_avg": 21.277,
+   "lat_an_p95": 36.553,
+   "gateway_rejected": 0,
+   "http_retries": 0,
+   "redelivered": 0,
+   "duplicates": 0,
+   "rejected": 0,
+   "pg": {
+    "xact_commit": 41312,
+    "xact_rollback": 0,
+    "tup_inserted": 25038,
+    "tup_updated": 14263,
+    "blks_read": 5249,
+    "blks_hit": 1111625,
+    "wal_records": 117976,
+    "wal_bytes": 11778594,
+    "wal_write": 233,
+    "wal_sync": 231,
+    "wal_mb": 11.23,
+    "commits_per_s": 883.1,
+    "fsync_per_s": 4.9
+   },
+   "cpu": {
+    "analytics-service": {
+     "cpu_avg": 0.431,
+     "cpu_max": 0.524,
+     "mem_max_mb": 34.2
+    },
+    "track-service": {
+     "cpu_avg": 0.645,
+     "cpu_max": 2.04,
+     "mem_max_mb": 114.7
+    },
+    "postgres": {
+     "cpu_avg": 0.658,
+     "cpu_max": 1.43,
+     "mem_max_mb": 180.4
+    },
+    "gateway": {
+     "cpu_avg": 0.151,
+     "cpu_max": 0.983,
+     "mem_max_mb": 54.0
+    },
+    "dispatcher-api": {
+     "cpu_avg": 0.003,
+     "cpu_max": 0.005,
+     "mem_max_mb": 48.8
+    },
+    "rabbitmq": {
+     "cpu_avg": 1.291,
+     "cpu_max": 3.185,
+     "mem_max_mb": 289.2
+    },
+    "incident-service": {
+     "cpu_avg": 0.002,
+     "cpu_max": 0.006,
+     "mem_max_mb": 25.6
+    }
+   }
+  }
+ ]
+}

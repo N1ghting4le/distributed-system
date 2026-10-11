@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
         - name: dispatcher-api
-          image: transit-monitor/dispatcher-api:lab5
+          image: transit-monitor/dispatcher-api:lab6
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef: {name: transit-config}

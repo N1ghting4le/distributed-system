@@ -1,0 +1,14 @@
+flowchart TB
+    SIM["Fleet Simulator (Job, генератор нагрузки)"] -- "HTTP, пакеты по 50 событий" --> GW["Ingest Gateway ×1<br/>CPU 0,11–0,15 ядра, масштабируется"]
+    GW -- "AMQP, подтверждения публикации" --> MQ[("RabbitMQ ×1 – ЕДИНАЯ ТОЧКА ОТКАЗА<br/>собственная нагрузка ≈0,3 ядра<br/>+0,8 ядра на readiness-пробу (устранено)")]
+    MQ -- "track.positions" --> TR["Track Service ×1…4<br/>34 → 123 сообщ./с (20 мс)<br/>85 → 237 сообщ./с (0 мс)"]
+    MQ -- "analytics.*" --> AN["Schedule Analytics ×1<br/>УЗКОЕ МЕСТО: 92–102 сообщ./с<br/>состояние в памяти, обработка последовательная"]
+    MQ -- "incidents" --> IN["Incident Service ×1<br/>&lt; 1 сообщ./с"]
+    TR & AN & IN -- "2 фиксации и 2 fsync на сообщение" --> PG[("PostgreSQL ×1 – ЕДИНАЯ ТОЧКА ОТКАЗА<br/>CPU 0,4–0,6 ядра, ≈300 fsync/с")]
+    API["Dispatcher API ×1"] --> PG
+    classDef spof fill:#fde2e2,stroke:#d03b3b,stroke-width:2px,color:#111
+    classDef neck fill:#fdebd9,stroke:#eb6834,stroke-width:2px,color:#111
+    classDef ok fill:#e1f3ea,stroke:#1baf7a,stroke-width:1.5px,color:#111
+    class MQ,PG spof
+    class AN neck
+    class TR,GW ok

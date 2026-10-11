@@ -224,12 +224,12 @@ async def main():
     pool = await asyncpg.create_pool(DB_DSN, min_size=1, max_size=3, init=init_connection,
                                      timeout=DB_TIMEOUT_S, command_timeout=DB_TIMEOUT_S,
                                      server_settings={'search_path': 'transit'})
-    connection = await aio_pika.connect_robust(RABBIT_URL)
+    connection = await rel.connect_broker(RABBIT_URL)  # ЛР 6: тайм-аут попытки подключения
     channel = await connection.channel()
     await channel.set_qos(prefetch_count=PREFETCH)
     publish_channel = await connection.channel(publisher_confirms=True, on_return_raises=True)
     await rel.declare_topology(channel)
-    queues = {name: await channel.get_queue(name, ensure=False) for name in QUEUES}
+    queues = {name: await rel.work_queue(channel, name) for name in QUEUES}  # ЛР 6: восстанавливаемая подписка
     publish_exchange = await publish_channel.get_exchange(rel.EXCHANGE, ensure=False)
 
     service = Analytics(pool, publish_exchange)

@@ -27,17 +27,22 @@
   FAULT_POISON        source_id или message_id через запятую – такие сообщения не обрабатываются никогда;
   FAULT_ACK_LOSS_RATE вероятность «потери» ack после фиксации (сообщение возвращается брокером повторно) (0);
   FAULT_SEED          зерно: решение о сбое – хеш (зерно, message_id, попытка), прогоны воспроизводимы;
-  HEALTH_PORT         порт HTTP-проб /live и /ready для Kubernetes (ЛР 5); 0 – пробы не запускаются (0).
+  HEALTH_PORT         порт HTTP-проб /live и /ready для Kubernetes (ЛР 5); 0 – пробы не запускаются (0);
+  CONNECT_TIMEOUT_S   тайм-аут одной попытки подключения к брокеру, в т. ч. при восстановлении (ЛР 6) (10);
+  BROKER_GRACE_S      сколько секунд допускается отсутствие соединения с брокером, после чего /live
+                      отвечает 503 и kubelet перезапускает контейнер (ЛР 6) (30).
 """
 import asyncio
 import hashlib
 import logging
 import os
 import signal
+import time
 import uuid
 from datetime import datetime, timezone
 
 import aio_pika
+import aiormq
 import asyncpg
 
 EXCHANGE = 'transit.events'
@@ -57,6 +62,8 @@ FAULT_POISON = {x.strip() for x in os.getenv('FAULT_POISON', '').split(',') if x
 FAULT_ACK_LOSS_RATE = float(os.getenv('FAULT_ACK_LOSS_RATE', '0'))
 FAULT_SEED = os.getenv('FAULT_SEED', '0')
 HEALTH_PORT = int(os.getenv('HEALTH_PORT', '0'))
+CONNECT_TIMEOUT_S = float(os.getenv('CONNECT_TIMEOUT_S', '10'))
+BROKER_GRACE_S = float(os.getenv('BROKER_GRACE_S', '30'))
 
 PERMANENT = (ValueError, KeyError, TypeError, asyncpg.DataError, asyncpg.IntegrityConstraintViolationError)
 
@@ -86,20 +93,46 @@ def stop_on_sigterm():
         pass
 
 
+async def connect_broker(url):
+    """ЛР 6: connect_robust с тайм-аутом попытки. Без тайм-аута попытка восстановления соединения
+    к брокеру, который еще запускается, может зависнуть навсегда (эксперимент с остановкой брокера)."""
+    return await aio_pika.connect_robust(url, timeout=CONNECT_TIMEOUT_S)
+
+
 async def serve_health(connection, pool, log):
     """ЛР 5: HTTP-пробы для Kubernetes на HEALTH_PORT (вызывается, когда потребитель готов читать очереди).
 
     GET /live  – 200, пока цикл событий процесса отвечает (livenessProbe: зависший процесс перезапускается);
-    GET /ready – 200, если соединение с брокером открыто и БД отвечает на SELECT 1 за 2 с, иначе 503
+                 ЛР 6: 503, если соединения с брокером нет дольше BROKER_GRACE_S – восстановление
+                 соединения не удалось, и kubelet перезапускает контейнер;
+    GET /ready – 200, если соединение с брокером установлено и БД отвечает на SELECT 1 за 2 с, иначе 503
                  (readinessProbe: момент готовности нового Pod; при отказе БД Pod помечается неготовым,
                  но не перезапускается – переподключение выполняют aio-pika и asyncpg).
     """
     if not HEALTH_PORT:
         return None
+    down = {'since': None}
+
+    def broker_down():
+        """Секунды без соединения с брокером (None – соединение есть). У RobustConnection is_closed
+        остается False во время восстановления, поэтому проверяется событие connected."""
+        ok = not connection.is_closed and connection.connected.is_set()
+        if ok:
+            down['since'] = None
+            return None
+        down['since'] = down['since'] or time.monotonic()
+        return time.monotonic() - down['since']
+
+    async def live():
+        lost = broker_down()
+        if lost is not None and lost > BROKER_GRACE_S:
+            log.error('no broker connection for %.0f s, liveness probe fails', lost)
+            return f'no broker connection for {lost:.0f} s'
+        return None
 
     async def ready():
-        if connection.is_closed:
-            return 'broker connection closed'
+        if broker_down() is not None:
+            return 'broker connection lost'
         try:
             await asyncio.wait_for(pool.fetchval('SELECT 1'), 2)
         except Exception as exc:  # noqa: BLE001 – любая ошибка БД означает неготовность
@@ -110,7 +143,7 @@ async def serve_health(connection, pool, log):
         try:
             line = (await asyncio.wait_for(reader.readline(), 2)).decode('latin-1').split()
             path = line[1] if len(line) > 1 else '/'
-            error = None if path == '/live' else await ready() if path == '/ready' else 'not found'
+            error = await live() if path == '/live' else await ready() if path == '/ready' else 'not found'
             status = ('200 OK' if error is None else '404 Not Found' if error == 'not found'
                       else '503 Service Unavailable')
             body = (error or 'ok').encode()
@@ -165,8 +198,7 @@ async def declare_topology(channel, delays_ms=None):
     retry_x = await channel.declare_exchange(RETRY_EXCHANGE, aio_pika.ExchangeType.HEADERS, durable=True)
     dlx = await channel.declare_exchange(DLX, aio_pika.ExchangeType.DIRECT, durable=True)
     for name, keys in QUEUES.items():
-        queue = await channel.declare_queue(name, durable=True, arguments={
-            'x-dead-letter-exchange': DLX, 'x-dead-letter-routing-key': name})
+        queue = await work_queue(channel, name)
         for key in keys:
             await queue.bind(exchange, routing_key=key)
         dlq = await channel.declare_queue(f'{name}.dlq', durable=True)
@@ -176,6 +208,15 @@ async def declare_topology(channel, delays_ms=None):
             'x-message-ttl': delay, 'x-dead-letter-exchange': ''})  # '' – exchange по умолчанию: ключ = имя очереди
         await wait.bind(retry_x, arguments={'x-match': 'all', 'retry-delay': wait_queue(delay)})
     return exchange
+
+
+async def work_queue(channel, name):
+    """Рабочая очередь с аргументами DLX. ЛР 6: потребители получают очередь только так, а не через
+    get_queue(ensure=False): RobustChannel восстанавливает после переподключения подписки лишь на очереди,
+    объявленные через declare_queue, – иначе после перезапуска брокера соединение и канал восстанавливаются,
+    а подписка нет, и экземпляр «готов», но не получает сообщений (эксперимент с остановкой брокера)."""
+    return await channel.declare_queue(name, durable=True, arguments={
+        'x-dead-letter-exchange': DLX, 'x-dead-letter-routing-key': name})
 
 
 async def claim(conn, service, consumer_id, msg, attempt):
@@ -227,11 +268,11 @@ class Consumer:
         outcome = 'duplicate' if result.startswith('duplicate') else 'success'
         error = None
         if outcome == 'success' and chance(FAULT_ACK_LOSS_RATE, 'ack', mid, attempt, message.redelivered):
-            await message.nack(requeue=True)   # результат зафиксирован, но брокер ack не получил
+            await self.settle(message, 'nack', mid)   # результат зафиксирован, но брокер ack не получил
             error = 'ack lost (simulated): message will be redelivered'
             self.log.warning('ack lost id=%s attempt=%d', mid, attempt)
         else:
-            await message.ack()
+            await self.settle(message, 'ack', mid)
         self.count(outcome)
         self.log.info('processed id=%s attempt=%d outcome=%s result=%s', mid, attempt, outcome, result)
         await self.journal(queue, mid, msg, attempt, message.redelivered, received_at, outcome, result, error)
@@ -259,9 +300,9 @@ class Consumer:
                 timestamp=message.timestamp), routing_key=queue, mandatory=True)
         except Exception as pub_exc:  # noqa: BLE001 – брокер не принял копию: доставка вернется в очередь
             self.log.error('forward to %s failed id=%s (%s), message returned to queue', exchange, mid, pub_exc)
-            await message.nack(requeue=True)
+            await self.settle(message, 'nack', mid)
             return
-        await message.ack()
+        await self.settle(message, 'ack', mid)
         self.count(outcome)
         if outcome == 'retry':
             self.log.warning('attempt %d/%d failed id=%s (%s), retry in %d ms', attempt, MAX_ATTEMPTS, mid, reason,
@@ -270,6 +311,22 @@ class Consumer:
             self.log.error('attempt %d/%d failed id=%s (%s, %s), moved to %s.dlq', attempt, MAX_ATTEMPTS, mid, kind,
                            reason, queue)
         await self.journal(queue, mid, msg, attempt, message.redelivered, received_at, outcome, None, reason)
+
+    async def settle(self, message, action, mid):
+        """ack или nack (с возвратом в очередь). ЛР 6: если соединение с брокером уже разорвано, подтвердить
+        доставку нельзя, но и не нужно – брокер сам вернет неподтвержденное сообщение в очередь, а повтор
+        будет распознан как дубликат. Раньше исключение завершало процесс, и при перезапуске брокера
+        kubelet перезапускал обработчик несколько раз (CrashLoopBackOff), пока брокер не станет доступен."""
+        try:
+            if action == 'ack':
+                await message.ack()
+            else:
+                await message.nack(requeue=True)
+            return True
+        except (aiormq.exceptions.AMQPError, ConnectionError, RuntimeError) as exc:
+            self.log.warning('%s not delivered id=%s (%s: channel closed), broker will redeliver the message',
+                             action, mid, type(exc).__name__)
+            return False
 
     def count(self, outcome):
         self.counts[outcome] = self.counts.get(outcome, 0) + 1

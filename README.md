@@ -111,7 +111,7 @@ docker compose down               # остановка; данные остаю�
 ```bash
 kind create cluster --config k8s/kind-cluster.yaml          # кластер transit: control-plane + 2 worker
 for c in gateway:producer track-service:services/track-service analytics-service:services/analytics-service          incident-service:services/incident-service dispatcher-api:services/dispatcher-api simulator:simulator; do
-  docker build -f ${c#*:}/Dockerfile -t transit-monitor/${c%%:*}:lab5 . && kind load docker-image transit-monitor/${c%%:*}:lab5 --name transit
+  docker build -f ${c#*:}/Dockerfile -t transit-monitor/${c%%:*}:lab6 . && kind load docker-image transit-monitor/${c%%:*}:lab6 --name transit
 done
 kubectl apply -k k8s/                                        # вся система одной командой (namespace transit)
 kubectl -n transit get pods -o wide
@@ -207,6 +207,26 @@ persist` – накопление 1000 событий в очередях, `dock
 (`kubectl delete pod`) и `kill -9` процесса под потоком. Затем `python tools/report_lab5.py` –
 [`docs/lab5/experiments.md`](docs/lab5/experiments.md) и графики.
 
+## Эксперименты (ЛР 6)
+
+Кластер развернут (`kubectl apply -k k8s/`, образы `:lab6`). `python tools/run_lab6.py <фаза>`:
+`perf` – 1000/5000/10 000 событий и серия по интенсивности 25–200 событий/с; `scale` – 1, 2, 4 реплики
+Track Service (обработка 20 мс и 0 мс); `errors` – доля временных сбоев и ошибочных данных 0–30 %;
+`consumer` – `kill -9` Schedule Analytics; `broker [--name broker_fixed2]` – удаление Pod `rabbitmq-0`;
+`network` – обрыв сети экземпляра Track Service (iptables в сетевом пространстве Pod, 90 с);
+`storage`, `storage2` – остановка PostgreSQL при штатных и коротких задержках Retry, replay из DLQ;
+`optim` – `synchronous_commit = off`; `idle` – загрузка CPU без нагрузки. Стенд собирает журналы всех
+контейнеров (в том числе удаленных) в `docs/lab6/logs/<фаза>/all.log`, загрузку CPU – по cgroup узлов kind,
+счетчики PostgreSQL – по `pg_stat_database`/`pg_stat_wal`. Затем `python tools/report_lab6.py` –
+[`docs/lab6/experiments.md`](docs/lab6/experiments.md), графики и `docs/lab6/results/summary.json`.
+
+Исправления по результатам ЛР 6: рабочая очередь обработчика объявляется через `declare_queue`
+(`rel.work_queue`) – иначе `connect_robust` после перезапуска брокера не восстанавливает подписку;
+невозможность подтвердить доставку при разрыве соединения не завершает процесс (`Consumer.settle`);
+пробы проверяют фактическое соединение с брокером (`BROKER_GRACE_S`, `CONNECT_TIMEOUT_S`);
+readiness-проба RabbitMQ – `tcpSocket` вместо `rabbitmq-diagnostics` (0,82 → 0,135 ядра в простое).
+Схема аудита – [`docs/diagrams/audit.mmd`](docs/diagrams/audit.mmd).
+
 ## Проверки
 
 ```bash
@@ -226,4 +246,4 @@ python tools/build_reference.py     # справочники маршрутов 
 | 3 ✔ | Retry, DLQ, идемпотентность | `common/reliability.py`: `transit.retry` и очереди ожидания с TTL, `transit.dlx` и `*.dlq`, `processed_messages` в транзакции, `processing_log`, имитация сбоев, `tools/dlq.py` |
 | 4 ✔ | Контейнеризация | Dockerfile каждого компонента, `docker-compose.yml` (9 сервисов, сеть `transit-net`, тома, healthcheck), `.env.example`, Dispatcher API, `tools/run_lab4.py` |
 | 5 ✔ | Kubernetes | `k8s/`: Deployment, StatefulSet + PVC, Service, ConfigMap, Secret, пробы готовности обработчиков (`HEALTH_PORT`), масштабирование Track Service 1 → 2 → 4, `tools/run_lab5.py` |
-| 6 | Тестирование и оптимизация | Генератор нагрузки, chaos-сценарии, метрики throughput/latency, аудит узких мест |
+| 6 ✔ | Тестирование и оптимизация | `tools/run_lab6.py`: нагрузка, масштабирование, ошибки, 6 chaos-сценариев, сбор журналов всех Pod, CPU и счетчики БД; аудит SPOF и узких мест, исправление восстановления подписки после перезапуска брокера |

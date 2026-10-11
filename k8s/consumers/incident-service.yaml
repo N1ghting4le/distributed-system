@@ -17,7 +17,7 @@ spec:
       terminationGracePeriodSeconds: 30
       initContainers:
         - name: wait-deps
-          image: transit-monitor/incident-service:lab5
+          image: transit-monitor/incident-service:lab6
           imagePullPolicy: IfNotPresent
           command: [python, -c]
           args:
@@ -31,7 +31,7 @@ spec:
                           print(host, 'waiting:', exc); time.sleep(1)
       containers:
         - name: incident-service
-          image: transit-monitor/incident-service:lab5
+          image: transit-monitor/incident-service:lab6
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef: {name: transit-config}

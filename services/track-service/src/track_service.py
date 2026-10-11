@@ -206,11 +206,11 @@ async def main():
     shapes = {(r['route_id'], r['direction']): r['points']
               for r in await pool.fetch('SELECT route_id, direction, points FROM route_shapes')}
 
-    connection = await aio_pika.connect_robust(RABBIT_URL)
+    connection = await rel.connect_broker(RABBIT_URL)  # ЛР 6: тайм-аут попытки подключения
     channel = await connection.channel()
     await channel.set_qos(prefetch_count=PREFETCH)
     await rel.declare_topology(channel)
-    queue = await channel.get_queue(QUEUE, ensure=False)
+    queue = await rel.work_queue(channel, QUEUE)  # ЛР 6: восстанавливаемая подписка
     publish_channel = await connection.channel(publisher_confirms=True, on_return_raises=True)
     exchange = await publish_channel.get_exchange(EXCHANGE, ensure=False)
 

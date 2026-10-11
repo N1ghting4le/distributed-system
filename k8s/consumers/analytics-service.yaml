@@ -20,7 +20,7 @@ spec:
       terminationGracePeriodSeconds: 30
       initContainers:
         - name: wait-deps
-          image: transit-monitor/analytics-service:lab5
+          image: transit-monitor/analytics-service:lab6
           imagePullPolicy: IfNotPresent
           command: [python, -c]
           args:
@@ -34,7 +34,7 @@ spec:
                           print(host, 'waiting:', exc); time.sleep(1)
       containers:
         - name: analytics-service
-          image: transit-monitor/analytics-service:lab5
+          image: transit-monitor/analytics-service:lab6
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef: {name: transit-config}

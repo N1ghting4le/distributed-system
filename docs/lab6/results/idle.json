@@ -1,0 +1,1032 @@
+{
+ "cpu": {
+  "analytics-service": {
+   "cpu_avg": 0.001,
+   "cpu_max": 0.002,
+   "mem_max_mb": 36.0
+  },
+  "postgres": {
+   "cpu_avg": 0.021,
+   "cpu_max": 0.039,
+   "mem_max_mb": 271.7
+  },
+  "track-service": {
+   "cpu_avg": 0.002,
+   "cpu_max": 0.003,
+   "mem_max_mb": 57.4
+  },
+  "incident-service": {
+   "cpu_avg": 0.001,
+   "cpu_max": 0.002,
+   "mem_max_mb": 26.0
+  },
+  "gateway": {
+   "cpu_avg": 0.003,
+   "cpu_max": 0.004,
+   "mem_max_mb": 49.9
+  },
+  "dispatcher-api": {
+   "cpu_avg": 0.003,
+   "cpu_max": 0.003,
+   "mem_max_mb": 40.2
+  },
+  "rabbitmq": {
+   "cpu_avg": 0.818,
+   "cpu_max": 1.371,
+   "mem_max_mb": 197.5
+  }
+ },
+ "cpu_samples": [
+  {
+   "t": 3.27,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.025,
+     "mem_mb": 269.7
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.002,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.494,
+     "mem_mb": 115.1
+    }
+   }
+  },
+  {
+   "t": 5.97,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.018,
+     "mem_mb": 269.7
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.0,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.0,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.356,
+     "mem_mb": 114.7
+    }
+   }
+  },
+  {
+   "t": 8.65,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.021,
+     "mem_mb": 270.1
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.002,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.017,
+     "mem_mb": 114.2
+    }
+   }
+  },
+  {
+   "t": 11.36,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.018,
+     "mem_mb": 270.7
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.004,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.282,
+     "mem_mb": 113.8
+    }
+   }
+  },
+  {
+   "t": 14.0,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.034,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.014,
+     "mem_mb": 113.0
+    }
+   }
+  },
+  {
+   "t": 16.64,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.022,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.371,
+     "mem_mb": 112.3
+    }
+   }
+  },
+  {
+   "t": 19.34,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.02,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.004,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.011,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 22.0,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.021,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.344,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 24.69,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.004,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.012,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 27.35,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.026,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.004,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.303,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 30.02,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.018,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.306,
+     "mem_mb": 141.1
+    }
+   }
+  },
+  {
+   "t": 32.7,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.039,
+     "mem_mb": 271.7
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.002,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.341,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 35.37,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.02,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.495,
+     "mem_mb": 192.4
+    }
+   }
+  },
+  {
+   "t": 38.07,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.02,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.883,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 40.79,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.018,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.0,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.101,
+     "mem_mb": 197.5
+    }
+   }
+  },
+  {
+   "t": 43.49,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.002,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.024,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.002,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.002,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.004,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.0,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.342,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 46.17,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.019,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.355,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 48.82,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.002,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.0,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.013,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 51.49,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.019,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.004,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.313,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 54.19,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.037,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 0.013,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 56.84,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.019,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.002,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.002,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.002,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.325,
+     "mem_mb": 110.9
+    }
+   }
+  },
+  {
+   "t": 59.49,
+   "pods": {
+    "analytics-service-65454bf7cd-4gqnj": {
+     "app": "analytics-service",
+     "cpu": 0.001,
+     "mem_mb": 36.0
+    },
+    "postgres-0": {
+     "app": "postgres",
+     "cpu": 0.019,
+     "mem_mb": 271.3
+    },
+    "track-service-788965dc5d-bbxbt": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 29.8
+    },
+    "incident-service-6675bcf-wp5ht": {
+     "app": "incident-service",
+     "cpu": 0.001,
+     "mem_mb": 26.0
+    },
+    "gateway-9d85848ff-fdbtj": {
+     "app": "gateway",
+     "cpu": 0.003,
+     "mem_mb": 49.9
+    },
+    "dispatcher-api-795dc49c98-l97c5": {
+     "app": "dispatcher-api",
+     "cpu": 0.003,
+     "mem_mb": 40.2
+    },
+    "track-service-788965dc5d-n64ph": {
+     "app": "track-service",
+     "cpu": 0.001,
+     "mem_mb": 27.6
+    },
+    "rabbitmq-0": {
+     "app": "rabbitmq",
+     "cpu": 1.297,
+     "mem_mb": 110.9
+    }
+   }
+  }
+ ],
+ "rabbitmq_scheduler": "0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%  100.00%    0.00%\n      poll( 0)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%    0.00%    0.00%    0.00%    0.00%   99.99%    0.00%\n scheduler( 1)    0.15%    0.04%    0.03%    0.01%    0.04%    0.05%    0.11%    0.01%    0.01%    0.01%    0.00%    0.00%    0.16%   99.33%    0.02%\n scheduler( 2)    0.06%    0.01%    0.00%    0.00%    0.01%    0.01%    0.02%    0.00%    0.00%    0.00%    0.00%    0.00%    0.04%   99.81%    0.02%\n scheduler( 3)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%   99.99%    0.00%\n scheduler( 4)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%   99.99%    0.00%\n scheduler( 5)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%   99.99%    0.00%\n scheduler( 6)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%   99.99%    0.00%\n scheduler( 7)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%   99.99%    0.00%\n scheduler( 8)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%   99.99%    0.00%\n scheduler( 9)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%   99.99%    0.00%\n scheduler(10)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%   99.99%    0.00%\n scheduler(11)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%   99.99%    0.00%\n scheduler(12)    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%  100.00%    0.00%\n\nStats per type:\n         async    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%  100.00%    0.00%\n           aux    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%    0.00%    0.00%    0.01%    0.00%    0.00%    0.00%    0.00%   99.98%    0.00%\ndirty_cpu_sche    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%  100.00%    0.00%\ndirty_io_sched    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%   99.99%    0.00%\n          poll    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.00%    0.01%    0.00%    0.00%    0.00%    0.00%   99.99%    0.00%\n     scheduler    0.02%    0.00%    0.00%    0.00%    0.01%    0.01%    0.01%    0.00%    0.00%    0.00%    0.00%    0.00%    0.02%   99.92%    0.00%\n\n"
+}

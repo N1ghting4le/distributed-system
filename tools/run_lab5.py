@@ -37,6 +37,7 @@ RABBIT_API = 'http://localhost:15672/api'                         # NodePort rab
 RABBIT_AUTH = ('transit', 'transit')
 API_URL = 'http://localhost:8081'
 TRACK = 'track-service'
+IMAGE_TAG = 'lab5'   # ЛР 6 переключает на образы :lab6
 APPS = ['gateway', 'track-service', 'analytics-service', 'incident-service', 'dispatcher-api']
 
 
@@ -166,7 +167,7 @@ def simulator_job(args, wait=True, timeout=1800):
         'spec': {'backoffLimit': 0, 'ttlSecondsAfterFinished': 3600, 'template': {
             'metadata': {'labels': {'app': 'simulator'}},
             'spec': {'restartPolicy': 'Never', 'containers': [{
-                'name': 'simulator', 'image': 'transit-monitor/simulator:lab5', 'imagePullPolicy': 'IfNotPresent',
+                'name': 'simulator', 'image': f'transit-monitor/simulator:{IMAGE_TAG}', 'imagePullPolicy': 'IfNotPresent',
                 'env': [{'name': 'GATEWAY_URL', 'valueFrom': {'configMapKeyRef': {'name': 'transit-config',
                                                                                   'key': 'GATEWAY_URL'}}}],
                 'args': [str(a) for a in args]}]}}}}

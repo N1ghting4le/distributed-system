@@ -67,10 +67,12 @@ spec:
             - {name: data, mountPath: /var/lib/rabbitmq}
             - {name: config, mountPath: /etc/rabbitmq/conf.d/90-transit.conf, subPath: 90-transit.conf}
           readinessProbe:
-            exec: {command: [rabbitmq-diagnostics, -q, check_port_connectivity]}
+            # ЛР 6: было exec rabbitmq-diagnostics check_port_connectivity – каждый вызов запускает отдельную
+            # виртуальную машину Erlang (CLI) и в простое занимал ≈0,8 ядра; проверка порта AMQP почти бесплатна
+            tcpSocket: {port: 5672}
             initialDelaySeconds: 10
             periodSeconds: 5
-            timeoutSeconds: 10
+            timeoutSeconds: 3
           livenessProbe:
             exec: {command: [rabbitmq-diagnostics, -q, ping]}
             initialDelaySeconds: 60

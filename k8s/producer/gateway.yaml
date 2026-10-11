@@ -31,7 +31,7 @@ spec:
       terminationGracePeriodSeconds: 20
       containers:
         - name: gateway
-          image: transit-monitor/gateway:lab5
+          image: transit-monitor/gateway:lab6
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef: {name: transit-config}
