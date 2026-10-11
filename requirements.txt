@@ -1,4 +1,4 @@
-# Компоненты (ЛР 2): Ingest Gateway, Fleet Simulator, Track / Schedule Analytics / Incident Service, tools/run_experiment.py
+# Компоненты (ЛР 2–3): Ingest Gateway, Fleet Simulator, Track / Schedule Analytics / Incident Service, tools/run_experiment.py
 aio-pika==10.1.1
 asyncpg==0.32.0
 fastapi==0.143.0

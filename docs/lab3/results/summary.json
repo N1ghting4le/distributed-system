@@ -1,0 +1,574 @@
+{
+ "exp1": {
+  "published": 100,
+  "unique_published": 100,
+  "unique_by_type": {
+   "vehicle.position": 86,
+   "ticket.validation": 9,
+   "vehicle.incident": 5
+  },
+  "services": {
+   "track-service": {
+    "received": 86,
+    "success": 86,
+    "retry": 0,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 86,
+    "redelivered": 0,
+    "operations": 86,
+    "journal_lost": 0
+   },
+   "analytics-service": {
+    "received": 95,
+    "success": 95,
+    "retry": 0,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 95,
+    "redelivered": 0,
+    "operations": 95,
+    "journal_lost": 0
+   },
+   "incident-service": {
+    "received": 5,
+    "success": 5,
+    "retry": 0,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 5,
+    "redelivered": 0,
+    "operations": 5,
+    "journal_lost": 0
+   }
+  },
+  "total": {
+   "received": 186,
+   "success": 186,
+   "retry": 0,
+   "dlq": 0,
+   "duplicate": 0,
+   "unique": 186,
+   "redelivered": 0,
+   "operations": 186,
+   "journal_lost": 0
+  },
+  "business": {
+   "vehicle_positions": 86,
+   "rejected_messages": 0,
+   "passenger_flow_validations": 9,
+   "stop_arrivals": 5,
+   "incidents": 5,
+   "positions_without_journal": 0
+  },
+  "dlq": {
+   "track.positions.dlq": 0,
+   "analytics.positions.dlq": 0,
+   "analytics.validations.dlq": 0,
+   "incidents.dlq": 0
+  },
+  "elapsed_s": 2.96,
+  "events": [],
+  "by_attempt": {
+   "analytics-service": {
+    "1": {
+     "success": 95
+    }
+   },
+   "incident-service": {
+    "1": {
+     "success": 5
+    }
+   },
+   "track-service": {
+    "1": {
+     "success": 86
+    }
+   }
+  }
+ },
+ "exp2": {
+  "published": 100,
+  "unique_published": 100,
+  "unique_by_type": {
+   "vehicle.position": 84,
+   "vehicle.incident": 4,
+   "ticket.validation": 12
+  },
+  "services": {
+   "track-service": {
+    "received": 108,
+    "success": 84,
+    "retry": 24,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 84,
+    "redelivered": 0,
+    "operations": 84,
+    "journal_lost": 0
+   },
+   "analytics-service": {
+    "received": 124,
+    "success": 96,
+    "retry": 28,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 96,
+    "redelivered": 0,
+    "operations": 96,
+    "journal_lost": 0
+   },
+   "incident-service": {
+    "received": 7,
+    "success": 4,
+    "retry": 3,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 4,
+    "redelivered": 0,
+    "operations": 4,
+    "journal_lost": 0
+   }
+  },
+  "total": {
+   "received": 239,
+   "success": 184,
+   "retry": 55,
+   "dlq": 0,
+   "duplicate": 0,
+   "unique": 184,
+   "redelivered": 0,
+   "operations": 184,
+   "journal_lost": 0
+  },
+  "business": {
+   "vehicle_positions": 84,
+   "rejected_messages": 0,
+   "passenger_flow_validations": 12,
+   "stop_arrivals": 5,
+   "incidents": 4,
+   "positions_without_journal": 0
+  },
+  "dlq": {
+   "track.positions.dlq": 0,
+   "analytics.positions.dlq": 0,
+   "analytics.validations.dlq": 0,
+   "incidents.dlq": 0
+  },
+  "elapsed_s": 9.3,
+  "events": [],
+  "by_attempt": {
+   "analytics-service": {
+    "1": {
+     "retry": 20,
+     "success": 76
+    },
+    "2": {
+     "retry": 6,
+     "success": 14
+    },
+    "3": {
+     "retry": 2,
+     "success": 4
+    },
+    "4": {
+     "success": 2
+    }
+   },
+   "incident-service": {
+    "1": {
+     "retry": 2,
+     "success": 2
+    },
+    "2": {
+     "retry": 1,
+     "success": 1
+    },
+    "3": {
+     "success": 1
+    }
+   },
+   "track-service": {
+    "1": {
+     "retry": 17,
+     "success": 67
+    },
+    "2": {
+     "retry": 5,
+     "success": 12
+    },
+    "3": {
+     "retry": 2,
+     "success": 3
+    },
+    "4": {
+     "success": 2
+    }
+   }
+  }
+ },
+ "exp2_outage": {
+  "published": 100,
+  "unique_published": 100,
+  "unique_by_type": {
+   "vehicle.position": 87,
+   "ticket.validation": 11,
+   "vehicle.incident": 2
+  },
+  "services": {
+   "track-service": {
+    "received": 91,
+    "success": 87,
+    "retry": 4,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 87,
+    "redelivered": 0,
+    "operations": 87,
+    "journal_lost": 4
+   },
+   "analytics-service": {
+    "received": 102,
+    "success": 98,
+    "retry": 4,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 98,
+    "redelivered": 0,
+    "operations": 98,
+    "journal_lost": 4
+   },
+   "incident-service": {
+    "received": 4,
+    "success": 2,
+    "retry": 2,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 2,
+    "redelivered": 0,
+    "operations": 2,
+    "journal_lost": 2
+   }
+  },
+  "total": {
+   "received": 197,
+   "success": 187,
+   "retry": 10,
+   "dlq": 0,
+   "duplicate": 0,
+   "unique": 187,
+   "redelivered": 0,
+   "operations": 187,
+   "journal_lost": 10
+  },
+  "business": {
+   "vehicle_positions": 87,
+   "rejected_messages": 0,
+   "passenger_flow_validations": 11,
+   "stop_arrivals": 5,
+   "incidents": 2,
+   "positions_without_journal": 0
+  },
+  "dlq": {
+   "track.positions.dlq": 0,
+   "analytics.positions.dlq": 0,
+   "analytics.validations.dlq": 0,
+   "incidents.dlq": 0
+  },
+  "elapsed_s": 17.47,
+  "events": [
+   [
+    "db_stop",
+    1.99
+   ],
+   [
+    "db_stopped",
+    2.79
+   ],
+   [
+    "db_started",
+    13.26
+   ]
+  ],
+  "by_attempt": {
+   "analytics-service": {
+    "1": {
+     "success": 94
+    },
+    "2": {
+     "success": 4
+    }
+   },
+   "incident-service": {
+    "1": {
+     "success": 1
+    },
+    "3": {
+     "success": 1
+    }
+   },
+   "track-service": {
+    "1": {
+     "success": 83
+    },
+    "2": {
+     "success": 4
+    }
+   }
+  }
+ },
+ "exp3": {
+  "published": 101,
+  "unique_published": 101,
+  "unique_by_type": {
+   "vehicle.position": 81,
+   "ticket.validation": 13,
+   "vehicle.incident": 7
+  },
+  "services": {
+   "track-service": {
+    "received": 84,
+    "success": 80,
+    "retry": 3,
+    "dlq": 3,
+    "duplicate": 0,
+    "unique": 83,
+    "redelivered": 0,
+    "operations": 80,
+    "journal_lost": 0
+   },
+   "analytics-service": {
+    "received": 97,
+    "success": 93,
+    "retry": 3,
+    "dlq": 3,
+    "duplicate": 0,
+    "unique": 96,
+    "redelivered": 0,
+    "operations": 93,
+    "journal_lost": 0
+   },
+   "incident-service": {
+    "received": 7,
+    "success": 7,
+    "retry": 0,
+    "dlq": 0,
+    "duplicate": 0,
+    "unique": 7,
+    "redelivered": 0,
+    "operations": 7,
+    "journal_lost": 0
+   }
+  },
+  "total": {
+   "received": 188,
+   "success": 180,
+   "retry": 6,
+   "dlq": 6,
+   "duplicate": 0,
+   "unique": 186,
+   "redelivered": 0,
+   "operations": 180,
+   "journal_lost": 0
+  },
+  "business": {
+   "vehicle_positions": 80,
+   "rejected_messages": 0,
+   "passenger_flow_validations": 13,
+   "stop_arrivals": 7,
+   "incidents": 7,
+   "positions_without_journal": 0
+  },
+  "dlq": {
+   "track.positions.dlq": 3,
+   "analytics.positions.dlq": 3,
+   "analytics.validations.dlq": 0,
+   "incidents.dlq": 0
+  },
+  "elapsed_s": 9.84,
+  "events": [
+   [
+    "poison_sent",
+    "704b04fd-6648-5836-97ad-38bf3f1757ce"
+   ],
+   [
+    "malformed_sent",
+    2
+   ]
+  ],
+  "by_attempt": {
+   "analytics-service": {
+    "1": {
+     "dlq": 2,
+     "retry": 1,
+     "success": 93
+    },
+    "2": {
+     "retry": 1
+    },
+    "3": {
+     "retry": 1
+    },
+    "4": {
+     "dlq": 1
+    }
+   },
+   "incident-service": {
+    "1": {
+     "success": 7
+    }
+   },
+   "track-service": {
+    "1": {
+     "dlq": 2,
+     "retry": 1,
+     "success": 80
+    },
+    "2": {
+     "retry": 1
+    },
+    "3": {
+     "retry": 1
+    },
+    "4": {
+     "dlq": 1
+    }
+   }
+  }
+ },
+ "exp4": {
+  "published": 300,
+  "unique_published": 100,
+  "unique_by_type": {
+   "vehicle.position": 80,
+   "vehicle.incident": 7,
+   "ticket.validation": 13
+  },
+  "services": {
+   "track-service": {
+    "received": 257,
+    "success": 80,
+    "retry": 0,
+    "dlq": 0,
+    "duplicate": 177,
+    "unique": 80,
+    "redelivered": 17,
+    "operations": 80,
+    "journal_lost": 0
+   },
+   "analytics-service": {
+    "received": 299,
+    "success": 93,
+    "retry": 0,
+    "dlq": 0,
+    "duplicate": 206,
+    "unique": 93,
+    "redelivered": 20,
+    "operations": 93,
+    "journal_lost": 0
+   },
+   "incident-service": {
+    "received": 22,
+    "success": 7,
+    "retry": 0,
+    "dlq": 0,
+    "duplicate": 15,
+    "unique": 7,
+    "redelivered": 1,
+    "operations": 7,
+    "journal_lost": 0
+   }
+  },
+  "total": {
+   "received": 578,
+   "success": 180,
+   "retry": 0,
+   "dlq": 0,
+   "duplicate": 398,
+   "unique": 180,
+   "redelivered": 38,
+   "operations": 180,
+   "journal_lost": 0
+  },
+  "business": {
+   "vehicle_positions": 80,
+   "rejected_messages": 0,
+   "passenger_flow_validations": 13,
+   "stop_arrivals": 7,
+   "incidents": 7,
+   "positions_without_journal": 0
+  },
+  "dlq": {
+   "track.positions.dlq": 0,
+   "analytics.positions.dlq": 0,
+   "analytics.validations.dlq": 0,
+   "incidents.dlq": 0
+  },
+  "elapsed_s": 4.99,
+  "events": [],
+  "by_attempt": {
+   "analytics-service": {
+    "1": {
+     "duplicate": 206,
+     "success": 93
+    }
+   },
+   "incident-service": {
+    "1": {
+     "duplicate": 15,
+     "success": 7
+    }
+   },
+   "track-service": {
+    "1": {
+     "duplicate": 177,
+     "success": 80
+    }
+   }
+  }
+ },
+ "exp2_series": [
+  {
+   "p": 0.1,
+   "messages": 1854,
+   "deliveries": 2080,
+   "retry": 226,
+   "dlq": 0,
+   "success": 1854,
+   "retry_per_msg": 0.12189859762675297,
+   "retry_theory": 0.111,
+   "dlq_share": 0.0,
+   "dlq_theory": 0.00010000000000000002,
+   "elapsed_s": 17.71,
+   "operations": 1854
+  },
+  {
+   "p": 0.3,
+   "messages": 1880,
+   "deliveries": 2686,
+   "retry": 806,
+   "dlq": 20,
+   "success": 1860,
+   "retry_per_msg": 0.42872340425531913,
+   "retry_theory": 0.417,
+   "dlq_share": 0.010638297872340425,
+   "dlq_theory": 0.0081,
+   "elapsed_s": 24.61,
+   "operations": 1860
+  },
+  {
+   "p": 0.5,
+   "messages": 1844,
+   "deliveries": 3383,
+   "retry": 1539,
+   "dlq": 94,
+   "success": 1750,
+   "retry_per_msg": 0.8345986984815619,
+   "retry_theory": 0.875,
+   "dlq_share": 0.0509761388286334,
+   "dlq_theory": 0.0625,
+   "elapsed_s": 31.05,
+   "operations": 1750
+  }
+ ]
+}

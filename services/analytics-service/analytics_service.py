@@ -6,6 +6,10 @@ vehicle.position: если машина стоит с открытыми две�
 ticket.validation: агрегирование в пассажиропоток passenger_flow по маршруту, остановке и 15-минутному
 интервалу (UPSERT счетчиков accepted/rejected).
 
+ЛР 3: счетчики passenger_flow не идемпотентны сами по себе (повтор прибавил бы проход еще раз), поэтому
+первая операция каждой транзакции – регистрация message_id в processed_messages (common.reliability.claim):
+дубликат не меняет ни таблиц, ни состояния в памяти. Retry и DLQ – common.reliability.
+
 Сервис хранит состояние машины (последняя зафиксированная остановка) в памяти, поэтому запускается
 в одном экземпляре; масштабирование – распределением по vehicle_id (ЛР 5).
 Запуск: CONSUMER_ID=a1 python services/analytics-service/analytics_service.py
@@ -16,6 +20,7 @@ import logging
 import math
 import os
 import socket
+import sys
 import time
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -25,21 +30,24 @@ import aio_pika
 import asyncpg
 from jsonschema import Draft202012Validator, FormatChecker
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from common import reliability as rel  # noqa: E402
+
 RABBIT_URL = os.getenv('RABBIT_URL', 'amqp://guest:guest@localhost:5672/')
 DB_DSN = os.getenv('DB_DSN', 'postgresql://transit:transit@localhost:5433/transit')
 SCHEMA_PATH = Path(os.getenv('SCHEMA_PATH', Path(__file__).resolve().parents[2] / 'docs/schemas/message.schema.json'))
 PREFETCH = int(os.getenv('PREFETCH', '50'))
 PROCESS_DELAY_MS = int(os.getenv('PROCESS_DELAY_MS', '0'))
 CONSUMER_ID = os.getenv('CONSUMER_ID', f'{socket.gethostname()}-{os.getpid()}')
+DB_TIMEOUT_S = float(os.getenv('DB_TIMEOUT_S', '10'))  # тайм-аут подключения и запроса: зависание БД → временная ошибка
 HEADWAY_MIN = int(os.getenv('HEADWAY_MIN', '3'))
 GEOFENCE_M = 30
 LATE_S = 600
 MINSK = timezone(timedelta(hours=3))
 
 SERVICE = 'analytics-service'
-EXCHANGE = 'transit.events'
 QUEUES = {'analytics.positions': 'vehicle.position', 'analytics.validations': 'ticket.validation'}
-INCIDENTS_QUEUE, INCIDENT_KEY = 'incidents', 'vehicle.incident'
+INCIDENT_KEY = 'vehicle.incident'
 NAMESPACE = uuid.uuid5(uuid.NAMESPACE_DNS, 'transit-monitor.local')
 
 logging.basicConfig(level=logging.INFO, format=f'%(asctime)s [{CONSUMER_ID}] %(levelname)s %(message)s')
@@ -78,7 +86,6 @@ class Analytics:
         self.day = None
         self.last_stop = {}      # vehicle_id → (trip_id, stop_id): состояние в памяти
         self.late_reported = set()
-        self.counts = {}
 
     async def load_reference(self):
         day = now_utc().astimezone(MINSK).date()
@@ -93,44 +100,25 @@ class Analytics:
         log.info('reference loaded: day=%s trips_built=%d stops_routes=%d timetable=%d', day, built, len(self.stops),
                  len(self.timetable))
 
-    async def handle(self, message, expected_type):
-        try:
-            msg = json.loads(message.body)
-            validate(msg, expected_type)
-        except ValueError as exc:
-            log.error('invalid message rejected: %s', exc)
-            await self.save_invalid(message, str(exc))
-            await message.reject(requeue=False)
-            return
-        mid = msg['message_id']
-        log.info('received id=%s type=%s redelivered=%s', mid, msg['type'], message.redelivered)
+    @staticmethod
+    def parse(body, expected_type):
+        msg = json.loads(body)
+        validate(msg, expected_type)
+        return msg
+
+    async def handle(self, msg, attempt):
         if PROCESS_DELAY_MS:
             time.sleep(PROCESS_DELAY_MS / 1000)  # блокирующая, как вычисления; таймер asyncio в Windows – 15,6 мс
-        try:
-            if msg['type'] == 'vehicle.position':
-                result, state, incident = await self.on_position(msg)
-            else:
-                result, state, incident = await self.on_validation(msg), None, None
-            if incident:
-                await self.publish(incident)
-        except (asyncpg.PostgresError, OSError, aio_pika.exceptions.AMQPError) as exc:
-            log.error('processing failed id=%s (%s: %s), message returned to queue', mid, type(exc).__name__, exc)
-            await asyncio.sleep(1)
-            await message.nack(requeue=True)
-            return
-        if state:  # состояние меняется только после фиксации результата
+        if msg['type'] == 'vehicle.position':
+            result, state, incident = await self.on_position(msg, attempt)
+        else:
+            result, state, incident = await self.on_validation(msg, attempt), None, None
+        if incident:
+            await self.publish(incident)  # ошибка – временная: повтор найдет дубликат и опубликует снова
+            self.late_reported.add((incident['payload']['vehicle_id'], incident['payload']['trip_id']))
+        if state:  # состояние в памяти меняется только после фиксации результата и публикации
             self.last_stop[state[0]] = state[1]
-        await message.ack()
-        kind = result.split(':')[0]
-        self.counts[kind] = self.counts.get(kind, 0) + 1
-        log.info('processed id=%s result=%s', mid, result)
-
-    async def journal(self, conn, msg, result):
-        await conn.execute(
-            'INSERT INTO processed_messages (consumer, message_id, instance_id, msg_type, produced_at, processed_at, '
-            'result) VALUES ($1, $2, $3, $4, $5, $6, $7) ON CONFLICT DO NOTHING',
-            SERVICE, msg['message_id'], CONSUMER_ID, msg['type'], datetime.fromisoformat(msg['received_at']),
-            now_utc(), result)
+        return result
 
     def nearest_stop(self, p):
         best = None
@@ -140,7 +128,7 @@ class Analytics:
                 best = (stop_id, d)
         return best
 
-    async def on_position(self, msg):
+    async def on_position(self, msg, attempt):
         p = msg['payload']
         ts = datetime.fromisoformat(msg['timestamp'])
         if ts.astimezone(MINSK).date() != self.day:
@@ -158,6 +146,12 @@ class Analytics:
                 result = 'arrival_unscheduled'
                 planned = None
         async with self.pool.acquire() as conn, conn.transaction():
+            previous = await rel.claim(conn, SERVICE, CONSUMER_ID, msg, attempt)
+            if previous is not None:  # уже обработано: ни записей, ни изменения состояния
+                if previous.startswith('arrival_late:'):  # инцидент мог не дойти до брокера после COMMIT
+                    _, stop_id, delay_s = previous.split(':')
+                    return 'duplicate:republished', None, self.make_incident(msg, stop_id, int(delay_s[:-1]))
+                return 'duplicate', None, None
             if state and planned is not None:
                 delay = await conn.fetchval(
                     'INSERT INTO stop_arrivals (trip_id, stop_id, vehicle_id, arrived_at, planned_at) '
@@ -168,15 +162,15 @@ class Analytics:
                 if delay is not None and delay > LATE_S and key not in self.late_reported:
                     incident = self.make_incident(msg, stop[0], delay)
                     result = f'arrival_late:{stop[0]}:{delay}s'
-            await self.journal(conn, msg, result)
-        if incident:
-            self.late_reported.add((p['vehicle_id'], p['trip_id']))
+            await rel.finish(conn, SERVICE, msg, attempt, result)  # здесь же – точка имитации сбоя
         return result, state, incident
 
-    async def on_validation(self, msg):
+    async def on_validation(self, msg, attempt):
         p = msg['payload']
         accepted = p['result'] == 'accepted'
         async with self.pool.acquire() as conn, conn.transaction():
+            if await rel.claim(conn, SERVICE, CONSUMER_ID, msg, attempt) is not None:
+                return 'duplicate'
             await conn.execute(
                 '''INSERT INTO passenger_flow (route_id, stop_id, bucket_start, accepted, rejected)
                    VALUES ($1, $2, date_bin('15 min', $3::timestamptz, '2026-01-01'), $4, $5)
@@ -185,7 +179,7 @@ class Analytics:
                        rejected = passenger_flow.rejected + excluded.rejected''',
                 p['route_id'], p['stop_id'], datetime.fromisoformat(msg['timestamp']), int(accepted), int(not accepted))
             result = 'counted:' + ('accepted' if accepted else p['reject_reason'] or 'rejected')
-            await self.journal(conn, msg, result)
+            await rel.finish(conn, SERVICE, msg, attempt, result)
         return result
 
     def make_incident(self, msg, stop_id, delay):
@@ -210,24 +204,14 @@ class Analytics:
                     msg['payload']['vehicle_id'], msg['payload']['trip_id'], msg['payload']['details']['delay_s'],
                     msg['message_id'])
 
-    async def save_invalid(self, message, reason):
-        try:
-            raw = json.loads(message.body)
-            raw = raw if isinstance(raw, dict) else {'value': raw}
-        except ValueError:
-            raw = {'raw_text': message.body.decode('utf-8', 'replace')[:2000]}
-        try:
-            mid = str(uuid.UUID(raw.get('message_id') or message.message_id or ''))
-        except (ValueError, TypeError, AttributeError):
-            mid = None
-        await self.pool.execute('INSERT INTO rejected_messages (consumer, message_id, raw, reason) '
-                                'VALUES ($1, $2, $3, $4)', SERVICE, mid, raw, reason)
 
+async def consume(consumer, service, queue, expected_type):
+    def parse(body):
+        return service.parse(body, expected_type)
 
-async def consume(service, queue, expected_type):
     async with queue.iterator() as messages:
         async for message in messages:
-            await service.handle(message, expected_type)
+            await consumer.process(message, queue.name, parse, service.handle)
 
 
 async def init_connection(conn):
@@ -236,27 +220,25 @@ async def init_connection(conn):
 
 async def main():
     pool = await asyncpg.create_pool(DB_DSN, min_size=1, max_size=3, init=init_connection,
+                                     timeout=DB_TIMEOUT_S, command_timeout=DB_TIMEOUT_S,
                                      server_settings={'search_path': 'transit'})
     connection = await aio_pika.connect_robust(RABBIT_URL)
     channel = await connection.channel()
     await channel.set_qos(prefetch_count=PREFETCH)
     publish_channel = await connection.channel(publisher_confirms=True, on_return_raises=True)
-    exchange = await channel.declare_exchange(EXCHANGE, aio_pika.ExchangeType.TOPIC, durable=True)
-    queues = {}
-    for name, key in QUEUES.items():
-        queues[name] = await channel.declare_queue(name, durable=True)
-        await queues[name].bind(exchange, routing_key=key)
-    incidents = await channel.declare_queue(INCIDENTS_QUEUE, durable=True)
-    await incidents.bind(exchange, routing_key=INCIDENT_KEY)
-    publish_exchange = await publish_channel.get_exchange(EXCHANGE)
+    await rel.declare_topology(channel)
+    queues = {name: await channel.get_queue(name, ensure=False) for name in QUEUES}
+    publish_exchange = await publish_channel.get_exchange(rel.EXCHANGE, ensure=False)
 
     service = Analytics(pool, publish_exchange)
+    consumer = rel.Consumer(SERVICE, CONSUMER_ID, pool, publish_channel, log)
     await service.load_reference()
-    log.info('started, queues=%s prefetch=%d delay=%dms', ','.join(QUEUES), PREFETCH, PROCESS_DELAY_MS)
+    log.info('started, queues=%s prefetch=%d delay=%dms %s', ','.join(QUEUES), PREFETCH, PROCESS_DELAY_MS,
+             rel.settings())
     try:
-        await asyncio.gather(*(consume(service, queues[name], key) for name, key in QUEUES.items()))
+        await asyncio.gather(*(consume(consumer, service, queues[name], key) for name, key in QUEUES.items()))
     finally:
-        log.info('stopping, results=%s', json.dumps(service.counts))
+        log.info('stopping, outcomes=%s', json.dumps(consumer.counts))
         await connection.close()
         await pool.close()
 

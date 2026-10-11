@@ -27,7 +27,7 @@
 | Назначение | Принимает, хранит и маршрутизирует сообщения; развязывает Producer и обработчики по времени и по нагрузке |
 | Входные данные | Сообщения от Ingest Gateway, Track Service, Schedule Analytics Service |
 | Выходные данные | Сообщения в очередях обработчиков |
-| Взаимодействие | AMQP 0-9-1, асинхронно. Exchange `transit.events` (topic, durable); очереди (durable, ручное подтверждение): `track.positions` ← `vehicle.position`; `analytics.positions` ← `vehicle.position`; `analytics.validations` ← `ticket.validation`; `incidents` ← `vehicle.incident`. В ЛР 3 добавляются `transit.retry` и `transit.dlx` с очередями `*.retry` и `*.dlq` |
+| Взаимодействие | AMQP 0-9-1, асинхронно. Exchange `transit.events` (topic, durable); очереди (durable, ручное подтверждение): `track.positions` ← `vehicle.position`; `analytics.positions` ← `vehicle.position`; `analytics.validations` ← `ticket.validation`; `incidents` ← `vehicle.incident`. ЛР 3: exchange `transit.retry` (headers) с очередями ожидания `transit.retry.<задержка>` и `transit.dlx` (direct) с очередями `*.dlq` |
 
 ## Track Service – обработчик 1 (валидация и трек)
 

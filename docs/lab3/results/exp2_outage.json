@@ -1,0 +1,627 @@
+{
+ "params": {
+  "name": "exp2_outage",
+  "count": 100,
+  "types": "vehicle.position,ticket.validation,vehicle.incident",
+  "vehicles": 48,
+  "rate": 10.0,
+  "incident_prob": 0.05,
+  "seed": 3,
+  "track": 2,
+  "resend": 1,
+  "poison": false,
+  "malformed": false,
+  "db_outage": [
+   2.0,
+   10.0
+  ],
+  "env": {
+   "RETRY_DELAYS_MS": "2000,5000,10000",
+   "DB_TIMEOUT_S": "2",
+   "PREFETCH": "1"
+  },
+  "timeout": 600
+ },
+ "elapsed_s": 17.47,
+ "samples": [
+  [
+   0.03,
+   0,
+   0
+  ],
+  [
+   0.25,
+   0,
+   0
+  ],
+  [
+   0.48,
+   0,
+   0
+  ],
+  [
+   0.7,
+   0,
+   0
+  ],
+  [
+   0.92,
+   78,
+   0
+  ],
+  [
+   1.13,
+   32,
+   0
+  ],
+  [
+   1.35,
+   7,
+   0
+  ],
+  [
+   1.57,
+   0,
+   0
+  ],
+  [
+   1.79,
+   0,
+   0
+  ],
+  [
+   2.8,
+   0,
+   0
+  ],
+  [
+   3.02,
+   0,
+   0
+  ],
+  [
+   3.24,
+   0,
+   0
+  ],
+  [
+   3.46,
+   0,
+   0
+  ],
+  [
+   3.68,
+   0,
+   0
+  ],
+  [
+   3.88,
+   0,
+   0
+  ],
+  [
+   4.11,
+   0,
+   0
+  ],
+  [
+   4.32,
+   0,
+   0
+  ],
+  [
+   4.55,
+   0,
+   0
+  ],
+  [
+   4.77,
+   0,
+   0
+  ],
+  [
+   4.99,
+   0,
+   0
+  ],
+  [
+   5.21,
+   0,
+   0
+  ],
+  [
+   5.42,
+   0,
+   0
+  ],
+  [
+   5.64,
+   91,
+   0
+  ],
+  [
+   5.87,
+   91,
+   0
+  ],
+  [
+   6.09,
+   91,
+   0
+  ],
+  [
+   6.31,
+   91,
+   0
+  ],
+  [
+   6.52,
+   91,
+   0
+  ],
+  [
+   6.75,
+   91,
+   0
+  ],
+  [
+   6.98,
+   91,
+   0
+  ],
+  [
+   7.2,
+   91,
+   0
+  ],
+  [
+   7.43,
+   91,
+   0
+  ],
+  [
+   7.66,
+   87,
+   5
+  ],
+  [
+   7.89,
+   87,
+   5
+  ],
+  [
+   8.11,
+   87,
+   5
+  ],
+  [
+   8.32,
+   87,
+   5
+  ],
+  [
+   8.54,
+   87,
+   5
+  ],
+  [
+   8.76,
+   87,
+   5
+  ],
+  [
+   8.99,
+   87,
+   5
+  ],
+  [
+   9.2,
+   87,
+   5
+  ],
+  [
+   9.42,
+   87,
+   5
+  ],
+  [
+   9.64,
+   91,
+   0
+  ],
+  [
+   9.86,
+   91,
+   0
+  ],
+  [
+   10.09,
+   91,
+   0
+  ],
+  [
+   10.31,
+   91,
+   0
+  ],
+  [
+   10.52,
+   91,
+   0
+  ],
+  [
+   10.73,
+   91,
+   0
+  ],
+  [
+   10.96,
+   91,
+   0
+  ],
+  [
+   11.17,
+   91,
+   0
+  ],
+  [
+   11.39,
+   91,
+   0
+  ],
+  [
+   11.61,
+   91,
+   1
+  ],
+  [
+   11.82,
+   87,
+   5
+  ],
+  [
+   12.04,
+   87,
+   5
+  ],
+  [
+   12.27,
+   87,
+   5
+  ],
+  [
+   12.49,
+   87,
+   5
+  ],
+  [
+   12.71,
+   87,
+   5
+  ],
+  [
+   13.28,
+   87,
+   5
+  ],
+  [
+   13.51,
+   87,
+   5
+  ],
+  [
+   13.74,
+   78,
+   1
+  ],
+  [
+   13.96,
+   35,
+   1
+  ],
+  [
+   14.17,
+   8,
+   1
+  ],
+  [
+   14.39,
+   0,
+   1
+  ],
+  [
+   14.61,
+   0,
+   1
+  ],
+  [
+   14.85,
+   0,
+   1
+  ],
+  [
+   15.08,
+   0,
+   1
+  ],
+  [
+   15.29,
+   0,
+   1
+  ],
+  [
+   15.47,
+   0,
+   1
+  ],
+  [
+   15.7,
+   0,
+   1
+  ],
+  [
+   15.93,
+   0,
+   1
+  ],
+  [
+   16.17,
+   0,
+   1
+  ],
+  [
+   16.4,
+   0,
+   1
+  ],
+  [
+   16.63,
+   0,
+   0
+  ],
+  [
+   16.85,
+   0,
+   0
+  ],
+  [
+   17.08,
+   0,
+   0
+  ],
+  [
+   17.29,
+   0,
+   0
+  ],
+  [
+   17.51,
+   0,
+   0
+  ],
+  [
+   17.75,
+   0,
+   0
+  ],
+  [
+   17.99,
+   0,
+   0
+  ],
+  [
+   18.22,
+   0,
+   0
+  ],
+  [
+   18.45,
+   0,
+   0
+  ],
+  [
+   18.68,
+   0,
+   0
+  ],
+  [
+   18.9,
+   0,
+   0
+  ],
+  [
+   19.13,
+   0,
+   0
+  ],
+  [
+   19.34,
+   0,
+   0
+  ],
+  [
+   19.56,
+   0,
+   0
+  ],
+  [
+   19.77,
+   0,
+   0
+  ],
+  [
+   20.0,
+   0,
+   0
+  ],
+  [
+   20.23,
+   0,
+   0
+  ],
+  [
+   20.47,
+   0,
+   0
+  ]
+ ],
+ "events": [
+  [
+   "db_stop",
+   1.99
+  ],
+  [
+   "db_stopped",
+   2.79
+  ],
+  [
+   "db_started",
+   13.26
+  ]
+ ],
+ "published": 100,
+ "unique_published": 100,
+ "unique_by_type": {
+  "vehicle.position": 87,
+  "ticket.validation": 11,
+  "vehicle.incident": 2
+ },
+ "consumers": {
+  "analytics-service": {
+   "consumer": "analytics-service",
+   "deliveries": 98,
+   "unique_ids": 98,
+   "success": 98,
+   "duplicate": 0,
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "ack_lost": 0,
+   "retried_deliveries": 4,
+   "operations": 98
+  },
+  "incident-service": {
+   "consumer": "incident-service",
+   "deliveries": 2,
+   "unique_ids": 2,
+   "success": 2,
+   "duplicate": 0,
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "ack_lost": 0,
+   "retried_deliveries": 1,
+   "operations": 2
+  },
+  "track-service": {
+   "consumer": "track-service",
+   "deliveries": 87,
+   "unique_ids": 87,
+   "success": 87,
+   "duplicate": 0,
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "ack_lost": 0,
+   "retried_deliveries": 4,
+   "operations": 87
+  }
+ },
+ "by_attempt": {
+  "analytics-service": {
+   "1": {
+    "success": 94
+   },
+   "2": {
+    "success": 4
+   }
+  },
+  "incident-service": {
+   "1": {
+    "success": 1
+   },
+   "3": {
+    "success": 1
+   }
+  },
+  "track-service": {
+   "1": {
+    "success": 83
+   },
+   "2": {
+    "success": 4
+   }
+  }
+ },
+ "attempts_to_success": {
+  "analytics-service": {
+   "1": 94,
+   "2": 4
+  },
+  "incident-service": {
+   "1": 1,
+   "3": 1
+  },
+  "track-service": {
+   "1": 83,
+   "2": 4
+  }
+ },
+ "errors": [],
+ "business": {
+  "vehicle_positions": 87,
+  "rejected_messages": 0,
+  "passenger_flow_validations": 11,
+  "stop_arrivals": 5,
+  "incidents": 2,
+  "positions_without_journal": 0
+ },
+ "queues": {
+  "track.positions": 0,
+  "analytics.positions": 0,
+  "analytics.validations": 0,
+  "incidents": 0,
+  "track.positions.dlq": 0,
+  "analytics.positions.dlq": 0,
+  "analytics.validations.dlq": 0,
+  "incidents.dlq": 0,
+  "transit.retry.2s": 0,
+  "transit.retry.5s": 0,
+  "transit.retry.10s": 0
+ },
+ "dlq_samples": {},
+ "logs": {
+  "a1": {
+   "received": 102,
+   "retry": 4,
+   "dlq": 0,
+   "success": 98,
+   "duplicate": 0,
+   "journal_lost": 4
+  },
+  "i1": {
+   "received": 4,
+   "retry": 2,
+   "dlq": 0,
+   "success": 2,
+   "duplicate": 0,
+   "journal_lost": 2
+  },
+  "t1": {
+   "received": 45,
+   "retry": 2,
+   "dlq": 0,
+   "success": 43,
+   "duplicate": 0,
+   "journal_lost": 2
+  },
+  "t2": {
+   "received": 46,
+   "retry": 2,
+   "dlq": 0,
+   "success": 44,
+   "duplicate": 0,
+   "journal_lost": 2
+  }
+ }
+}

@@ -12,6 +12,7 @@ import asyncio
 import json
 import logging
 import os
+import sys
 import time
 import uuid
 from contextlib import asynccontextmanager
@@ -25,20 +26,15 @@ from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from jsonschema import Draft202012Validator, FormatChecker
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from common.reliability import EXCHANGE, QUEUES, declare_topology  # noqa: E402
+
 RABBIT_URL = os.getenv('RABBIT_URL', 'amqp://guest:guest@localhost:5672/')
 SCHEMA_PATH = Path(os.getenv('SCHEMA_PATH', Path(__file__).resolve().parent.parent / 'docs/schemas/message.schema.json'))
 HOST = os.getenv('GATEWAY_HOST', '0.0.0.0')
 PORT = int(os.getenv('GATEWAY_PORT', '8080'))
 MAX_BATCH = 50
 
-EXCHANGE = 'transit.events'
-# очередь → ключи привязки; шлюз объявляет всю топологию, чтобы сообщения не терялись до запуска потребителей
-QUEUES = {
-    'track.positions': ['vehicle.position'],
-    'analytics.positions': ['vehicle.position'],
-    'analytics.validations': ['ticket.validation'],
-    'incidents': ['vehicle.incident'],
-}
 NAMESPACE = uuid.uuid5(uuid.NAMESPACE_DNS, 'transit-monitor.local')
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s [gateway] %(levelname)s %(message)s')
@@ -48,16 +44,6 @@ logging.getLogger('uvicorn.access').disabled = True
 validator = Draft202012Validator(json.loads(SCHEMA_PATH.read_text(encoding='utf-8')), format_checker=FormatChecker())
 broker = {}
 stats = {'sent': 0, 'requests': 0, 'bad_requests': 0, 'unavailable': 0}
-
-
-async def declare_topology(channel):
-    """Идемпотентно создает exchange, очереди и привязки."""
-    exchange = await channel.declare_exchange(EXCHANGE, aio_pika.ExchangeType.TOPIC, durable=True)
-    for name, keys in QUEUES.items():
-        queue = await channel.declare_queue(name, durable=True)
-        for key in keys:
-            await queue.bind(exchange, routing_key=key)
-    return exchange
 
 
 async def connect():
@@ -71,6 +57,7 @@ async def connect():
     else:
         raise RuntimeError('broker unavailable')
     channel = await connection.channel(publisher_confirms=True, on_return_raises=True)
+    # шлюз объявляет всю топологию (с retry и DLQ), чтобы сообщения не терялись до запуска потребителей
     broker.update(connection=connection, exchange=await declare_topology(channel))
     log.info('connected to %s, exchange=%s, queues=%s', RABBIT_URL.split('@')[-1], EXCHANGE, ','.join(QUEUES))
 

@@ -1,0 +1,605 @@
+{
+ "params": {
+  "name": "exp3",
+  "count": 100,
+  "types": "vehicle.position,ticket.validation,vehicle.incident",
+  "vehicles": 48,
+  "rate": 0,
+  "incident_prob": 0.05,
+  "seed": 3,
+  "track": 2,
+  "resend": 1,
+  "poison": true,
+  "malformed": true,
+  "db_outage": null,
+  "env": {
+   "RETRY_DELAYS_MS": "1000,2000,4000",
+   "FAULT_POISON": "trk-99999"
+  },
+  "timeout": 600
+ },
+ "elapsed_s": 9.84,
+ "samples": [
+  [
+   0.03,
+   0,
+   0
+  ],
+  [
+   0.25,
+   0,
+   0
+  ],
+  [
+   0.47,
+   0,
+   0
+  ],
+  [
+   0.69,
+   0,
+   0
+  ],
+  [
+   0.93,
+   0,
+   0
+  ],
+  [
+   1.13,
+   22,
+   0
+  ],
+  [
+   1.34,
+   6,
+   0
+  ],
+  [
+   1.55,
+   0,
+   0
+  ],
+  [
+   1.76,
+   0,
+   1
+  ],
+  [
+   2.0,
+   0,
+   1
+  ],
+  [
+   2.21,
+   0,
+   2
+  ],
+  [
+   2.42,
+   0,
+   2
+  ],
+  [
+   2.63,
+   0,
+   2
+  ],
+  [
+   2.85,
+   0,
+   2
+  ],
+  [
+   3.06,
+   0,
+   1
+  ],
+  [
+   3.28,
+   0,
+   2
+  ],
+  [
+   3.5,
+   0,
+   2
+  ],
+  [
+   3.7,
+   0,
+   2
+  ],
+  [
+   3.94,
+   0,
+   2
+  ],
+  [
+   4.16,
+   0,
+   2
+  ],
+  [
+   4.35,
+   0,
+   2
+  ],
+  [
+   4.57,
+   0,
+   2
+  ],
+  [
+   4.79,
+   0,
+   2
+  ],
+  [
+   5.01,
+   0,
+   2
+  ],
+  [
+   5.21,
+   0,
+   2
+  ],
+  [
+   5.45,
+   0,
+   2
+  ],
+  [
+   5.67,
+   0,
+   2
+  ],
+  [
+   5.92,
+   0,
+   2
+  ],
+  [
+   6.17,
+   0,
+   2
+  ],
+  [
+   6.4,
+   0,
+   2
+  ],
+  [
+   6.61,
+   0,
+   2
+  ],
+  [
+   6.8,
+   0,
+   2
+  ],
+  [
+   7.03,
+   0,
+   2
+  ],
+  [
+   7.24,
+   0,
+   2
+  ],
+  [
+   7.46,
+   0,
+   2
+  ],
+  [
+   7.68,
+   0,
+   2
+  ],
+  [
+   7.92,
+   0,
+   2
+  ],
+  [
+   8.15,
+   0,
+   2
+  ],
+  [
+   8.38,
+   0,
+   2
+  ],
+  [
+   8.62,
+   0,
+   2
+  ],
+  [
+   8.85,
+   0,
+   1
+  ],
+  [
+   9.08,
+   0,
+   1
+  ],
+  [
+   9.32,
+   0,
+   0
+  ],
+  [
+   9.55,
+   0,
+   0
+  ],
+  [
+   9.79,
+   0,
+   0
+  ],
+  [
+   10.01,
+   0,
+   0
+  ],
+  [
+   10.25,
+   0,
+   0
+  ],
+  [
+   10.47,
+   0,
+   0
+  ],
+  [
+   10.69,
+   0,
+   0
+  ],
+  [
+   10.92,
+   0,
+   0
+  ],
+  [
+   11.12,
+   0,
+   0
+  ],
+  [
+   11.35,
+   0,
+   0
+  ],
+  [
+   11.57,
+   0,
+   0
+  ],
+  [
+   11.79,
+   0,
+   0
+  ],
+  [
+   12.01,
+   0,
+   0
+  ],
+  [
+   12.21,
+   0,
+   0
+  ],
+  [
+   12.42,
+   0,
+   0
+  ],
+  [
+   12.65,
+   0,
+   0
+  ]
+ ],
+ "events": [
+  [
+   "poison_sent",
+   "704b04fd-6648-5836-97ad-38bf3f1757ce"
+  ],
+  [
+   "malformed_sent",
+   2
+  ]
+ ],
+ "published": 101,
+ "unique_published": 101,
+ "unique_by_type": {
+  "vehicle.position": 81,
+  "ticket.validation": 13,
+  "vehicle.incident": 7
+ },
+ "consumers": {
+  "analytics-service": {
+   "consumer": "analytics-service",
+   "deliveries": 99,
+   "unique_ids": 96,
+   "success": 93,
+   "duplicate": 0,
+   "retry": 3,
+   "dlq": 3,
+   "redelivered": 0,
+   "ack_lost": 0,
+   "retried_deliveries": 3,
+   "operations": 93
+  },
+  "incident-service": {
+   "consumer": "incident-service",
+   "deliveries": 7,
+   "unique_ids": 7,
+   "success": 7,
+   "duplicate": 0,
+   "retry": 0,
+   "dlq": 0,
+   "redelivered": 0,
+   "ack_lost": 0,
+   "retried_deliveries": 0,
+   "operations": 7
+  },
+  "track-service": {
+   "consumer": "track-service",
+   "deliveries": 86,
+   "unique_ids": 83,
+   "success": 80,
+   "duplicate": 0,
+   "retry": 3,
+   "dlq": 3,
+   "redelivered": 0,
+   "ack_lost": 0,
+   "retried_deliveries": 3,
+   "operations": 80
+  }
+ },
+ "by_attempt": {
+  "analytics-service": {
+   "1": {
+    "dlq": 2,
+    "retry": 1,
+    "success": 93
+   },
+   "2": {
+    "retry": 1
+   },
+   "3": {
+    "retry": 1
+   },
+   "4": {
+    "dlq": 1
+   }
+  },
+  "incident-service": {
+   "1": {
+    "success": 7
+   }
+  },
+  "track-service": {
+   "1": {
+    "dlq": 2,
+    "retry": 1,
+    "success": 80
+   },
+   "2": {
+    "retry": 1
+   },
+   "3": {
+    "retry": 1
+   },
+   "4": {
+    "dlq": 1
+   }
+  }
+ },
+ "attempts_to_success": {
+  "analytics-service": {
+   "1": 93
+  },
+  "incident-service": {
+   "1": 7
+  },
+  "track-service": {
+   "1": 80
+  }
+ },
+ "errors": [
+  {
+   "consumer": "analytics-service",
+   "outcome": "dlq",
+   "error": "JSONDecodeError: Unterminated string starting at: line 1 column 16 (char 15)",
+   "n": 1
+  },
+  {
+   "consumer": "analytics-service",
+   "outcome": "dlq",
+   "error": "TransientError: simulated persistent fault (poison message)",
+   "n": 1
+  },
+  {
+   "consumer": "analytics-service",
+   "outcome": "dlq",
+   "error": "ValueError: payload: 'route_id' is a required property",
+   "n": 1
+  },
+  {
+   "consumer": "analytics-service",
+   "outcome": "retry",
+   "error": "TransientError: simulated persistent fault (poison message)",
+   "n": 3
+  },
+  {
+   "consumer": "track-service",
+   "outcome": "dlq",
+   "error": "JSONDecodeError: Unterminated string starting at: line 1 column 16 (char 15)",
+   "n": 1
+  },
+  {
+   "consumer": "track-service",
+   "outcome": "dlq",
+   "error": "TransientError: simulated persistent fault (poison message)",
+   "n": 1
+  },
+  {
+   "consumer": "track-service",
+   "outcome": "dlq",
+   "error": "ValueError: payload: 'route_id' is a required property",
+   "n": 1
+  },
+  {
+   "consumer": "track-service",
+   "outcome": "retry",
+   "error": "TransientError: simulated persistent fault (poison message)",
+   "n": 3
+  }
+ ],
+ "business": {
+  "vehicle_positions": 80,
+  "rejected_messages": 0,
+  "passenger_flow_validations": 13,
+  "stop_arrivals": 7,
+  "incidents": 7,
+  "positions_without_journal": 0
+ },
+ "queues": {
+  "track.positions": 0,
+  "analytics.positions": 0,
+  "analytics.validations": 0,
+  "incidents": 0,
+  "track.positions.dlq": 3,
+  "analytics.positions.dlq": 3,
+  "analytics.validations.dlq": 0,
+  "incidents.dlq": 0,
+  "transit.retry.1s": 0,
+  "transit.retry.2s": 0,
+  "transit.retry.4s": 0
+ },
+ "dlq_samples": {
+  "track.positions.dlq": [
+   {
+    "message_id": "4ad0bb1a-365a-5036-8e2c-b42f9f5673ed",
+    "headers": {
+     "x-attempt": "1",
+     "x-error-class": "permanent",
+     "x-failed-at": "2026-10-11T10:04:51.372+00:00",
+     "x-failed-by": "track-service/t2",
+     "x-last-error": "JSONDecodeError: Unterminated string starting at: line 1 column 16 (char 15)",
+     "x-original-queue": "track.positions"
+    },
+    "body": "{\"message_id\": \"not json"
+   },
+   {
+    "message_id": "2becd9aa-73be-5134-9f3c-e777494dbfc6",
+    "headers": {
+     "x-attempt": "1",
+     "x-error-class": "permanent",
+     "x-failed-at": "2026-10-11T10:04:51.381+00:00",
+     "x-failed-by": "track-service/t1",
+     "x-last-error": "ValueError: payload: 'route_id' is a required property",
+     "x-original-queue": "track.positions"
+    },
+    "body": "{\"message_id\": \"0373e17b-b977-5a7d-a9b7-2936ac031c97\", \"type\": \"vehicle.position\", \"schema_version\": 1, \"source_id\": \"trk-00001\", \"seq\": 1, \"timestamp\": \"2026-10-11T00:00:00Z\", \"received_at\": \"2026-10-11T00:00:00Z\", \"payload\": {\"vehicle_id\": \"BUS-00001\"}}"
+   },
+   {
+    "message_id": "704b04fd-6648-5836-97ad-38bf3f1757ce",
+    "headers": {
+     "x-attempt": "4",
+     "x-error-class": "transient",
+     "x-failed-at": "2026-10-11T10:04:58.424+00:00",
+     "x-failed-by": "track-service/t2",
+     "x-last-error": "TransientError: simulated persistent fault (poison message)",
+     "x-original-queue": "track.positions"
+    },
+    "body": "{\"message_id\":\"704b04fd-6648-5836-97ad-38bf3f1757ce\",\"type\":\"vehicle.position\",\"schema_version\":1,\"source_id\":\"trk-99999\",\"seq\":1791713090,\"timestamp\":\"2026-10-11T10:04:50.856Z\",\"payload\":{\"vehicle_id\":\"BUS-10427\",\"route_id\":\"100\",\"trip_id\":\"100-A-0815\",\"lat\":53.902284,\"lon\":27.561831,\"speed_kmh\":31"
+   }
+  ],
+  "analytics.positions.dlq": [
+   {
+    "message_id": "4ad0bb1a-365a-5036-8e2c-b42f9f5673ed",
+    "headers": {
+     "x-attempt": "1",
+     "x-error-class": "permanent",
+     "x-failed-at": "2026-10-11T10:04:51.824+00:00",
+     "x-failed-by": "analytics-service/a1",
+     "x-last-error": "JSONDecodeError: Unterminated string starting at: line 1 column 16 (char 15)",
+     "x-original-queue": "analytics.positions"
+    },
+    "body": "{\"message_id\": \"not json"
+   },
+   {
+    "message_id": "2becd9aa-73be-5134-9f3c-e777494dbfc6",
+    "headers": {
+     "x-attempt": "1",
+     "x-error-class": "permanent",
+     "x-failed-at": "2026-10-11T10:04:51.832+00:00",
+     "x-failed-by": "analytics-service/a1",
+     "x-last-error": "ValueError: payload: 'route_id' is a required property",
+     "x-original-queue": "analytics.positions"
+    },
+    "body": "{\"message_id\": \"0373e17b-b977-5a7d-a9b7-2936ac031c97\", \"type\": \"vehicle.position\", \"schema_version\": 1, \"source_id\": \"trk-00001\", \"seq\": 1, \"timestamp\": \"2026-10-11T00:00:00Z\", \"received_at\": \"2026-10-11T00:00:00Z\", \"payload\": {\"vehicle_id\": \"BUS-00001\"}}"
+   },
+   {
+    "message_id": "704b04fd-6648-5836-97ad-38bf3f1757ce",
+    "headers": {
+     "x-attempt": "4",
+     "x-error-class": "transient",
+     "x-failed-at": "2026-10-11T10:04:58.856+00:00",
+     "x-failed-by": "analytics-service/a1",
+     "x-last-error": "TransientError: simulated persistent fault (poison message)",
+     "x-original-queue": "analytics.positions"
+    },
+    "body": "{\"message_id\":\"704b04fd-6648-5836-97ad-38bf3f1757ce\",\"type\":\"vehicle.position\",\"schema_version\":1,\"source_id\":\"trk-99999\",\"seq\":1791713090,\"timestamp\":\"2026-10-11T10:04:50.856Z\",\"payload\":{\"vehicle_id\":\"BUS-10427\",\"route_id\":\"100\",\"trip_id\":\"100-A-0815\",\"lat\":53.902284,\"lon\":27.561831,\"speed_kmh\":31"
+   }
+  ]
+ },
+ "logs": {
+  "a1": {
+   "received": 97,
+   "retry": 3,
+   "dlq": 3,
+   "success": 93,
+   "duplicate": 0,
+   "journal_lost": 0
+  },
+  "i1": {
+   "received": 7,
+   "retry": 0,
+   "dlq": 0,
+   "success": 7,
+   "duplicate": 0,
+   "journal_lost": 0
+  },
+  "t1": {
+   "received": 42,
+   "retry": 2,
+   "dlq": 1,
+   "success": 40,
+   "duplicate": 0,
+   "journal_lost": 0
+  },
+  "t2": {
+   "received": 42,
+   "retry": 1,
+   "dlq": 2,
+   "success": 40,
+   "duplicate": 0,
+   "journal_lost": 0
+  }
+ }
+}

@@ -85,7 +85,7 @@ async def queue_state(channel, name):
 
 async def run_once(args, run_dir, db, channel):
     for name in QUEUES:
-        await (await channel.declare_queue(name, durable=True)).purge()
+        await (await channel.get_queue(name, ensure=False)).purge()  # объявлены с аргументами DLX (ЛР 3)
     await db.execute(f'TRUNCATE {TABLES}')
     procs = [start('producer/gateway.py', run_dir / 'gateway.log')]
     consumers = []
@@ -155,7 +155,7 @@ async def run_once(args, run_dir, db, channel):
         await asyncio.sleep(0.3)
         for p in reversed(procs):
             stop(p)
-    await (await channel.declare_queue('analytics.positions', durable=True)).purge()  # копии координат в экспериментах 2–3
+    await (await channel.get_queue('analytics.positions', ensure=False)).purge()  # копии координат в экспериментах 2–3
 
     row = await db.fetchrow(
         '''SELECT count(*) AS processed,

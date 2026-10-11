@@ -9,6 +9,7 @@
 
 Режимы:
   --count N   сформировать N событий «из недавнего прошлого» и отправить с темпом --rate (0 – без ограничения);
+  --resend K  каждый пакет отправить K раз (устройство не получило ответ шлюза и повторило отправку) – ЛР 3;
   без --count  работа в реальном времени: каждые PERIOD секунд – очередной такт парка.
 
 Примеры:
@@ -232,7 +233,7 @@ class Sender:
     def __init__(self, args):
         self.args = args
         self.client = httpx.AsyncClient(base_url=GATEWAY_URL, timeout=args.timeout)
-        self.stats = {'sent': 0, 'accepted': 0, 'rejected': 0, 'retries': 0, 'batches': 0}
+        self.stats = {'sent': 0, 'accepted': 0, 'rejected': 0, 'retries': 0, 'batches': 0, 'resent': 0}
         self.by_type = {k: 0 for k in TYPES}
 
     async def post(self, batch):
@@ -263,6 +264,9 @@ class Sender:
             await self.post(batch)
             self.stats['batches'] += 1
             self.stats['sent'] += len(batch)
+            for _ in range(self.args.resend - 1):  # те же source_id и seq → шлюз присвоит те же message_id
+                await self.post(batch)
+                self.stats['resent'] += len(batch)
 
 
 async def main():
@@ -282,6 +286,7 @@ async def main():
     ap.add_argument('--seed', type=int, help='зерно генератора случайных чисел')
     ap.add_argument('--timeout', type=float, default=10, help='таймаут HTTP, с')
     ap.add_argument('--max-retries', type=int, default=20)
+    ap.add_argument('--resend', type=int, default=1, help='сколько раз отправить каждый пакет (дубликаты, ЛР 3)')
     args = ap.parse_args()
     types = set(args.types.split(','))
     assert types <= set(TYPES), f'неизвестные типы: {types - set(TYPES)}'
@@ -348,9 +353,9 @@ async def main():
     await sender.client.aclose()
     elapsed = time.perf_counter() - started
     s = sender.stats
-    log.info('DONE generated=%d sent=%d accepted=%d rejected=%d retries=%d elapsed=%.3fs rate=%.1f ev/s by_type=%s',
-             produced, s['sent'], s['accepted'], s['rejected'], s['retries'], elapsed, s['accepted'] / elapsed,
-             json.dumps(sender.by_type))
+    log.info('DONE generated=%d sent=%d resent=%d accepted=%d rejected=%d retries=%d elapsed=%.3fs rate=%.1f ev/s '
+             'by_type=%s', produced, s['sent'], s['resent'], s['accepted'], s['rejected'], s['retries'], elapsed,
+             s['accepted'] / elapsed, json.dumps(sender.by_type))
 
 
 if __name__ == '__main__':

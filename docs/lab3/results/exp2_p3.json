@@ -1,0 +1,928 @@
+{
+ "params": {
+  "name": "exp2_p3",
+  "count": 1000,
+  "types": "vehicle.position,ticket.validation,vehicle.incident",
+  "vehicles": 300,
+  "rate": 0,
+  "incident_prob": 0.05,
+  "seed": 3,
+  "track": 2,
+  "resend": 1,
+  "poison": false,
+  "malformed": false,
+  "db_outage": null,
+  "env": {
+   "RETRY_DELAYS_MS": "1000,2000,4000",
+   "FAULT_RATE": "0.3"
+  },
+  "timeout": 600
+ },
+ "elapsed_s": 24.61,
+ "samples": [
+  [
+   0.03,
+   0,
+   0
+  ],
+  [
+   0.26,
+   0,
+   0
+  ],
+  [
+   0.48,
+   0,
+   0
+  ],
+  [
+   0.69,
+   0,
+   0
+  ],
+  [
+   0.91,
+   0,
+   0
+  ],
+  [
+   1.13,
+   42,
+   8
+  ],
+  [
+   1.35,
+   238,
+   19
+  ],
+  [
+   1.58,
+   497,
+   29
+  ],
+  [
+   1.81,
+   736,
+   52
+  ],
+  [
+   2.03,
+   949,
+   65
+  ],
+  [
+   2.26,
+   1228,
+   63
+  ],
+  [
+   2.48,
+   1402,
+   64
+  ],
+  [
+   2.71,
+   1370,
+   67
+  ],
+  [
+   2.92,
+   1351,
+   56
+  ],
+  [
+   3.14,
+   1316,
+   61
+  ],
+  [
+   3.34,
+   1285,
+   61
+  ],
+  [
+   3.57,
+   1254,
+   58
+  ],
+  [
+   3.8,
+   1223,
+   66
+  ],
+  [
+   4.02,
+   1185,
+   68
+  ],
+  [
+   4.24,
+   1160,
+   63
+  ],
+  [
+   4.46,
+   1135,
+   67
+  ],
+  [
+   4.68,
+   1118,
+   58
+  ],
+  [
+   4.92,
+   1096,
+   51
+  ],
+  [
+   5.15,
+   1071,
+   53
+  ],
+  [
+   5.36,
+   1060,
+   48
+  ],
+  [
+   5.62,
+   1039,
+   50
+  ],
+  [
+   5.86,
+   1017,
+   55
+  ],
+  [
+   6.09,
+   996,
+   52
+  ],
+  [
+   6.31,
+   964,
+   53
+  ],
+  [
+   6.51,
+   933,
+   57
+  ],
+  [
+   6.73,
+   901,
+   61
+  ],
+  [
+   6.93,
+   870,
+   64
+  ],
+  [
+   7.14,
+   842,
+   67
+  ],
+  [
+   7.4,
+   814,
+   62
+  ],
+  [
+   7.61,
+   786,
+   60
+  ],
+  [
+   7.85,
+   756,
+   59
+  ],
+  [
+   8.07,
+   728,
+   62
+  ],
+  [
+   8.29,
+   694,
+   69
+  ],
+  [
+   8.51,
+   660,
+   74
+  ],
+  [
+   8.71,
+   641,
+   72
+  ],
+  [
+   8.92,
+   611,
+   71
+  ],
+  [
+   9.14,
+   588,
+   68
+  ],
+  [
+   9.38,
+   557,
+   70
+  ],
+  [
+   9.61,
+   528,
+   65
+  ],
+  [
+   9.85,
+   498,
+   60
+  ],
+  [
+   10.09,
+   472,
+   60
+  ],
+  [
+   10.31,
+   444,
+   61
+  ],
+  [
+   10.55,
+   406,
+   70
+  ],
+  [
+   10.77,
+   368,
+   75
+  ],
+  [
+   10.99,
+   357,
+   84
+  ],
+  [
+   11.22,
+   344,
+   87
+  ],
+  [
+   11.47,
+   333,
+   92
+  ],
+  [
+   11.69,
+   322,
+   94
+  ],
+  [
+   11.91,
+   311,
+   86
+  ],
+  [
+   12.15,
+   297,
+   87
+  ],
+  [
+   12.35,
+   283,
+   83
+  ],
+  [
+   12.57,
+   271,
+   75
+  ],
+  [
+   12.76,
+   262,
+   74
+  ],
+  [
+   13.0,
+   249,
+   69
+  ],
+  [
+   13.23,
+   242,
+   60
+  ],
+  [
+   13.47,
+   228,
+   53
+  ],
+  [
+   13.69,
+   219,
+   47
+  ],
+  [
+   13.91,
+   206,
+   50
+  ],
+  [
+   14.14,
+   197,
+   50
+  ],
+  [
+   14.35,
+   182,
+   52
+  ],
+  [
+   14.58,
+   171,
+   51
+  ],
+  [
+   14.81,
+   162,
+   46
+  ],
+  [
+   15.03,
+   150,
+   44
+  ],
+  [
+   15.28,
+   138,
+   49
+  ],
+  [
+   15.52,
+   124,
+   54
+  ],
+  [
+   15.75,
+   111,
+   55
+  ],
+  [
+   15.98,
+   98,
+   54
+  ],
+  [
+   16.19,
+   82,
+   54
+  ],
+  [
+   16.4,
+   71,
+   54
+  ],
+  [
+   16.64,
+   58,
+   49
+  ],
+  [
+   16.86,
+   44,
+   49
+  ],
+  [
+   17.07,
+   33,
+   47
+  ],
+  [
+   17.3,
+   22,
+   42
+  ],
+  [
+   17.53,
+   9,
+   39
+  ],
+  [
+   17.76,
+   0,
+   39
+  ],
+  [
+   18.0,
+   0,
+   46
+  ],
+  [
+   18.22,
+   0,
+   44
+  ],
+  [
+   18.44,
+   0,
+   45
+  ],
+  [
+   18.66,
+   0,
+   46
+  ],
+  [
+   18.86,
+   0,
+   44
+  ],
+  [
+   19.07,
+   0,
+   39
+  ],
+  [
+   19.31,
+   0,
+   38
+  ],
+  [
+   19.53,
+   0,
+   35
+  ],
+  [
+   19.77,
+   0,
+   30
+  ],
+  [
+   20.0,
+   0,
+   25
+  ],
+  [
+   20.24,
+   0,
+   25
+  ],
+  [
+   20.47,
+   0,
+   25
+  ],
+  [
+   20.7,
+   0,
+   25
+  ],
+  [
+   20.91,
+   0,
+   25
+  ],
+  [
+   21.13,
+   0,
+   25
+  ],
+  [
+   21.34,
+   0,
+   25
+  ],
+  [
+   21.59,
+   0,
+   25
+  ],
+  [
+   21.84,
+   0,
+   25
+  ],
+  [
+   22.08,
+   0,
+   20
+  ],
+  [
+   22.32,
+   0,
+   15
+  ],
+  [
+   22.55,
+   0,
+   10
+  ],
+  [
+   22.79,
+   0,
+   9
+  ],
+  [
+   23.0,
+   0,
+   4
+  ],
+  [
+   23.24,
+   0,
+   1
+  ],
+  [
+   23.47,
+   0,
+   1
+  ],
+  [
+   23.71,
+   0,
+   1
+  ],
+  [
+   23.94,
+   0,
+   0
+  ],
+  [
+   24.16,
+   0,
+   0
+  ],
+  [
+   24.38,
+   0,
+   0
+  ],
+  [
+   24.6,
+   0,
+   0
+  ],
+  [
+   24.81,
+   0,
+   0
+  ],
+  [
+   25.03,
+   0,
+   0
+  ],
+  [
+   25.27,
+   0,
+   0
+  ],
+  [
+   25.51,
+   0,
+   0
+  ],
+  [
+   25.73,
+   0,
+   0
+  ],
+  [
+   25.94,
+   0,
+   0
+  ],
+  [
+   26.16,
+   0,
+   0
+  ],
+  [
+   26.39,
+   0,
+   0
+  ],
+  [
+   26.63,
+   0,
+   0
+  ],
+  [
+   26.87,
+   0,
+   0
+  ],
+  [
+   27.11,
+   0,
+   0
+  ],
+  [
+   27.33,
+   0,
+   0
+  ],
+  [
+   27.54,
+   0,
+   0
+  ]
+ ],
+ "events": [],
+ "published": 1000,
+ "unique_published": 1000,
+ "unique_by_type": {
+  "vehicle.position": 878,
+  "ticket.validation": 82,
+  "vehicle.incident": 40
+ },
+ "consumers": {
+  "analytics-service": {
+   "consumer": "analytics-service",
+   "deliveries": 1370,
+   "unique_ids": 960,
+   "success": 950,
+   "duplicate": 0,
+   "retry": 410,
+   "dlq": 10,
+   "redelivered": 0,
+   "ack_lost": 0,
+   "retried_deliveries": 410,
+   "operations": 950
+  },
+  "incident-service": {
+   "consumer": "incident-service",
+   "deliveries": 60,
+   "unique_ids": 42,
+   "success": 42,
+   "duplicate": 0,
+   "retry": 18,
+   "dlq": 0,
+   "redelivered": 0,
+   "ack_lost": 0,
+   "retried_deliveries": 18,
+   "operations": 42
+  },
+  "track-service": {
+   "consumer": "track-service",
+   "deliveries": 1256,
+   "unique_ids": 878,
+   "success": 868,
+   "duplicate": 0,
+   "retry": 378,
+   "dlq": 10,
+   "redelivered": 0,
+   "ack_lost": 0,
+   "retried_deliveries": 378,
+   "operations": 868
+  }
+ },
+ "by_attempt": {
+  "analytics-service": {
+   "1": {
+    "retry": 291,
+    "success": 669
+   },
+   "2": {
+    "retry": 90,
+    "success": 201
+   },
+   "3": {
+    "retry": 29,
+    "success": 61
+   },
+   "4": {
+    "dlq": 10,
+    "success": 19
+   }
+  },
+  "incident-service": {
+   "1": {
+    "retry": 13,
+    "success": 29
+   },
+   "2": {
+    "retry": 4,
+    "success": 9
+   },
+   "3": {
+    "retry": 1,
+    "success": 3
+   },
+   "4": {
+    "success": 1
+   }
+  },
+  "track-service": {
+   "1": {
+    "retry": 272,
+    "success": 606
+   },
+   "2": {
+    "retry": 81,
+    "success": 191
+   },
+   "3": {
+    "retry": 25,
+    "success": 56
+   },
+   "4": {
+    "dlq": 10,
+    "success": 15
+   }
+  }
+ },
+ "attempts_to_success": {
+  "analytics-service": {
+   "1": 669,
+   "2": 201,
+   "3": 61,
+   "4": 19
+  },
+  "incident-service": {
+   "1": 29,
+   "2": 9,
+   "3": 3,
+   "4": 1
+  },
+  "track-service": {
+   "1": 606,
+   "2": 191,
+   "3": 56,
+   "4": 15
+  }
+ },
+ "errors": [
+  {
+   "consumer": "analytics-service",
+   "outcome": "dlq",
+   "error": "TransientError: simulated transient fault",
+   "n": 10
+  },
+  {
+   "consumer": "analytics-service",
+   "outcome": "retry",
+   "error": "TransientError: simulated transient fault",
+   "n": 410
+  },
+  {
+   "consumer": "incident-service",
+   "outcome": "retry",
+   "error": "TransientError: simulated transient fault",
+   "n": 18
+  },
+  {
+   "consumer": "track-service",
+   "outcome": "dlq",
+   "error": "TransientError: simulated transient fault",
+   "n": 10
+  },
+  {
+   "consumer": "track-service",
+   "outcome": "retry",
+   "error": "TransientError: simulated transient fault",
+   "n": 378
+  }
+ ],
+ "business": {
+  "vehicle_positions": 868,
+  "rejected_messages": 0,
+  "passenger_flow_validations": 82,
+  "stop_arrivals": 30,
+  "incidents": 42,
+  "positions_without_journal": 0
+ },
+ "queues": {
+  "track.positions": 0,
+  "analytics.positions": 0,
+  "analytics.validations": 0,
+  "incidents": 0,
+  "track.positions.dlq": 10,
+  "analytics.positions.dlq": 10,
+  "analytics.validations.dlq": 0,
+  "incidents.dlq": 0,
+  "transit.retry.1s": 0,
+  "transit.retry.2s": 0,
+  "transit.retry.4s": 0
+ },
+ "dlq_samples": {
+  "track.positions.dlq": [
+   {
+    "message_id": "a8b73e96-6414-5212-bd72-0356ab229d26",
+    "headers": {
+     "x-attempt": "4",
+     "x-error-class": "transient",
+     "x-failed-at": "2026-10-11T10:00:12.860+00:00",
+     "x-failed-by": "track-service/t1",
+     "x-last-error": "TransientError: simulated transient fault (FAULT_RATE=0.3)",
+     "x-original-queue": "track.positions"
+    },
+    "body": "{\"message_id\":\"a8b73e96-6414-5212-bd72-0356ab229d26\",\"type\":\"vehicle.position\",\"schema_version\":1,\"source_id\":\"trk-10074\",\"seq\":1791712798610,\"timestamp\":\"2026-10-11T09:59:29.942Z\",\"payload\":{\"vehicle_id\":\"TRM-10074\",\"route_id\":\"1\",\"trip_id\":\"1-A-1242\",\"lat\":53.872109,\"lon\":27.615594,\"speed_kmh\":20."
+   },
+   {
+    "message_id": "1c2704a0-d282-54ed-90e3-0a3537bd3fcb",
+    "headers": {
+     "x-attempt": "4",
+     "x-error-class": "transient",
+     "x-failed-at": "2026-10-11T10:00:12.878+00:00",
+     "x-failed-by": "track-service/t2",
+     "x-last-error": "TransientError: simulated transient fault (FAULT_RATE=0.3)",
+     "x-original-queue": "track.positions"
+    },
+    "body": "{\"message_id\":\"1c2704a0-d282-54ed-90e3-0a3537bd3fcb\",\"type\":\"vehicle.position\",\"schema_version\":1,\"source_id\":\"trk-10139\",\"seq\":1791712798485,\"timestamp\":\"2026-10-11T09:59:32.109Z\",\"payload\":{\"vehicle_id\":\"TRL-10139\",\"route_id\":\"40\",\"trip_id\":\"40-A-1236\",\"lat\":53.906819,\"lon\":27.459159,\"speed_kmh\":2"
+   },
+   {
+    "message_id": "48fb4c91-7ffa-5f03-8dfe-d56b75bcca03",
+    "headers": {
+     "x-attempt": "4",
+     "x-error-class": "transient",
+     "x-failed-at": "2026-10-11T10:00:12.987+00:00",
+     "x-failed-by": "track-service/t1",
+     "x-last-error": "TransientError: simulated transient fault (FAULT_RATE=0.3)",
+     "x-original-queue": "track.positions"
+    },
+    "body": "{\"message_id\":\"48fb4c91-7ffa-5f03-8dfe-d56b75bcca03\",\"type\":\"vehicle.position\",\"schema_version\":1,\"source_id\":\"trk-10198\",\"seq\":1791712798112,\"timestamp\":\"2026-10-11T09:59:34.076Z\",\"payload\":{\"vehicle_id\":\"BUS-10198\",\"route_id\":\"100\",\"trip_id\":\"100-A-1254\",\"lat\":53.893726,\"lon\":27.548071,\"speed_kmh\""
+   }
+  ],
+  "analytics.positions.dlq": [
+   {
+    "message_id": "a8b73e96-6414-5212-bd72-0356ab229d26",
+    "headers": {
+     "x-attempt": "4",
+     "x-error-class": "transient",
+     "x-failed-at": "2026-10-11T10:00:19.217+00:00",
+     "x-failed-by": "analytics-service/a1",
+     "x-last-error": "TransientError: simulated transient fault (FAULT_RATE=0.3)",
+     "x-original-queue": "analytics.positions"
+    },
+    "body": "{\"message_id\":\"a8b73e96-6414-5212-bd72-0356ab229d26\",\"type\":\"vehicle.position\",\"schema_version\":1,\"source_id\":\"trk-10074\",\"seq\":1791712798610,\"timestamp\":\"2026-10-11T09:59:29.942Z\",\"payload\":{\"vehicle_id\":\"TRM-10074\",\"route_id\":\"1\",\"trip_id\":\"1-A-1242\",\"lat\":53.872109,\"lon\":27.615594,\"speed_kmh\":20."
+   },
+   {
+    "message_id": "1c2704a0-d282-54ed-90e3-0a3537bd3fcb",
+    "headers": {
+     "x-attempt": "4",
+     "x-error-class": "transient",
+     "x-failed-at": "2026-10-11T10:00:19.284+00:00",
+     "x-failed-by": "analytics-service/a1",
+     "x-last-error": "TransientError: simulated transient fault (FAULT_RATE=0.3)",
+     "x-original-queue": "analytics.positions"
+    },
+    "body": "{\"message_id\":\"1c2704a0-d282-54ed-90e3-0a3537bd3fcb\",\"type\":\"vehicle.position\",\"schema_version\":1,\"source_id\":\"trk-10139\",\"seq\":1791712798485,\"timestamp\":\"2026-10-11T09:59:32.109Z\",\"payload\":{\"vehicle_id\":\"TRL-10139\",\"route_id\":\"40\",\"trip_id\":\"40-A-1236\",\"lat\":53.906819,\"lon\":27.459159,\"speed_kmh\":2"
+   },
+   {
+    "message_id": "48fb4c91-7ffa-5f03-8dfe-d56b75bcca03",
+    "headers": {
+     "x-attempt": "4",
+     "x-error-class": "transient",
+     "x-failed-at": "2026-10-11T10:00:19.306+00:00",
+     "x-failed-by": "analytics-service/a1",
+     "x-last-error": "TransientError: simulated transient fault (FAULT_RATE=0.3)",
+     "x-original-queue": "analytics.positions"
+    },
+    "body": "{\"message_id\":\"48fb4c91-7ffa-5f03-8dfe-d56b75bcca03\",\"type\":\"vehicle.position\",\"schema_version\":1,\"source_id\":\"trk-10198\",\"seq\":1791712798112,\"timestamp\":\"2026-10-11T09:59:34.076Z\",\"payload\":{\"vehicle_id\":\"BUS-10198\",\"route_id\":\"100\",\"trip_id\":\"100-A-1254\",\"lat\":53.893726,\"lon\":27.548071,\"speed_kmh\""
+   }
+  ]
+ },
+ "logs": {
+  "a1": {
+   "received": 1370,
+   "retry": 410,
+   "dlq": 10,
+   "success": 950,
+   "duplicate": 0,
+   "journal_lost": 0
+  },
+  "i1": {
+   "received": 60,
+   "retry": 18,
+   "dlq": 0,
+   "success": 42,
+   "duplicate": 0,
+   "journal_lost": 0
+  },
+  "t1": {
+   "received": 629,
+   "retry": 184,
+   "dlq": 6,
+   "success": 439,
+   "duplicate": 0,
+   "journal_lost": 0
+  },
+  "t2": {
+   "received": 627,
+   "retry": 194,
+   "dlq": 4,
+   "success": 429,
+   "duplicate": 0,
+   "journal_lost": 0
+  }
+ }
+}

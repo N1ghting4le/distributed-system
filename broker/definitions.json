@@ -10,34 +10,32 @@
       "arguments": {},
       "auto_delete": false,
       "durable": true,
+      "name": "transit.dlx",
+      "type": "direct",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
       "name": "transit.events",
       "type": "topic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "auto_delete": false,
+      "durable": true,
+      "name": "transit.retry",
+      "type": "headers",
       "vhost": "/"
     }
   ],
   "queues": [
     {
       "arguments": {
-        "x-queue-type": "classic"
-      },
-      "auto_delete": false,
-      "durable": true,
-      "name": "incidents",
-      "type": "classic",
-      "vhost": "/"
-    },
-    {
-      "arguments": {
-        "x-queue-type": "classic"
-      },
-      "auto_delete": false,
-      "durable": true,
-      "name": "analytics.validations",
-      "type": "classic",
-      "vhost": "/"
-    },
-    {
-      "arguments": {
+        "x-dead-letter-exchange": "transit.dlx",
+        "x-dead-letter-routing-key": "analytics.positions",
         "x-queue-type": "classic"
       },
       "auto_delete": false,
@@ -52,12 +50,154 @@
       },
       "auto_delete": false,
       "durable": true,
+      "name": "analytics.positions.dlq",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-dead-letter-exchange": "transit.dlx",
+        "x-dead-letter-routing-key": "analytics.validations",
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "analytics.validations",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "analytics.validations.dlq",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-dead-letter-exchange": "transit.dlx",
+        "x-dead-letter-routing-key": "incidents",
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "incidents",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "incidents.dlq",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-dead-letter-exchange": "transit.dlx",
+        "x-dead-letter-routing-key": "track.positions",
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
       "name": "track.positions",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "track.positions.dlq",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-dead-letter-exchange": "",
+        "x-message-ttl": 120000,
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "transit.retry.120s",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-dead-letter-exchange": "",
+        "x-message-ttl": 30000,
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "transit.retry.30s",
+      "type": "classic",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "x-dead-letter-exchange": "",
+        "x-message-ttl": 5000,
+        "x-queue-type": "classic"
+      },
+      "auto_delete": false,
+      "durable": true,
+      "name": "transit.retry.5s",
       "type": "classic",
       "vhost": "/"
     }
   ],
   "bindings": [
+    {
+      "arguments": {},
+      "destination": "analytics.positions.dlq",
+      "destination_type": "queue",
+      "routing_key": "analytics.positions",
+      "source": "transit.dlx",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "destination": "analytics.validations.dlq",
+      "destination_type": "queue",
+      "routing_key": "analytics.validations",
+      "source": "transit.dlx",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "destination": "incidents.dlq",
+      "destination_type": "queue",
+      "routing_key": "incidents",
+      "source": "transit.dlx",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "destination": "track.positions.dlq",
+      "destination_type": "queue",
+      "routing_key": "track.positions",
+      "source": "transit.dlx",
+      "vhost": "/"
+    },
+    {
+      "arguments": {},
+      "destination": "analytics.positions",
+      "destination_type": "queue",
+      "routing_key": "vehicle.position",
+      "source": "transit.events",
+      "vhost": "/"
+    },
     {
       "arguments": {},
       "destination": "analytics.validations",
@@ -76,18 +216,43 @@
     },
     {
       "arguments": {},
-      "destination": "analytics.positions",
+      "destination": "track.positions",
       "destination_type": "queue",
       "routing_key": "vehicle.position",
       "source": "transit.events",
       "vhost": "/"
     },
     {
-      "arguments": {},
-      "destination": "track.positions",
+      "arguments": {
+        "retry-delay": "transit.retry.120s",
+        "x-match": "all"
+      },
+      "destination": "transit.retry.120s",
       "destination_type": "queue",
-      "routing_key": "vehicle.position",
-      "source": "transit.events",
+      "routing_key": "transit.retry.120s",
+      "source": "transit.retry",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "retry-delay": "transit.retry.30s",
+        "x-match": "all"
+      },
+      "destination": "transit.retry.30s",
+      "destination_type": "queue",
+      "routing_key": "transit.retry.30s",
+      "source": "transit.retry",
+      "vhost": "/"
+    },
+    {
+      "arguments": {
+        "retry-delay": "transit.retry.5s",
+        "x-match": "all"
+      },
+      "destination": "transit.retry.5s",
+      "destination_type": "queue",
+      "routing_key": "transit.retry.5s",
+      "source": "transit.retry",
       "vhost": "/"
     }
   ]
