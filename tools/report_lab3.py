@@ -41,7 +41,8 @@ def per_service(r):
     for svc, (prefix, _) in SERVICES.items():
         logs = [v for k, v in r['logs'].items() if k.startswith(prefix)]
         c = r['consumers'].get(svc, {})
-        out[svc] = {k: sum(x[k] for x in logs) for k in ('received', 'success', 'retry', 'dlq', 'duplicate')}
+        out[svc] = {k: sum(x[k] for x in logs) for k in ('success', 'retry', 'dlq', 'duplicate')}
+        out[svc]['received'] = sum(out[svc].values())  # каждая доставка завершается ровно одним исходом
         out[svc] |= {'unique': c.get('unique_ids', 0), 'redelivered': c.get('redelivered', 0),
                      'operations': c.get('operations', 0), 'journal_lost': sum(x['journal_lost'] for x in logs)}
     return out

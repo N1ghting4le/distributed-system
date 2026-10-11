@@ -47,10 +47,10 @@
 
 | Обработчик | Доставок | Успешно | Retry | В DLQ | Дубликатов | Redelivered | Операций |
 |---|---|---|---|---|---|---|---|
-| Track Service | 84 | 80 | 3 | 3 | 0 | 0 | 80 |
-| Schedule Analytics | 97 | 93 | 3 | 3 | 0 | 0 | 93 |
+| Track Service | 86 | 80 | 3 | 3 | 0 | 0 | 80 |
+| Schedule Analytics | 99 | 93 | 3 | 3 | 0 | 0 | 93 |
 | Incident Service | 7 | 7 | 0 | 0 | 0 | 0 | 7 |
-| **Всего** | 188 | 180 | 6 | 6 | 0 | 0 | 180 |
+| **Всего** | 192 | 180 | 6 | 6 | 0 | 0 | 180 |
 
 Бизнес-таблицы: {'vehicle_positions': 80, 'rejected_messages': 0, 'passenger_flow_validations': 13, 'stop_arrivals': 7, 'incidents': 7, 'positions_without_journal': 0}; DLQ: {'track.positions.dlq': 3, 'analytics.positions.dlq': 3, 'analytics.validations.dlq': 0, 'incidents.dlq': 0}.
 

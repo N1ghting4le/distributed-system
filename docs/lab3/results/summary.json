@@ -9,33 +9,33 @@
   },
   "services": {
    "track-service": {
-    "received": 86,
     "success": 86,
     "retry": 0,
     "dlq": 0,
     "duplicate": 0,
+    "received": 86,
     "unique": 86,
     "redelivered": 0,
     "operations": 86,
     "journal_lost": 0
    },
    "analytics-service": {
-    "received": 95,
     "success": 95,
     "retry": 0,
     "dlq": 0,
     "duplicate": 0,
+    "received": 95,
     "unique": 95,
     "redelivered": 0,
     "operations": 95,
     "journal_lost": 0
    },
    "incident-service": {
-    "received": 5,
     "success": 5,
     "retry": 0,
     "dlq": 0,
     "duplicate": 0,
+    "received": 5,
     "unique": 5,
     "redelivered": 0,
     "operations": 5,
@@ -43,11 +43,11 @@
    }
   },
   "total": {
-   "received": 186,
    "success": 186,
    "retry": 0,
    "dlq": 0,
    "duplicate": 0,
+   "received": 186,
    "unique": 186,
    "redelivered": 0,
    "operations": 186,
@@ -97,33 +97,33 @@
   },
   "services": {
    "track-service": {
-    "received": 108,
     "success": 84,
     "retry": 24,
     "dlq": 0,
     "duplicate": 0,
+    "received": 108,
     "unique": 84,
     "redelivered": 0,
     "operations": 84,
     "journal_lost": 0
    },
    "analytics-service": {
-    "received": 124,
     "success": 96,
     "retry": 28,
     "dlq": 0,
     "duplicate": 0,
+    "received": 124,
     "unique": 96,
     "redelivered": 0,
     "operations": 96,
     "journal_lost": 0
    },
    "incident-service": {
-    "received": 7,
     "success": 4,
     "retry": 3,
     "dlq": 0,
     "duplicate": 0,
+    "received": 7,
     "unique": 4,
     "redelivered": 0,
     "operations": 4,
@@ -131,11 +131,11 @@
    }
   },
   "total": {
-   "received": 239,
    "success": 184,
    "retry": 55,
    "dlq": 0,
    "duplicate": 0,
+   "received": 239,
    "unique": 184,
    "redelivered": 0,
    "operations": 184,
@@ -217,33 +217,33 @@
   },
   "services": {
    "track-service": {
-    "received": 91,
     "success": 87,
     "retry": 4,
     "dlq": 0,
     "duplicate": 0,
+    "received": 91,
     "unique": 87,
     "redelivered": 0,
     "operations": 87,
     "journal_lost": 4
    },
    "analytics-service": {
-    "received": 102,
     "success": 98,
     "retry": 4,
     "dlq": 0,
     "duplicate": 0,
+    "received": 102,
     "unique": 98,
     "redelivered": 0,
     "operations": 98,
     "journal_lost": 4
    },
    "incident-service": {
-    "received": 4,
     "success": 2,
     "retry": 2,
     "dlq": 0,
     "duplicate": 0,
+    "received": 4,
     "unique": 2,
     "redelivered": 0,
     "operations": 2,
@@ -251,11 +251,11 @@
    }
   },
   "total": {
-   "received": 197,
    "success": 187,
    "retry": 10,
    "dlq": 0,
    "duplicate": 0,
+   "received": 197,
    "unique": 187,
    "redelivered": 0,
    "operations": 187,
@@ -327,33 +327,33 @@
   },
   "services": {
    "track-service": {
-    "received": 84,
     "success": 80,
     "retry": 3,
     "dlq": 3,
     "duplicate": 0,
+    "received": 86,
     "unique": 83,
     "redelivered": 0,
     "operations": 80,
     "journal_lost": 0
    },
    "analytics-service": {
-    "received": 97,
     "success": 93,
     "retry": 3,
     "dlq": 3,
     "duplicate": 0,
+    "received": 99,
     "unique": 96,
     "redelivered": 0,
     "operations": 93,
     "journal_lost": 0
    },
    "incident-service": {
-    "received": 7,
     "success": 7,
     "retry": 0,
     "dlq": 0,
     "duplicate": 0,
+    "received": 7,
     "unique": 7,
     "redelivered": 0,
     "operations": 7,
@@ -361,11 +361,11 @@
    }
   },
   "total": {
-   "received": 188,
    "success": 180,
    "retry": 6,
    "dlq": 6,
    "duplicate": 0,
+   "received": 192,
    "unique": 186,
    "redelivered": 0,
    "operations": 180,
@@ -446,33 +446,33 @@
   },
   "services": {
    "track-service": {
-    "received": 257,
     "success": 80,
     "retry": 0,
     "dlq": 0,
     "duplicate": 177,
+    "received": 257,
     "unique": 80,
     "redelivered": 17,
     "operations": 80,
     "journal_lost": 0
    },
    "analytics-service": {
-    "received": 299,
     "success": 93,
     "retry": 0,
     "dlq": 0,
     "duplicate": 206,
+    "received": 299,
     "unique": 93,
     "redelivered": 20,
     "operations": 93,
     "journal_lost": 0
    },
    "incident-service": {
-    "received": 22,
     "success": 7,
     "retry": 0,
     "dlq": 0,
     "duplicate": 15,
+    "received": 22,
     "unique": 7,
     "redelivered": 1,
     "operations": 7,
@@ -480,11 +480,11 @@
    }
   },
   "total": {
-   "received": 578,
    "success": 180,
    "retry": 0,
    "dlq": 0,
    "duplicate": 398,
+   "received": 578,
    "unique": 180,
    "redelivered": 38,
    "operations": 180,

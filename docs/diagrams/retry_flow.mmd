@@ -1,0 +1,14 @@
+flowchart TB
+    A(["Доставка, attempt = x-attempt или 1"]) --> C{"JSON и JSON Schema<br/>корректны?"}
+    C -- "нет: постоянная ошибка" --> DLQ["Копия в transit.dlx<br/>с причиной в заголовках"]
+    C -- "да" --> T["BEGIN, INSERT processed_messages<br/>ON CONFLICT DO NOTHING"]
+    T -- "конфликт ключа" --> DUP["COMMIT без операции<br/>итог duplicate"]
+    T -- "строка вставлена" --> OP["Бизнес-операции, точка сбоя,<br/>итог в processed_messages"]
+    OP -- "успех" --> OK["COMMIT, производное событие<br/>итог success"]
+    OP -- "ошибка: ROLLBACK" --> F{"Временная и<br/>attempt < MAX_ATTEMPTS?"}
+    F -- "да" --> RETRY["Копия в transit.retry<br/>x-attempt = attempt + 1"]
+    F -- "нет" --> DLQ
+    OK --> ACK(["ack доставки, строка в processing_log"])
+    DUP --> ACK
+    RETRY -- "confirm" --> ACK
+    DLQ -- "confirm" --> ACK

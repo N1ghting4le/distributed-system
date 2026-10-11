@@ -1,0 +1,16 @@
+flowchart TB
+    GW["Ingest Gateway"] -- "vehicle.position" --> X{{"transit.events (topic)"}}
+    X --> Q1[("track.positions<br/>DLX = transit.dlx")]
+    Q1 --> TS["Track Service, 1..N экземпляров"]
+    TS -- "временная ошибка,<br/>x-attempt + 1" --> RX{{"transit.retry (headers)"}}
+    TS -- "постоянная ошибка или<br/>попытки исчерпаны" --> DX{{"transit.dlx (direct)"}}
+    RX -- "по заголовку retry-delay" --> W
+    subgraph W["Очереди ожидания без потребителей"]
+        direction LR
+        W1[("transit.retry.5s<br/>TTL 5 с")]
+        W2[("transit.retry.30s<br/>TTL 30 с")]
+        W3[("transit.retry.120s<br/>TTL 120 с")]
+    end
+    W -- "TTL истек: exchange по умолчанию,<br/>routing key = track.positions" --> Q1
+    DX -- "track.positions" --> D1[("track.positions.dlq")]
+    D1 -. "tools/dlq.py replay" .-> Q1
