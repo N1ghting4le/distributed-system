@@ -216,6 +216,7 @@ async def main():
 
     service = TrackService(pool, exchange, shapes)
     consumer = rel.Consumer(SERVICE, CONSUMER_ID, pool, publish_channel, log)
+    await rel.serve_health(connection, pool, log)  # ЛР 5: пробы Kubernetes
     log.info('started, pid=%d queue=%s prefetch=%d delay=%dms shapes=%d %s', os.getpid(), QUEUE, PREFETCH,
              PROCESS_DELAY_MS, len(shapes), rel.settings())
     try:

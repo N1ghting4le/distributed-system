@@ -1,0 +1,30 @@
+# Неконфиденциальные параметры (аналог .env ЛР 4 без паролей). Компоненты получают их через envFrom;
+# изменение значений вступает в силу после перезапуска Pod: kubectl -n transit rollout restart deployment/<имя>
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: transit-config
+  namespace: transit
+  labels:
+    app.kubernetes.io/part-of: transit-monitor
+data:
+  # адреса – имена Kubernetes Services (DNS кластера), а не IP-адреса Pod
+  RABBIT_HOST: rabbitmq
+  RABBIT_PORT: '5672'
+  DB_HOST: postgres
+  DB_PORT: '5432'
+  POSTGRES_DB: transit
+  GATEWAY_URL: http://gateway:8080
+  GATEWAY_PORT: '8080'
+  API_PORT: '8081'
+  # обработчики (common/reliability.py, ЛР 3)
+  PREFETCH: '50'
+  PROCESS_DELAY_MS: '0'
+  TRACK_PROCESS_DELAY_MS: '20'      # имитация «тяжелой» привязки к трассе в Track Service (как в ЛР 2)
+  DB_TIMEOUT_S: '10'
+  MAX_ATTEMPTS: '4'
+  RETRY_DELAYS_MS: 5000,30000,120000
+  FAULT_RATE: '0'
+  HEADWAY_MIN: '3'
+  HEALTH_PORT: '8000'               # HTTP-пробы /live и /ready обработчиков (ЛР 5)
+  TZ: UTC

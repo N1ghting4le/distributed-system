@@ -1,0 +1,18 @@
+flowchart TB
+    USER["Хост: kubectl, браузер, tools/run_lab5.py<br/>localhost:8080, 8081, 15672, 5433"]
+    subgraph CL["Кластер kind «transit»: control-plane + 2 worker"]
+        subgraph NS["Пространство имен transit"]
+            CFG[/"ConfigMap transit-config<br/>Secret transit-secret"/]
+            JOB["Job simulator-*"] -- "HTTP gateway:8080" --> SGW{{"Service gateway<br/>NodePort 30080"}}
+            SGW --> GW["Deployment gateway<br/>(Producer) ×1"]
+            GW -- "AMQP rabbitmq:5672" --> SMQ{{"Service rabbitmq"}}
+            SMQ --> MQ[("StatefulSet rabbitmq-0")]
+            MQ --> TR["Deployment track-service<br/>×1 → 2 → 4"] & AN["Deployment analytics-service ×1"] & IN["Deployment incident-service ×1"]
+            TR & AN & IN -- "SQL postgres:5432" --> SPG{{"Service postgres"}}
+            SPG --> PG[("StatefulSet postgres-0")]
+            API["Deployment dispatcher-api ×1"] -- "SQL" --> SPG
+            MQ --- V1[["PVC data-rabbitmq-0"]]
+            PG --- V2[["PVC data-postgres-0"]]
+        end
+    end
+    USER -.-> SGW

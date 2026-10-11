@@ -1,0 +1,60 @@
+# Incident Service – обработчик инцидентов (очередь incidents).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: incident-service
+  namespace: transit
+  labels: {app: incident-service, app.kubernetes.io/part-of: transit-monitor, tier: consumer}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels: {app: incident-service}
+  template:
+    metadata:
+      labels: {app: incident-service, tier: consumer}
+    spec:
+      terminationGracePeriodSeconds: 30
+      initContainers:
+        - name: wait-deps
+          image: transit-monitor/incident-service:lab5
+          imagePullPolicy: IfNotPresent
+          command: [python, -c]
+          args:
+            - |
+              import socket, time
+              for host, port in (('rabbitmq', 5672), ('postgres', 5432)):
+                  while True:
+                      try:
+                          socket.create_connection((host, port), 2).close(); print(host, 'ok'); break
+                      except OSError as exc:
+                          print(host, 'waiting:', exc); time.sleep(1)
+      containers:
+        - name: incident-service
+          image: transit-monitor/incident-service:lab5
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef: {name: transit-config}
+          env:
+            - name: CONSUMER_ID
+              valueFrom: {fieldRef: {fieldPath: metadata.name}}
+            - name: PREFETCH
+              value: '10'
+            - name: RABBIT_URL
+              valueFrom: {secretKeyRef: {name: transit-secret, key: RABBIT_URL}}
+            - name: DB_DSN
+              valueFrom: {secretKeyRef: {name: transit-secret, key: DB_DSN}}
+          ports:
+            - {name: health, containerPort: 8000}
+          readinessProbe:
+            httpGet: {path: /ready, port: health}
+            periodSeconds: 2
+            failureThreshold: 2
+          livenessProbe:
+            httpGet: {path: /live, port: health}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests: {cpu: 50m, memory: 96Mi}
+            limits: {cpu: 500m, memory: 256Mi}

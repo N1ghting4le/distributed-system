@@ -1,0 +1,54 @@
+# Ingest Gateway (Producer): Deployment + Service. Шлюз без состояния – реплик может быть несколько,
+# Service gateway распределяет HTTP-запросы между ними. Внутри кластера – http://gateway:8080,
+# с хоста – NodePort 30080 (kind пробрасывает на localhost:8080).
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway
+  namespace: transit
+  labels: {app: gateway}
+spec:
+  type: NodePort
+  selector: {app: gateway}
+  ports:
+    - {name: http, port: 8080, targetPort: http, nodePort: 30080}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: transit
+  labels: {app: gateway, app.kubernetes.io/part-of: transit-monitor, tier: producer}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels: {app: gateway}
+  template:
+    metadata:
+      labels: {app: gateway, tier: producer}
+    spec:
+      terminationGracePeriodSeconds: 20
+      containers:
+        - name: gateway
+          image: transit-monitor/gateway:lab5
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef: {name: transit-config}
+          env:
+            - name: RABBIT_URL
+              valueFrom: {secretKeyRef: {name: transit-secret, key: RABBIT_URL}}
+          ports:
+            - {name: http, containerPort: 8080}
+          readinessProbe:                    # 503, пока нет соединения с брокером – запросы на Pod не идут
+            httpGet: {path: /health, port: http}
+            periodSeconds: 2
+            failureThreshold: 2
+          livenessProbe:
+            httpGet: {path: /health, port: http}
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            failureThreshold: 6
+          resources:
+            requests: {cpu: 100m, memory: 96Mi}
+            limits: {cpu: '1', memory: 256Mi}

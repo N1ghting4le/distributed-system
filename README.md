@@ -74,7 +74,7 @@ flowchart TB
 
 ## Стек
 
-Python 3.12 (FastAPI, aio-pika, asyncpg) · RabbitMQ 4.1 · PostgreSQL 17 · Docker Compose · Kubernetes (Minikube) · Mermaid.
+Python 3.12 (FastAPI, aio-pika, asyncpg) · RabbitMQ 4.1 · PostgreSQL 17 · Docker Compose · Kubernetes (kind) · Mermaid.
 
 ## Запуск в Docker Compose (ЛР 4)
 
@@ -102,6 +102,36 @@ docker compose down               # остановка; данные остаю�
 
 Схема БД применяется только к пустому тому: после изменения `database/init/` – `docker compose down -v`
 (удаляет данные) или ручное применение скрипта через `docker compose exec postgres psql`.
+
+## Запуск в Kubernetes (ЛР 5)
+
+Нужны Docker, [kind](https://kind.sigs.k8s.io) 0.27 и kubectl. Манифесты – каталог [`k8s/`](k8s), описание –
+[`docs/lab5/kubernetes.md`](docs/lab5/kubernetes.md). Стек Docker Compose должен быть остановлен (те же порты хоста).
+
+```bash
+kind create cluster --config k8s/kind-cluster.yaml          # кластер transit: control-plane + 2 worker
+for c in gateway:producer track-service:services/track-service analytics-service:services/analytics-service          incident-service:services/incident-service dispatcher-api:services/dispatcher-api simulator:simulator; do
+  docker build -f ${c#*:}/Dockerfile -t transit-monitor/${c%%:*}:lab5 . && kind load docker-image transit-monitor/${c%%:*}:lab5 --name transit
+done
+kubectl apply -k k8s/                                        # вся система одной командой (namespace transit)
+kubectl -n transit get pods -o wide
+kubectl -n transit create -f k8s/producer/simulator-job.yaml # 1000 событий через Job эмулятора
+kubectl -n transit scale deployment/track-service --replicas=4
+curl localhost:8081/api/v1/stats
+kubectl delete -k k8s/                                       # удаление (тома PVC удаляются вместе с namespace)
+```
+
+| Каталог `k8s/` | Объекты |
+|---|---|
+| `namespace.yaml`, `configmap.yaml`, `secret.yaml` | namespace `transit`, ConfigMap `transit-config`, Secret `transit-secret` |
+| `broker/` | StatefulSet `rabbitmq` + PVC, Service `rabbitmq`, NodePort `rabbitmq-management` (localhost:15672) |
+| `database/` | StatefulSet `postgres` + PVC, ConfigMap `postgres-init` (скрипты `database/init`), Service `postgres`, NodePort `postgres-external` (localhost:5433) |
+| `producer/` | Deployment и NodePort Service `gateway` (localhost:8080), шаблон Job эмулятора |
+| `consumers/` | Deployment `track-service` (масштабируемый), `analytics-service`, `incident-service` |
+| `api/` | Deployment и NodePort Service `dispatcher-api` (localhost:8081) |
+
+`k8s/database/init-sql.yaml` генерируется из `database/init`:
+`kubectl create configmap postgres-init -n transit --from-file=database/init --dry-run=client -o yaml`.
 
 ## Запуск без контейнеров (ЛР 2–3)
 
@@ -169,6 +199,14 @@ Service и единственного Analytics Service, остановка Post
 persist` – накопление 1000 событий в очередях, `docker compose down` → `up`, сверка данных. Затем
 `python tools/report_lab4.py` – [`docs/lab4/experiments.md`](docs/lab4/experiments.md) и график.
 
+## Эксперименты (ЛР 5)
+
+Кластер создан, образы `:lab5` загружены. `python tools/run_lab5.py deploy` – чистое развертывание и 1000 событий
+(1 реплика Track Service); `stream` – поток 57 координат/с, масштабирование 1 → 2 → 4 по ходу потока;
+`batch --count 3000` – пакеты по 3000 координат при 1, 2, 4 репликах; `failover --period 5` – удаление Pod
+(`kubectl delete pod`) и `kill -9` процесса под потоком. Затем `python tools/report_lab5.py` –
+[`docs/lab5/experiments.md`](docs/lab5/experiments.md) и графики.
+
 ## Проверки
 
 ```bash
@@ -187,5 +225,5 @@ python tools/build_reference.py     # справочники маршрутов 
 | 2 ✔ | Producer–Consumer | Gateway, Fleet Simulator, три обработчика, маршрутизация по типам, эксперименты с 1/2/4 Consumers |
 | 3 ✔ | Retry, DLQ, идемпотентность | `common/reliability.py`: `transit.retry` и очереди ожидания с TTL, `transit.dlx` и `*.dlq`, `processed_messages` в транзакции, `processing_log`, имитация сбоев, `tools/dlq.py` |
 | 4 ✔ | Контейнеризация | Dockerfile каждого компонента, `docker-compose.yml` (9 сервисов, сеть `transit-net`, тома, healthcheck), `.env.example`, Dispatcher API, `tools/run_lab4.py` |
-| 5 | Kubernetes | Манифесты Deployment/Service/ConfigMap/Secret, масштабирование Track Service 1 → 2 → 4 |
+| 5 ✔ | Kubernetes | `k8s/`: Deployment, StatefulSet + PVC, Service, ConfigMap, Secret, пробы готовности обработчиков (`HEALTH_PORT`), масштабирование Track Service 1 → 2 → 4, `tools/run_lab5.py` |
 | 6 | Тестирование и оптимизация | Генератор нагрузки, chaos-сценарии, метрики throughput/latency, аудит узких мест |

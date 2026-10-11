@@ -1,0 +1,16 @@
+# Локальный кластер Kubernetes (ЛР 5): kind – узлы кластера работают как контейнеры Docker.
+#   kind create cluster --config k8s/kind-cluster.yaml
+# NodePort-сервисы открыты на всех узлах; порты узла управления проброшены на хост
+# (те же номера, что у docker compose ЛР 4 – стек compose при этом должен быть остановлен).
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: transit
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - {containerPort: 30080, hostPort: 8080}    # gateway (Producer, HTTP)
+      - {containerPort: 30081, hostPort: 8081}    # dispatcher-api
+      - {containerPort: 31672, hostPort: 15672}   # веб-консоль и HTTP API RabbitMQ
+      - {containerPort: 30433, hostPort: 5433}    # PostgreSQL – для стенда экспериментов
+  - role: worker
+  - role: worker

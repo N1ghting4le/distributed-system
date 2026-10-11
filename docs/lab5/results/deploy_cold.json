@@ -1,0 +1,197 @@
+{
+  "started": "2026-10-11T17:08:57.218+00:00",
+  "apply_output": [
+    "namespace/transit created",
+    "configmap/postgres-init created",
+    "configmap/rabbitmq-config created",
+    "configmap/transit-config created",
+    "secret/transit-secret created",
+    "service/dispatcher-api created",
+    "service/gateway created",
+    "service/postgres created",
+    "service/postgres-external created",
+    "service/rabbitmq created",
+    "service/rabbitmq-management created",
+    "deployment.apps/analytics-service created",
+    "deployment.apps/dispatcher-api created",
+    "deployment.apps/gateway created",
+    "deployment.apps/incident-service created",
+    "deployment.apps/track-service created",
+    "statefulset.apps/postgres created",
+    "statefulset.apps/rabbitmq created"
+  ],
+  "ready_total_s": 62.47,
+  "pods": [
+    {
+      "name": "analytics-service-798585c988-cht5w",
+      "app": "analytics-service",
+      "node": "transit-worker",
+      "restarts": 0,
+      "ready_after_s": 62.0
+    },
+    {
+      "name": "dispatcher-api-84579f68bf-hpdmb",
+      "app": "dispatcher-api",
+      "node": "transit-worker2",
+      "restarts": 0,
+      "ready_after_s": 54.0
+    },
+    {
+      "name": "gateway-866c7ff975-tq5mp",
+      "app": "gateway",
+      "node": "transit-worker2",
+      "restarts": 0,
+      "ready_after_s": 61.0
+    },
+    {
+      "name": "incident-service-7889867f97-xqmqs",
+      "app": "incident-service",
+      "node": "transit-worker",
+      "restarts": 0,
+      "ready_after_s": 62.0
+    },
+    {
+      "name": "postgres-0",
+      "app": "postgres",
+      "node": "transit-worker2",
+      "restarts": 0,
+      "ready_after_s": 52.0
+    },
+    {
+      "name": "rabbitmq-0",
+      "app": "rabbitmq",
+      "node": "transit-worker",
+      "restarts": 0,
+      "ready_after_s": 58.0
+    },
+    {
+      "name": "track-service-d4b69b554-v67tl",
+      "app": "track-service",
+      "node": "transit-worker2",
+      "restarts": 0,
+      "ready_after_s": 61.0
+    }
+  ],
+  "objects": "NAME                                READY   UP-TO-DATE   AVAILABLE   AGE   CONTAINERS          IMAGES                                   SELECTOR\ndeployment.apps/analytics-service   1/1     1            1           62s   analytics-service   transit-monitor/analytics-service:lab5   app=analytics-service\ndeployment.apps/dispatcher-api      1/1     1            1           62s   dispatcher-api      transit-monitor/dispatcher-api:lab5      app=dispatcher-api\ndeployment.apps/gateway             1/1     1            1           62s   gateway             transit-monitor/gateway:lab5             app=gateway\ndeployment.apps/incident-service    1/1     1            1           62s   incident-service    transit-monitor/incident-service:lab5    app=incident-service\ndeployment.apps/track-service       1/1     1            1           61s   track-service       transit-monitor/track-service:lab5       app=track-service\n\nNAME                        READY   AGE   CONTAINERS   IMAGES\nstatefulset.apps/postgres   1/1     61s   postgres     postgres:17\nstatefulset.apps/rabbitmq   1/1     61s   rabbitmq     rabbitmq:4.1-management\n\nNAME                          TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)              AGE   SELECTOR\nservice/dispatcher-api        NodePort    10.96.217.247   <none>        8081:30081/TCP       62s   app=dispatcher-api\nservice/gateway               NodePort    10.96.111.216   <none>        8080:30080/TCP       62s   app=gateway\nservice/postgres              ClusterIP   10.96.6.46      <none>        5432/TCP             62s   app=postgres\nservice/postgres-external     NodePort    10.96.127.109   <none>        5432:30433/TCP       62s   app=postgres\nservice/rabbitmq              ClusterIP   10.96.137.108   <none>        5672/TCP,15672/TCP   62s   app=rabbitmq\nservice/rabbitmq-management   NodePort    10.96.29.66     <none>        15672:31672/TCP      62s   app=rabbitmq\n\nNAME                         DATA   AGE\nconfigmap/kube-root-ca.crt   1      62s\nconfigmap/postgres-init      3      62s\nconfigmap/rabbitmq-config    1      62s\nconfigmap/transit-config     18     62s\n\nNAME                    TYPE     DATA   AGE\nsecret/transit-secret   Opaque   6      62s\n\nNAME                                    STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE   VOLUMEMODE\npersistentvolumeclaim/data-postgres-0   Bound    pvc-1bf65fd2-f99a-4f82-a3af-1a89a5df82b1   2Gi        RWO            standard       <unset>                 61s   Filesystem\npersistentvolumeclaim/data-rabbitmq-0   Bound    pvc-f4e8d474-ffd0-4c6c-bcb3-61b058791d14   1Gi        RWO            standard       <unset>                 61s   Filesystem\n",
+  "nodes": "NAME                    STATUS   ROLES           AGE   VERSION   INTERNAL-IP   EXTERNAL-IP   OS-IMAGE                         KERNEL-VERSION                       CONTAINER-RUNTIME\ntransit-control-plane   Ready    control-plane   34m   v1.32.2   172.23.0.4    <none>        Debian GNU/Linux 12 (bookworm)   5.15.153.1-microsoft-standard-WSL2   containerd://2.0.2\ntransit-worker          Ready    <none>          33m   v1.32.2   172.23.0.2    <none>        Debian GNU/Linux 12 (bookworm)   5.15.153.1-microsoft-standard-WSL2   containerd://2.0.2\ntransit-worker2         Ready    <none>          33m   v1.32.2   172.23.0.3    <none>        Debian GNU/Linux 12 (bookworm)   5.15.153.1-microsoft-standard-WSL2   containerd://2.0.2\n",
+  "pods_wide": "NAME                                 READY   STATUS    RESTARTS   AGE   IP            NODE              NOMINATED NODE   READINESS GATES\nanalytics-service-798585c988-cht5w   1/1     Running   0          63s   10.244.2.24   transit-worker    <none>           <none>\ndispatcher-api-84579f68bf-hpdmb      1/1     Running   0          63s   10.244.1.15   transit-worker2   <none>           <none>\ngateway-866c7ff975-tq5mp             1/1     Running   0          63s   10.244.1.16   transit-worker2   <none>           <none>\nincident-service-7889867f97-xqmqs    1/1     Running   0          62s   10.244.2.25   transit-worker    <none>           <none>\npostgres-0                           1/1     Running   0          62s   10.244.1.19   transit-worker2   <none>           <none>\nrabbitmq-0                           1/1     Running   0          62s   10.244.2.27   transit-worker    <none>           <none>\ntrack-service-d4b69b554-v67tl        1/1     Running   0          62s   10.244.1.17   transit-worker2   <none>           <none>\n",
+  "secret_DB_DSN_base64": "cG9zdGdyZXNxbDovL3RyYW5zaXQ6dHJhbnNpdEBwb3N0Z3Jlczo1NDMyL3RyYW5zaXQ=",
+  "env_check": "CONSUMER_ID=track-service-d4b69b554-v67tl PROCESS_DELAY_MS=20 HEALTH_PORT=8000 DB_DSN=postgresql://***@postgres:5432/transit",
+  "ready_probe": "ok",
+  "dns": "{'rabbitmq': '10.96.137.108', 'postgres': '10.96.6.46', 'gateway': '10.96.111.216'}",
+  "service_ips": {
+    "dispatcher-api": "10.96.217.247",
+    "gateway": "10.96.111.216",
+    "postgres": "10.96.6.46",
+    "postgres-external": "10.96.127.109",
+    "rabbitmq": "10.96.137.108",
+    "rabbitmq-management": "10.96.29.66"
+  },
+  "clock_offset_s": 0.014,
+  "simulator": {
+    "job": "simulator-r5cln",
+    "generated": 1000,
+    "accepted": 1000,
+    "rejected": 0,
+    "retries": 0,
+    "elapsed_s": 1.337,
+    "rate": 747.7,
+    "by_type": {
+      "vehicle.position": 861,
+      "ticket.validation": 136,
+      "vehicle.incident": 3
+    }
+  },
+  "drain_s": 31.2,
+  "verify": {
+    "expected": {
+      "track-service": 861,
+      "analytics-service": 997,
+      "incident-service": 7
+    },
+    "processed": {
+      "analytics-service": 997,
+      "track-service": 861,
+      "incident-service": 7
+    },
+    "results": {
+      "analytics-service:arrival_duplicate": 14,
+      "track-service:stored_off_route": 1,
+      "analytics-service:arrival_late": 3,
+      "analytics-service:arrival": 34,
+      "analytics-service:counted": 136,
+      "analytics-service:no_arrival": 773,
+      "track-service:stored": 859,
+      "analytics-service:at_stop": 37,
+      "track-service:stored_route_deviation": 1,
+      "incident-service:registered": 7
+    },
+    "attempts": {
+      "analytics-service:success": 997,
+      "track-service:success": 861,
+      "incident-service:success": 7
+    },
+    "redelivered": {},
+    "dlq": {
+      "analytics.positions.dlq": 0,
+      "analytics.validations.dlq": 0,
+      "incidents.dlq": 0,
+      "track.positions.dlq": 0
+    },
+    "lost": {
+      "track-service": 0,
+      "analytics-service": 0,
+      "incident-service": 0
+    }
+  },
+  "api_stats": {
+    "at": "2026-10-11T17:10:54.479175+00:00",
+    "tables": {
+      "vehicle_positions": 861,
+      "vehicle_state": 300,
+      "stop_arrivals": 37,
+      "passenger_flow": 15,
+      "incidents": 7,
+      "rejected_messages": 0,
+      "processed_messages": 1865,
+      "processing_log": 1865
+    },
+    "processed_by_instance": [
+      {
+        "consumer": "analytics-service",
+        "instance_id": "analytics-service-798585c988-cht5w",
+        "messages": 997,
+        "last_processed_at": "2026-10-11T17:10:26.644324+00:00"
+      },
+      {
+        "consumer": "incident-service",
+        "instance_id": "incident-service-7889867f97-xqmqs",
+        "messages": 7,
+        "last_processed_at": "2026-10-11T17:10:28.543100+00:00"
+      },
+      {
+        "consumer": "track-service",
+        "instance_id": "track-service-d4b69b554-v67tl",
+        "messages": 861,
+        "last_processed_at": "2026-10-11T17:10:43.497409+00:00"
+      }
+    ],
+    "outcomes": [
+      {
+        "consumer": "analytics-service",
+        "outcome": "success",
+        "n": 997
+      },
+      {
+        "consumer": "incident-service",
+        "outcome": "success",
+        "n": 7
+      },
+      {
+        "consumer": "track-service",
+        "outcome": "success",
+        "n": 861
+      }
+    ]
+  }
+}

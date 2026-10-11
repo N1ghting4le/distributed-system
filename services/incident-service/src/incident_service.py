@@ -115,6 +115,7 @@ async def main():
     async def handler(msg, attempt):
         return await handle(pool, msg, attempt)
 
+    await rel.serve_health(connection, pool, log)  # ЛР 5: пробы Kubernetes
     log.info('started, queue=%s prefetch=%d delay=%dms %s', QUEUE, PREFETCH, PROCESS_DELAY_MS, rel.settings())
     try:
         async with queue.iterator() as messages:

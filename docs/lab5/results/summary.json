@@ -1,0 +1,536 @@
+{
+  "deploy": {
+    "ready_total_s": 24.22,
+    "pods": [
+      {
+        "name": "analytics-service-798585c988-ft889",
+        "app": "analytics-service",
+        "node": "transit-worker2",
+        "restarts": 0,
+        "ready_after_s": 22.9
+      },
+      {
+        "name": "dispatcher-api-84579f68bf-hbtkv",
+        "app": "dispatcher-api",
+        "node": "transit-worker",
+        "restarts": 0,
+        "ready_after_s": 11.9
+      },
+      {
+        "name": "gateway-866c7ff975-29jhp",
+        "app": "gateway",
+        "node": "transit-worker",
+        "restarts": 0,
+        "ready_after_s": 20.9
+      },
+      {
+        "name": "incident-service-7889867f97-h7tr7",
+        "app": "incident-service",
+        "node": "transit-worker2",
+        "restarts": 0,
+        "ready_after_s": 20.9
+      },
+      {
+        "name": "postgres-0",
+        "app": "postgres",
+        "node": "transit-worker",
+        "restarts": 0,
+        "ready_after_s": 9.9
+      },
+      {
+        "name": "rabbitmq-0",
+        "app": "rabbitmq",
+        "node": "transit-worker2",
+        "restarts": 0,
+        "ready_after_s": 17.9
+      },
+      {
+        "name": "track-service-d4b69b554-pbnhs",
+        "app": "track-service",
+        "node": "transit-worker",
+        "restarts": 0,
+        "ready_after_s": 20.9
+      }
+    ],
+    "simulator": {
+      "job": "simulator-8bjt5",
+      "generated": 1000,
+      "accepted": 1000,
+      "rejected": 0,
+      "retries": 0,
+      "elapsed_s": 1.265,
+      "rate": 790.5,
+      "by_type": {
+        "vehicle.position": 896,
+        "ticket.validation": 102,
+        "vehicle.incident": 2
+      }
+    },
+    "drain_s": 27.1,
+    "verify": {
+      "expected": {
+        "track-service": 896,
+        "analytics-service": 998,
+        "incident-service": 4
+      },
+      "processed": {
+        "analytics-service": 998,
+        "track-service": 896,
+        "incident-service": 4
+      },
+      "results": {
+        "analytics-service:arrival_duplicate": 15,
+        "analytics-service:arrival_late": 1,
+        "analytics-service:arrival": 30,
+        "analytics-service:counted": 102,
+        "analytics-service:no_arrival": 807,
+        "track-service:stored": 895,
+        "analytics-service:at_stop": 43,
+        "track-service:stored_route_deviation": 1,
+        "incident-service:registered": 4
+      },
+      "attempts": {
+        "analytics-service:success": 998,
+        "track-service:success": 896,
+        "incident-service:success": 4
+      },
+      "redelivered": {},
+      "dlq": {
+        "analytics.positions.dlq": 0,
+        "analytics.validations.dlq": 0,
+        "incidents.dlq": 0,
+        "track.positions.dlq": 0
+      },
+      "lost": {
+        "track-service": 0,
+        "analytics-service": 0,
+        "incident-service": 0
+      }
+    },
+    "dns": "{'rabbitmq': '10.96.88.133', 'postgres': '10.96.247.50', 'gateway': '10.96.83.254'}",
+    "env_check": "CONSUMER_ID=track-service-d4b69b554-pbnhs PROCESS_DELAY_MS=20 HEALTH_PORT=8000 DB_DSN=postgresql://***@postgres:5432/transit",
+    "cold_ready_total_s": 62.47
+  },
+  "stream": {
+    "marks": [
+      {
+        "t": 60.0,
+        "replicas": 2,
+        "ready_s": 5.43,
+        "consumers_s": 8.93,
+        "pods": [
+          {
+            "name": "track-service-d4b69b554-wmwwj",
+            "node": "transit-worker2",
+            "restarts": 0
+          },
+          {
+            "name": "track-service-d4b69b554-zn9z8",
+            "node": "transit-worker",
+            "restarts": 0
+          }
+        ]
+      },
+      {
+        "t": 120.0,
+        "replicas": 4,
+        "ready_s": 6.19,
+        "consumers_s": 8.67,
+        "pods": [
+          {
+            "name": "track-service-d4b69b554-cbk4m",
+            "node": "transit-worker2",
+            "restarts": 0
+          },
+          {
+            "name": "track-service-d4b69b554-m9jzf",
+            "node": "transit-worker",
+            "restarts": 0
+          },
+          {
+            "name": "track-service-d4b69b554-wmwwj",
+            "node": "transit-worker2",
+            "restarts": 0
+          },
+          {
+            "name": "track-service-d4b69b554-zn9z8",
+            "node": "transit-worker",
+            "restarts": 0
+          }
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "replicas": 1,
+        "from_s": 0,
+        "to_s": 60.0,
+        "rate": 33.3,
+        "queue_start": 0,
+        "queue_end": 1215,
+        "queue_max": 1215,
+        "queue_trend": 24.6
+      },
+      {
+        "replicas": 2,
+        "from_s": 60.0,
+        "to_s": 120.0,
+        "rate": 67.6,
+        "queue_start": 1354,
+        "queue_end": 955,
+        "queue_max": 1368,
+        "queue_trend": -8.2
+      },
+      {
+        "replicas": 4,
+        "from_s": 120.0,
+        "to_s": 180.3,
+        "rate": 70.2,
+        "queue_start": 659,
+        "queue_end": 0,
+        "queue_max": 1044,
+        "queue_trend": -13.3
+      }
+    ],
+    "queue_empty_after_4_s": 24.3,
+    "simulator": {
+      "job": "simulator-5vwwj",
+      "generated": 11858,
+      "accepted": 11858,
+      "rejected": 0,
+      "retries": 0,
+      "elapsed_s": 180.251,
+      "rate": 65.8,
+      "by_type": {
+        "vehicle.position": 10284,
+        "ticket.validation": 1554,
+        "vehicle.incident": 20
+      }
+    },
+    "verify": {
+      "expected": {
+        "track-service": 10284,
+        "analytics-service": 11838,
+        "incident-service": 41
+      },
+      "processed": {
+        "analytics-service": 11838,
+        "track-service": 10284,
+        "incident-service": 41
+      },
+      "results": {
+        "analytics-service:arrival_duplicate": 143,
+        "track-service:stored_off_route": 46,
+        "analytics-service:arrival": 63,
+        "analytics-service:counted": 1554,
+        "incident-service:registered": 41,
+        "analytics-service:arrival_late": 7,
+        "analytics-service:no_arrival": 9155,
+        "track-service:stored": 10224,
+        "analytics-service:at_stop": 916,
+        "track-service:stored_route_deviation": 14
+      },
+      "attempts": {
+        "analytics-service:success": 11838,
+        "track-service:success": 10284,
+        "incident-service:success": 41
+      },
+      "redelivered": {},
+      "dlq": {
+        "analytics.positions.dlq": 0,
+        "analytics.validations.dlq": 0,
+        "incidents.dlq": 0,
+        "track.positions.dlq": 0
+      },
+      "lost": {
+        "track-service": 0,
+        "analytics-service": 0,
+        "incident-service": 0
+      }
+    }
+  },
+  "batch": [
+    {
+      "replicas": 1,
+      "processed": 3000,
+      "span_s": 88.31,
+      "throughput": 34.0,
+      "latency_avg_s": 42.94,
+      "latency_p95_s": 80.58,
+      "latency_max_s": 84.8,
+      "queue_peak": 2825,
+      "by_instance": {
+        "track-service-d4b69b554-zn9z8": 3000
+      },
+      "ingest_s": 3.59,
+      "lost": 0,
+      "scale_ready_s": 0.12
+    },
+    {
+      "replicas": 2,
+      "processed": 3000,
+      "span_s": 45.81,
+      "throughput": 65.5,
+      "latency_avg_s": 21.54,
+      "latency_p95_s": 40.06,
+      "latency_max_s": 42.09,
+      "queue_peak": 2522,
+      "by_instance": {
+        "track-service-d4b69b554-hb8tn": 1481,
+        "track-service-d4b69b554-zn9z8": 1519
+      },
+      "ingest_s": 3.8,
+      "lost": 0,
+      "scale_ready_s": 3.92
+    },
+    {
+      "replicas": 4,
+      "processed": 3000,
+      "span_s": 23.42,
+      "throughput": 128.1,
+      "latency_avg_s": 10.21,
+      "latency_p95_s": 18.77,
+      "latency_max_s": 19.83,
+      "queue_peak": 2059,
+      "by_instance": {
+        "track-service-d4b69b554-hb8tn": 741,
+        "track-service-d4b69b554-tk7nv": 756,
+        "track-service-d4b69b554-tm6dn": 742,
+        "track-service-d4b69b554-zn9z8": 761
+      },
+      "ingest_s": 3.7,
+      "lost": 0,
+      "scale_ready_s": 3.97
+    }
+  ],
+  "failover": {
+    "scenarios": [
+      {
+        "kind": "delete",
+        "detail": "kubectl delete pod (SIGTERM, штатное завершение)",
+        "victim": "track-service-6d767457d6-xvqbg",
+        "victim_node": "transit-worker",
+        "t": 37.75,
+        "events_s": {
+          "replacement_seen": 0.41,
+          "replacement": "track-service-6d767457d6-9qncq",
+          "replacement_created_k8s": -0.49,
+          "replacement_node": "transit-worker",
+          "victim_gone": 1.96,
+          "replacement_ready": 5.72,
+          "replacement_ready_k8s": 5.51,
+          "first_processed": 4.0
+        },
+        "k8s_events": [
+          "2026-10-11T17:04:53Z Pod/track-service-6d767457d6-9qncq Scheduled: Successfully assigned transit/track-service-6d767457d6-9qncq to transit-worker",
+          "2026-10-11T17:04:53Z Pod/track-service-6d767457d6-xvqbg Unhealthy: Readiness probe failed: Get \"http://10.244.2.20:8000/ready\": dial tcp 10.244.2.20:8000: connect: connection refused",
+          "2026-10-11T17:04:53Z Pod/track-service-6d767457d6-xvqbg Killing: Stopping container track-service",
+          "2026-10-11T17:04:53Z ReplicaSet/track-service-6d767457d6 SuccessfulCreate: Created pod: track-service-6d767457d6-9qncq",
+          "2026-10-11T17:04:54Z Pod/track-service-6d767457d6-9qncq Pulled: Container image \"transit-monitor/track-service:lab5\" already present on machine",
+          "2026-10-11T17:04:54Z Pod/track-service-6d767457d6-9qncq Created: Created container: wait-deps",
+          "2026-10-11T17:04:54Z Pod/track-service-6d767457d6-9qncq Started: Started container wait-deps",
+          "2026-10-11T17:04:55Z Pod/track-service-6d767457d6-9qncq Pulled: Container image \"transit-monitor/track-service:lab5\" already present on machine",
+          "2026-10-11T17:04:55Z Pod/track-service-6d767457d6-9qncq Created: Created container: track-service",
+          "2026-10-11T17:04:55Z Pod/track-service-6d767457d6-9qncq Started: Started container track-service",
+          "2026-10-11T17:04:57Z Pod/track-service-6d767457d6-9qncq Unhealthy: Readiness probe failed: Get \"http://10.244.2.22:8000/ready\": dial tcp 10.244.2.22:8000: connect: connection refused"
+        ]
+      },
+      {
+        "kind": "kill",
+        "detail": "kill -9 23152 на узле transit-worker2 (аварийное завершение процесса)",
+        "victim": "track-service-6d767457d6-b74q9",
+        "victim_node": "transit-worker2",
+        "t": 90.67,
+        "events_s": {
+          "not_ready": 0.59,
+          "restart_seen": 1.79,
+          "restarted_at_k8s": 0.59,
+          "last_terminated": {
+            "containerID": "containerd://d48680fe44255df170f3bd63dc28eec828b6f048c5f24377dbf4a3c1e3099331",
+            "exitCode": 137,
+            "finishedAt": "2026-10-11T17:05:46Z",
+            "reason": "Error",
+            "startedAt": "2026-10-11T17:04:13Z"
+          },
+          "replacement_ready": 4.55,
+          "replacement_ready_k8s": 3.59,
+          "replacement": "track-service-6d767457d6-b74q9",
+          "first_processed": 3.08
+        },
+        "k8s_events": [
+          "2026-10-11T17:05:46Z Pod/track-service-6d767457d6-b74q9 Pulled: Container image \"transit-monitor/track-service:lab5\" already present on machine",
+          "2026-10-11T17:05:46Z Pod/track-service-6d767457d6-b74q9 Created: Created container: track-service",
+          "2026-10-11T17:05:47Z Pod/track-service-6d767457d6-b74q9 Started: Started container track-service",
+          "2026-10-11T17:05:48Z Pod/track-service-6d767457d6-b74q9 Unhealthy: Readiness probe failed: Get \"http://10.244.1.13:8000/ready\": dial tcp 10.244.1.13:8000: connect: connection refused"
+        ]
+      }
+    ],
+    "stages": [
+      {
+        "kind": "delete",
+        "before": {
+          "rate": 59.2,
+          "queue_max": 72,
+          "ready_pods": [
+            2
+          ]
+        },
+        "during": {
+          "rate": 40.5,
+          "queue_max": 130,
+          "ready_pods": [
+            1
+          ]
+        },
+        "after": {
+          "rate": 65.1,
+          "queue_max": 213,
+          "ready_pods": [
+            2
+          ]
+        },
+        "queue_empty_after_ready_s": 46.2
+      },
+      {
+        "kind": "kill",
+        "before": {
+          "rate": 61.0,
+          "queue_max": 149,
+          "ready_pods": [
+            2
+          ]
+        },
+        "during": {
+          "rate": 40.8,
+          "queue_max": 128,
+          "ready_pods": [
+            1,
+            2
+          ]
+        },
+        "after": {
+          "rate": 65.1,
+          "queue_max": 143,
+          "ready_pods": [
+            2
+          ]
+        },
+        "queue_empty_after_ready_s": 44.2
+      }
+    ],
+    "simulator": {
+      "job": "simulator-96d44",
+      "generated": 9844,
+      "accepted": 9844,
+      "rejected": 0,
+      "retries": 0,
+      "elapsed_s": 151.058,
+      "rate": 65.2,
+      "by_type": {
+        "vehicle.position": 8541,
+        "ticket.validation": 1282,
+        "vehicle.incident": 21
+      }
+    },
+    "verify": {
+      "expected": {
+        "track-service": 8541,
+        "analytics-service": 9823,
+        "incident-service": 31
+      },
+      "processed": {
+        "analytics-service": 9823,
+        "track-service": 8541,
+        "incident-service": 31
+      },
+      "results": {
+        "analytics-service:arrival_duplicate": 142,
+        "track-service:stored_off_route": 27,
+        "analytics-service:arrival": 38,
+        "analytics-service:counted": 1282,
+        "incident-service:correlated": 1,
+        "incident-service:registered": 30,
+        "analytics-service:no_arrival": 7593,
+        "track-service:stored": 8504,
+        "analytics-service:at_stop": 768,
+        "track-service:stored_route_deviation": 10
+      },
+      "attempts": {
+        "analytics-service:success": 9823,
+        "track-service:success": 8539,
+        "track-service:duplicate": 2,
+        "incident-service:success": 31
+      },
+      "redelivered": {
+        "track-service": 78
+      },
+      "dlq": {
+        "analytics.positions.dlq": 0,
+        "analytics.validations.dlq": 0,
+        "incidents.dlq": 0,
+        "track.positions.dlq": 0
+      },
+      "lost": {
+        "track-service": 0,
+        "analytics-service": 0,
+        "incident-service": 0
+      }
+    },
+    "pods_after": [
+      {
+        "name": "track-service-6d767457d6-9qncq",
+        "node": "transit-worker",
+        "restarts": 0,
+        "ready": true
+      },
+      {
+        "name": "track-service-6d767457d6-b74q9",
+        "node": "transit-worker2",
+        "restarts": 1,
+        "ready": true
+      }
+    ],
+    "labels": {
+      "track-service-6d767457d6-b74q9": "Pod A (kill -9)",
+      "track-service-6d767457d6-xvqbg": "Pod B (удален)",
+      "track-service-6d767457d6-9qncq": "Pod C (замена удаленного)"
+    }
+  },
+  "failover_backoff": {
+    "kill": {
+      "kind": "kill",
+      "detail": "kill -9 14427 на узле transit-worker2 (аварийное завершение процесса)",
+      "victim": "track-service-d4b69b554-p9n2g",
+      "victim_node": "transit-worker2",
+      "t": 90.13,
+      "events_s": {
+        "not_ready": 1.34,
+        "restart_seen": 21.64,
+        "restarted_at_k8s": 19.66,
+        "last_terminated": {
+          "containerID": "containerd://3b034169a5f6dd8290997bf161046e06288a880ca7367fc9a487559a9fc16e27",
+          "exitCode": 137,
+          "finishedAt": "2026-10-11T16:59:09Z",
+          "reason": "Error",
+          "startedAt": "2026-10-11T16:55:49Z"
+        },
+        "replacement_ready": 22.71,
+        "replacement_ready_k8s": 21.66,
+        "replacement": "track-service-d4b69b554-p9n2g",
+        "first_processed": 0.32
+      },
+      "k8s_events": [
+        "2026-10-11T16:59:15Z Pod/track-service-d4b69b554-p9n2g BackOff: Back-off restarting failed container track-service in pod track-service-d4b69b554-p9n2g_transit(de28439b-85a0-4b60-9d4d-d29de748d9fc)",
+        "2026-10-11T16:59:29Z Pod/track-service-d4b69b554-p9n2g Pulled: Container image \"transit-monitor/track-service:lab5\" already present on machine",
+        "2026-10-11T16:59:29Z Pod/track-service-d4b69b554-p9n2g Created: Created container: track-service",
+        "2026-10-11T16:59:29Z Pod/track-service-d4b69b554-p9n2g Started: Started container track-service",
+        "2026-10-11T16:59:30Z Pod/track-service-d4b69b554-p9n2g Unhealthy: Readiness probe failed: Get \"http://10.244.1.11:8000/ready\": dial tcp 10.244.1.11:8000: connect: connection refused"
+      ]
+    },
+    "verify_lost": {
+      "track-service": 0,
+      "analytics-service": 0,
+      "incident-service": 0
+    }
+  }
+}

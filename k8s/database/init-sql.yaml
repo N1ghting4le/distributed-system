@@ -1,0 +1,191 @@
+# Скрипты инициализации БД из database/init (сгенерировано, не редактировать вручную):
+#   kubectl create configmap postgres-init -n transit --from-file=database/init --dry-run=client -o yaml
+apiVersion: v1
+data:
+  001_schema.sql: "-- Схема хранилища системы мониторинга городского транспорта (ЛР
+    1, дополнена в ЛР 2).\r\n-- Применяется вручную (ЛР 2), затем контейнером PostgreSQL
+    при первом запуске (ЛР 4).\r\n\r\nCREATE SCHEMA IF NOT EXISTS transit;\r\nSET
+    search_path TO transit;\r\n\r\n-- ---------- Справочные данные (загружаются из
+    ГИС перевозчика, только чтение для сервисов) ----------\r\nCREATE TABLE routes
+    (\r\n    route_id       varchar(8)  PRIMARY KEY,\r\n    transport_type varchar(10)
+    NOT NULL CHECK (transport_type IN ('bus', 'trolleybus', 'tram')),\r\n    name
+    \          text        NOT NULL\r\n);\r\n\r\nCREATE TABLE stops (\r\n    stop_id
+    varchar(8)       PRIMARY KEY,\r\n    name    text             NOT NULL,\r\n    lat
+    \    double precision NOT NULL,\r\n    lon     double precision NOT NULL\r\n);\r\n\r\nCREATE
+    TABLE route_stops (\r\n    route_id  varchar(8) REFERENCES routes,\r\n    direction
+    char(1)    CHECK (direction IN ('A', 'B')),\r\n    stop_seq  smallint,\r\n    stop_id
+    \  varchar(8) NOT NULL REFERENCES stops,\r\n    planned_offset_s integer NOT NULL,
+    \  -- плановое прибытие от начала рейса, с (ЛР 2)\r\n    PRIMARY KEY (route_id,
+    direction, stop_seq)\r\n);\r\n\r\nCREATE TABLE route_shapes (            -- геометрия
+    маршрута: массив точек [[lat, lon], ...]\r\n    route_id  varchar(8) REFERENCES
+    routes,\r\n    direction char(1)    CHECK (direction IN ('A', 'B')),\r\n    points
+    \   jsonb      NOT NULL,\r\n    PRIMARY KEY (route_id, direction)\r\n);\r\n\r\nCREATE
+    TABLE trips (                   -- рейсы расписания на текущие сутки\r\n    trip_id
+    \      varchar(16) PRIMARY KEY,\r\n    route_id      varchar(8)  NOT NULL REFERENCES
+    routes,\r\n    direction     char(1)     NOT NULL CHECK (direction IN ('A', 'B')),\r\n
+    \   planned_start timestamptz NOT NULL\r\n);\r\n\r\nCREATE TABLE timetable (\r\n
+    \   trip_id         varchar(16) REFERENCES trips,\r\n    stop_id         varchar(8)
+    \ REFERENCES stops,\r\n    planned_arrival timestamptz NOT NULL,\r\n    PRIMARY
+    KEY (trip_id, stop_id)\r\n);\r\n\r\n-- Учебное расписание на сутки day: рейсы
+    в обоих направлениях каждые headway_min минут круглые сутки,\r\n-- плановое прибытие
+    = начало рейса + route_stops.planned_offset_s. Повторный вызов за те же сутки
+    ничего не меняет.\r\nCREATE FUNCTION build_timetable(day date, headway_min integer
+    DEFAULT 3) RETURNS integer\r\nLANGUAGE plpgsql AS $$\r\nDECLARE n integer;\r\nBEGIN\r\n
+    \   IF EXISTS (SELECT 1 FROM trips WHERE (planned_start AT TIME ZONE 'Europe/Minsk')::date
+    = day) THEN\r\n        RETURN 0;\r\n    END IF;\r\n    DELETE FROM timetable;\r\n
+    \   DELETE FROM trips;\r\n    INSERT INTO trips (trip_id, route_id, direction,
+    planned_start)\r\n    SELECT d.route_id || '-' || d.direction || '-' || to_char(g,
+    'HH24MI'), d.route_id, d.direction,\r\n           g AT TIME ZONE 'Europe/Minsk'\r\n
+    \   FROM (SELECT DISTINCT route_id, direction FROM route_stops) d,\r\n         generate_series(day::timestamp,
+    day::timestamp + interval '1 day' - interval '1 minute',\r\n                         make_interval(mins
+    => headway_min)) g;\r\n    GET DIAGNOSTICS n = ROW_COUNT;\r\n    INSERT INTO timetable
+    (trip_id, stop_id, planned_arrival)\r\n    SELECT t.trip_id, rs.stop_id, t.planned_start
+    + make_interval(secs => rs.planned_offset_s)\r\n    FROM trips t JOIN route_stops
+    rs USING (route_id, direction);\r\n    RETURN n;\r\nEND $$;\r\n\r\n-- ----------
+    Track Service ----------\r\nCREATE TABLE vehicle_positions (       -- трек: ~6,2
+    млн строк в сутки, секционирование по суткам\r\n    message_id  uuid             NOT
+    NULL,\r\n    vehicle_id  varchar(9)       NOT NULL,\r\n    route_id    varchar(8)
+    \      NOT NULL,\r\n    trip_id     varchar(16)      NOT NULL,\r\n    recorded_at
+    timestamptz      NOT NULL,\r\n    received_at timestamptz      NOT NULL,\r\n    lat
+    \        double precision NOT NULL,\r\n    lon         double precision NOT NULL,\r\n
+    \   speed_kmh   real             NOT NULL,\r\n    heading     smallint         NOT
+    NULL,\r\n    doors_open  boolean          NOT NULL,\r\n    PRIMARY KEY (recorded_at,
+    message_id)\r\n) PARTITION BY RANGE (recorded_at);\r\nCREATE INDEX ON vehicle_positions
+    (vehicle_id, recorded_at);\r\nCREATE TABLE vehicle_positions_default PARTITION
+    OF vehicle_positions DEFAULT;\r\n\r\n-- Секция трека за сутки day (UTC); Track
+    Service создает секции на сегодня и завтра при запуске.\r\nCREATE FUNCTION create_positions_partition(day
+    date) RETURNS void\r\nLANGUAGE plpgsql AS $$\r\nBEGIN\r\n    EXECUTE format('CREATE
+    TABLE IF NOT EXISTS %I PARTITION OF vehicle_positions FOR VALUES FROM (%L) TO
+    (%L)',\r\n                   'vehicle_positions_' || to_char(day, 'YYYYMMDD'),
+    day::timestamp AT TIME ZONE 'UTC',\r\n                   (day + 1)::timestamp
+    AT TIME ZONE 'UTC');\r\nEND $$;\r\n\r\nCREATE TABLE vehicle_state (           --
+    последнее известное положение каждой машины\r\n    vehicle_id  varchar(9)       PRIMARY
+    KEY,\r\n    route_id    varchar(8)       NOT NULL,\r\n    trip_id     varchar(16)
+    \     NOT NULL,\r\n    recorded_at timestamptz      NOT NULL,\r\n    lat         double
+    precision NOT NULL,\r\n    lon         double precision NOT NULL,\r\n    speed_kmh
+    \  real             NOT NULL,\r\n    off_route   boolean          NOT NULL DEFAULT
+    false,\r\n    updated_at  timestamptz      NOT NULL DEFAULT now()\r\n);\r\n\r\n--
+    ---------- Schedule Analytics Service ----------\r\nCREATE TABLE stop_arrivals
+    (\r\n    trip_id     varchar(16) NOT NULL,\r\n    stop_id     varchar(8)  NOT
+    NULL,\r\n    vehicle_id  varchar(9)  NOT NULL,\r\n    arrived_at  timestamptz
+    NOT NULL,\r\n    planned_at  timestamptz NOT NULL,\r\n    delay_s     integer
+    \    GENERATED ALWAYS AS (extract(epoch FROM arrived_at - planned_at)::integer)
+    STORED,\r\n    PRIMARY KEY (trip_id, stop_id)\r\n);\r\n\r\nCREATE TABLE passenger_flow
+    (          -- агрегаты валидаций по 15-минутным интервалам\r\n    route_id     varchar(8)
+    \ NOT NULL,\r\n    stop_id      varchar(8)  NOT NULL,\r\n    bucket_start timestamptz
+    NOT NULL,\r\n    accepted     integer     NOT NULL DEFAULT 0,\r\n    rejected
+    \    integer     NOT NULL DEFAULT 0,\r\n    PRIMARY KEY (route_id, stop_id, bucket_start)\r\n);\r\n\r\n--
+    ---------- Incident Service ----------\r\nCREATE TABLE incidents (\r\n    incident_id
+    \  bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,\r\n    message_id    uuid
+    \            NOT NULL UNIQUE,\r\n    incident_type varchar(20)      NOT NULL,\r\n
+    \   severity      varchar(8)       NOT NULL CHECK (severity IN ('critical', 'high',
+    'medium', 'low')),\r\n    priority      smallint         NOT NULL CHECK (priority
+    BETWEEN 1 AND 4),\r\n    detected_by   varchar(20)      NOT NULL,\r\n    vehicle_id
+    \   varchar(9)       NOT NULL,\r\n    route_id      varchar(8)       NOT NULL,\r\n
+    \   trip_id       varchar(16),\r\n    lat           double precision NOT NULL,\r\n
+    \   lon           double precision NOT NULL,\r\n    occurred_at   timestamptz
+    \     NOT NULL,\r\n    details       jsonb            NOT NULL DEFAULT '{}',\r\n
+    \   status        varchar(12)      NOT NULL DEFAULT 'new' CHECK (status IN ('new',
+    'acknowledged', 'closed')),\r\n    correlated_to bigint REFERENCES incidents    --
+    повтор того же инцидента той же машины в течение 5 мин\r\n);\r\nCREATE INDEX ON
+    incidents (status, priority, occurred_at);\r\n\r\n-- ---------- Общие служебные
+    таблицы ----------\r\nCREATE TABLE processed_messages (      -- журнал обработки
+    (ЛР 2) и идемпотентность потребителей (ЛР 3)\r\n    consumer     varchar(20) NOT
+    NULL,     -- сервис: track-service, analytics-service, incident-service\r\n    message_id
+    \  uuid        NOT NULL,\r\n    instance_id  varchar(40),              -- экземпляр
+    сервиса (CONSUMER_ID) – для проверки распределения нагрузки\r\n    msg_type     varchar(20),\r\n
+    \   produced_at  timestamptz,              -- received_at сообщения: момент публикации
+    шлюзом\r\n    processed_at timestamptz NOT NULL DEFAULT now(),   -- задается потребителем
+    по своим часам\r\n    result       varchar(32),\r\n    PRIMARY KEY (consumer,
+    message_id)\r\n);\r\n\r\nCREATE TABLE rejected_messages (       -- сообщения,
+    не прошедшие проверку структуры и значений\r\n    id          bigint GENERATED
+    ALWAYS AS IDENTITY PRIMARY KEY,\r\n    consumer    varchar(20) NOT NULL,\r\n    message_id
+    \ uuid,\r\n    raw         jsonb       NOT NULL,\r\n    reason      text        NOT
+    NULL,\r\n    received_at timestamptz NOT NULL DEFAULT now()\r\n);\r\n"
+  002_reference.sql: "-- Сгенерировано tools/build_reference.py из database/reference/routes.json,
+    не редактировать вручную.\r\nSET search_path TO transit;\r\n\r\nINSERT INTO routes
+    (route_id, transport_type, name) VALUES\r\n    ('100', 'bus', 'Площадь Независимости
+    – ДС Восток'),\r\n    ('40', 'trolleybus', 'Немига – Каменная Горка'),\r\n    ('1',
+    'tram', 'Вокзал – Серебрянка')\r\nON CONFLICT (route_id) DO NOTHING;\r\n\r\nINSERT
+    INTO stops (stop_id, name, lat, lon) VALUES\r\n    ('ST-0211', 'Площадь Независимости',
+    53.8937, 27.548),\r\n    ('ST-0212', 'Октябрьская', 53.9023, 27.5612),\r\n    ('ST-0213',
+    'Площадь Победы', 53.9087, 27.575),\r\n    ('ST-0214', 'Площадь Якуба Коласа',
+    53.9153, 27.5833),\r\n    ('ST-0215', 'Академия наук', 53.9218, 27.5996),\r\n
+    \   ('ST-0216', 'Парк Челюскинцев', 53.9241, 27.6129),\r\n    ('ST-0217', 'Московская',
+    53.9278, 27.6276),\r\n    ('ST-0218', 'ДС Восток', 53.9339, 27.6509),\r\n    ('ST-0401',
+    'Немига', 53.905, 27.553),\r\n    ('ST-0402', 'Кальварийская', 53.9085, 27.524),\r\n
+    \   ('ST-0403', 'Пушкинская', 53.909, 27.495),\r\n    ('ST-0404', 'Спортивная',
+    53.9085, 27.4805),\r\n    ('ST-0405', 'Кунцевщина', 53.9065, 27.454),\r\n    ('ST-0406',
+    'Каменная Горка', 53.907, 27.437),\r\n    ('ST-0101', 'Вокзал', 53.8915, 27.556),\r\n
+    \   ('ST-0102', 'Ульяновская', 53.892, 27.568),\r\n    ('ST-0103', 'Партизанский
+    проспект', 53.888, 27.58),\r\n    ('ST-0104', 'Тракторный завод', 53.882, 27.6),\r\n
+    \   ('ST-0105', 'Ванеева', 53.874, 27.613),\r\n    ('ST-0106', 'Серебрянка', 53.866,
+    27.624)\r\nON CONFLICT (stop_id) DO NOTHING;\r\n\r\nINSERT INTO route_stops (route_id,
+    direction, stop_seq, stop_id, planned_offset_s) VALUES\r\n    ('100', 'A', 1,
+    'ST-0211', 0),\r\n    ('100', 'A', 2, 'ST-0212', 240),\r\n    ('100', 'A', 3,
+    'ST-0213', 458),\r\n    ('100', 'A', 4, 'ST-0214', 637),\r\n    ('100', 'A', 5,
+    'ST-0215', 878),\r\n    ('100', 'A', 6, 'ST-0216', 1057),\r\n    ('100', 'A',
+    7, 'ST-0217', 1258),\r\n    ('100', 'A', 8, 'ST-0218', 1561),\r\n    ('100', 'B',
+    1, 'ST-0218', 0),\r\n    ('100', 'B', 2, 'ST-0217', 303),\r\n    ('100', 'B',
+    3, 'ST-0216', 504),\r\n    ('100', 'B', 4, 'ST-0215', 683),\r\n    ('100', 'B',
+    5, 'ST-0214', 924),\r\n    ('100', 'B', 6, 'ST-0213', 1103),\r\n    ('100', 'B',
+    7, 'ST-0212', 1321),\r\n    ('100', 'B', 8, 'ST-0211', 1561),\r\n    ('40', 'A',
+    1, 'ST-0401', 0),\r\n    ('40', 'A', 2, 'ST-0402', 380),\r\n    ('40', 'A', 3,
+    'ST-0403', 752),\r\n    ('40', 'A', 4, 'ST-0404', 953),\r\n    ('40', 'A', 5,
+    'ST-0405', 1298),\r\n    ('40', 'A', 6, 'ST-0406', 1529),\r\n    ('40', 'B', 1,
+    'ST-0406', 0),\r\n    ('40', 'B', 2, 'ST-0405', 231),\r\n    ('40', 'B', 3, 'ST-0404',
+    576),\r\n    ('40', 'B', 4, 'ST-0403', 777),\r\n    ('40', 'B', 5, 'ST-0402',
+    1149),\r\n    ('40', 'B', 6, 'ST-0401', 1529),\r\n    ('1', 'A', 1, 'ST-0101',
+    0),\r\n    ('1', 'A', 2, 'ST-0102', 188),\r\n    ('1', 'A', 3, 'ST-0103', 399),\r\n
+    \   ('1', 'A', 4, 'ST-0104', 723),\r\n    ('1', 'A', 5, 'ST-0105', 999),\r\n    ('1',
+    'A', 6, 'ST-0106', 1257),\r\n    ('1', 'B', 1, 'ST-0106', 0),\r\n    ('1', 'B',
+    2, 'ST-0105', 258),\r\n    ('1', 'B', 3, 'ST-0104', 534),\r\n    ('1', 'B', 4,
+    'ST-0103', 858),\r\n    ('1', 'B', 5, 'ST-0102', 1069),\r\n    ('1', 'B', 6, 'ST-0101',
+    1257)\r\nON CONFLICT DO NOTHING;\r\n\r\nINSERT INTO route_shapes (route_id, direction,
+    points) VALUES\r\n    ('100', 'A', '[[53.8937, 27.548], [53.9023, 27.5612], [53.9087,
+    27.575], [53.9153, 27.5833], [53.9218, 27.5996], [53.9241, 27.6129], [53.9278,
+    27.6276], [53.9339, 27.6509]]'),\r\n    ('100', 'B', '[[53.9339, 27.6509], [53.9278,
+    27.6276], [53.9241, 27.6129], [53.9218, 27.5996], [53.9153, 27.5833], [53.9087,
+    27.575], [53.9023, 27.5612], [53.8937, 27.548]]'),\r\n    ('40', 'A', '[[53.905,
+    27.553], [53.907, 27.54], [53.9085, 27.524], [53.909, 27.495], [53.9085, 27.4805],
+    [53.9065, 27.454], [53.907, 27.437]]'),\r\n    ('40', 'B', '[[53.907, 27.437],
+    [53.9065, 27.454], [53.9085, 27.4805], [53.909, 27.495], [53.9085, 27.524], [53.907,
+    27.54], [53.905, 27.553]]'),\r\n    ('1', 'A', '[[53.8915, 27.556], [53.892, 27.568],
+    [53.888, 27.58], [53.885, 27.59], [53.882, 27.6], [53.874, 27.613], [53.866, 27.624]]'),\r\n
+    \   ('1', 'B', '[[53.866, 27.624], [53.874, 27.613], [53.882, 27.6], [53.885,
+    27.59], [53.888, 27.58], [53.892, 27.568], [53.8915, 27.556]]')\r\nON CONFLICT
+    DO NOTHING;\r\n\r\n-- расписание на текущие сутки (интервал 3 мин); сервисы вызывают
+    функцию при запуске\r\nSELECT build_timetable((now() AT TIME ZONE 'Europe/Minsk')::date,
+    3);\r\n"
+  003_reliability.sql: |
+    -- ЛР 3: история обработки и идемпотентность потребителей. Применяется после 001–002 и к уже развернутой БД.
+    SET search_path TO transit;
+
+    -- processed_messages – реестр обработанных сообщений: строка вставляется первой операцией транзакции
+    -- обработки (claim), конфликт ключа (consumer, message_id) означает повторную доставку уже обработанного
+    -- сообщения. result заполняется последней операцией той же транзакции.
+    ALTER TABLE processed_messages ADD COLUMN IF NOT EXISTS attempt smallint NOT NULL DEFAULT 1;
+    COMMENT ON TABLE processed_messages IS 'Обработанные сообщения: идемпотентность потребителей и итог обработки';
+
+    CREATE TABLE IF NOT EXISTS processing_log (   -- каждая попытка обработки каждой доставки
+        id          bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        consumer    varchar(20) NOT NULL,
+        instance_id varchar(40) NOT NULL,
+        queue       varchar(40) NOT NULL,
+        message_id  uuid,                         -- NULL, если идентификатор не удалось извлечь (битое сообщение)
+        msg_type    varchar(20),
+        attempt     smallint    NOT NULL,         -- 1 – первая доставка, далее – номер повтора + 1
+        redelivered boolean     NOT NULL,         -- повторная доставка брокером (не было ack)
+        received_at timestamptz NOT NULL,
+        finished_at timestamptz NOT NULL,
+        outcome     varchar(10) NOT NULL CHECK (outcome IN ('success', 'duplicate', 'retry', 'dlq')),
+        result      varchar(32),                  -- итог бизнес-обработки (как в processed_messages)
+        error       text                          -- причина ошибки: класс исключения и сообщение
+    );
+    CREATE INDEX IF NOT EXISTS processing_log_message ON processing_log (message_id, consumer);
+    CREATE INDEX IF NOT EXISTS processing_log_outcome ON processing_log (consumer, outcome) WHERE outcome <> 'success';
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: postgres-init
+  namespace: transit

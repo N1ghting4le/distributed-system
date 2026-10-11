@@ -1,0 +1,7 @@
+# Все объекты системы – в отдельном пространстве имен
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: transit
+  labels:
+    app.kubernetes.io/part-of: transit-monitor

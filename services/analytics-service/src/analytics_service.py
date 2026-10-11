@@ -235,6 +235,7 @@ async def main():
     service = Analytics(pool, publish_exchange)
     consumer = rel.Consumer(SERVICE, CONSUMER_ID, pool, publish_channel, log)
     await service.load_reference()
+    await rel.serve_health(connection, pool, log)  # ЛР 5: пробы Kubernetes
     log.info('started, queues=%s prefetch=%d delay=%dms %s', ','.join(QUEUES), PREFETCH, PROCESS_DELAY_MS,
              rel.settings())
     try:

@@ -26,7 +26,8 @@
   FAULT_RATE          вероятность имитированного временного сбоя на каждой попытке (0);
   FAULT_POISON        source_id или message_id через запятую – такие сообщения не обрабатываются никогда;
   FAULT_ACK_LOSS_RATE вероятность «потери» ack после фиксации (сообщение возвращается брокером повторно) (0);
-  FAULT_SEED          зерно: решение о сбое – хеш (зерно, message_id, попытка), прогоны воспроизводимы.
+  FAULT_SEED          зерно: решение о сбое – хеш (зерно, message_id, попытка), прогоны воспроизводимы;
+  HEALTH_PORT         порт HTTP-проб /live и /ready для Kubernetes (ЛР 5); 0 – пробы не запускаются (0).
 """
 import asyncio
 import hashlib
@@ -55,6 +56,7 @@ FAULT_RATE = float(os.getenv('FAULT_RATE', '0'))
 FAULT_POISON = {x.strip() for x in os.getenv('FAULT_POISON', '').split(',') if x.strip()}
 FAULT_ACK_LOSS_RATE = float(os.getenv('FAULT_ACK_LOSS_RATE', '0'))
 FAULT_SEED = os.getenv('FAULT_SEED', '0')
+HEALTH_PORT = int(os.getenv('HEALTH_PORT', '0'))
 
 PERMANENT = (ValueError, KeyError, TypeError, asyncpg.DataError, asyncpg.IntegrityConstraintViolationError)
 
@@ -82,6 +84,47 @@ def stop_on_sigterm():
         asyncio.get_running_loop().add_signal_handler(signal.SIGTERM, task.cancel)
     except (NotImplementedError, RuntimeError):
         pass
+
+
+async def serve_health(connection, pool, log):
+    """ЛР 5: HTTP-пробы для Kubernetes на HEALTH_PORT (вызывается, когда потребитель готов читать очереди).
+
+    GET /live  – 200, пока цикл событий процесса отвечает (livenessProbe: зависший процесс перезапускается);
+    GET /ready – 200, если соединение с брокером открыто и БД отвечает на SELECT 1 за 2 с, иначе 503
+                 (readinessProbe: момент готовности нового Pod; при отказе БД Pod помечается неготовым,
+                 но не перезапускается – переподключение выполняют aio-pika и asyncpg).
+    """
+    if not HEALTH_PORT:
+        return None
+
+    async def ready():
+        if connection.is_closed:
+            return 'broker connection closed'
+        try:
+            await asyncio.wait_for(pool.fetchval('SELECT 1'), 2)
+        except Exception as exc:  # noqa: BLE001 – любая ошибка БД означает неготовность
+            return f'database: {type(exc).__name__}'
+        return None
+
+    async def handle(reader, writer):
+        try:
+            line = (await asyncio.wait_for(reader.readline(), 2)).decode('latin-1').split()
+            path = line[1] if len(line) > 1 else '/'
+            error = None if path == '/live' else await ready() if path == '/ready' else 'not found'
+            status = ('200 OK' if error is None else '404 Not Found' if error == 'not found'
+                      else '503 Service Unavailable')
+            body = (error or 'ok').encode()
+            writer.write(f'HTTP/1.1 {status}\r\nContent-Type: text/plain\r\nContent-Length: {len(body)}\r\n'
+                         f'Connection: close\r\n\r\n'.encode() + body)
+            await writer.drain()
+        except (OSError, asyncio.TimeoutError):
+            pass
+        finally:
+            writer.close()
+
+    server = await asyncio.start_server(handle, '0.0.0.0', HEALTH_PORT)
+    log.info('health probes on :%d (/live, /ready)', HEALTH_PORT)
+    return server
 
 
 def retry_delay_ms(attempt):

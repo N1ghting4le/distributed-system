@@ -1,0 +1,16 @@
+# Развертывание всей системы одной командой:  kubectl apply -k k8s/
+# Удаление (тома PVC остаются):                kubectl delete -k k8s/
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secret.yaml
+  - database/init-sql.yaml
+  - database/postgres.yaml
+  - broker/rabbitmq.yaml
+  - producer/gateway.yaml
+  - consumers/track-service.yaml
+  - consumers/analytics-service.yaml
+  - consumers/incident-service.yaml
+  - api/dispatcher-api.yaml

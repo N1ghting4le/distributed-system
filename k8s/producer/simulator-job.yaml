@@ -1,0 +1,28 @@
+# Fleet Simulator – источник нагрузки, разовый Job (в kustomization не входит, запускается по требованию):
+#   kubectl -n transit create -f k8s/producer/simulator-job.yaml
+#   kubectl -n transit logs -f job/<имя>
+# Аргументы эмулятора – в args (по умолчанию 1000 событий без ограничения темпа).
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: simulator-
+  namespace: transit
+  labels: {app: simulator, app.kubernetes.io/part-of: transit-monitor, tier: load}
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels: {app: simulator, tier: load}
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: simulator
+          image: transit-monitor/simulator:lab5
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: GATEWAY_URL
+              valueFrom: {configMapKeyRef: {name: transit-config, key: GATEWAY_URL}}
+          args: [--count, '1000', --vehicles, '300']
+          resources:
+            requests: {cpu: 100m, memory: 64Mi}

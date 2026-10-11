@@ -1,0 +1,66 @@
+# Track Service – масштабируемый обработчик (сервис без состояния). Экземпляры – конкурирующие потребители
+# очереди track.positions; брокер распределяет между ними сообщения сам, Service для приема трафика не нужен.
+# Число экземпляров задается средствами Kubernetes:
+#   kubectl -n transit scale deployment/track-service --replicas=4
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: track-service
+  namespace: transit
+  labels: {app: track-service, app.kubernetes.io/part-of: transit-monitor, tier: consumer}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels: {app: track-service}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxSurge: 1, maxUnavailable: 0}
+  template:
+    metadata:
+      labels: {app: track-service, tier: consumer}
+    spec:
+      terminationGracePeriodSeconds: 30     # SIGTERM → закрытие соединений; неподтвержденное брокер вернет в очередь
+      initContainers:
+        - name: wait-deps                   # ожидание брокера и БД по именам Services (вместо depends_on)
+          image: transit-monitor/track-service:lab5
+          imagePullPolicy: IfNotPresent
+          command: [python, -c]
+          args:
+            - |
+              import socket, time
+              for host, port in (('rabbitmq', 5672), ('postgres', 5432)):
+                  while True:
+                      try:
+                          socket.create_connection((host, port), 2).close(); print(host, 'ok'); break
+                      except OSError as exc:
+                          print(host, 'waiting:', exc); time.sleep(1)
+      containers:
+        - name: track-service
+          image: transit-monitor/track-service:lab5
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - configMapRef: {name: transit-config}
+          env:
+            - name: CONSUMER_ID             # имя Pod – идентификатор экземпляра в processed_messages
+              valueFrom: {fieldRef: {fieldPath: metadata.name}}
+            - name: PROCESS_DELAY_MS
+              valueFrom: {configMapKeyRef: {name: transit-config, key: TRACK_PROCESS_DELAY_MS}}
+            - name: RABBIT_URL
+              valueFrom: {secretKeyRef: {name: transit-secret, key: RABBIT_URL}}
+            - name: DB_DSN
+              valueFrom: {secretKeyRef: {name: transit-secret, key: DB_DSN}}
+          ports:
+            - {name: health, containerPort: 8000}
+          readinessProbe:
+            httpGet: {path: /ready, port: health}
+            periodSeconds: 2
+            failureThreshold: 2
+          livenessProbe:
+            httpGet: {path: /live, port: health}
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
+          resources:
+            requests: {cpu: 100m, memory: 96Mi}
+            limits: {cpu: 500m, memory: 256Mi}
